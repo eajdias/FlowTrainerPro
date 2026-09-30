@@ -1,0 +1,56 @@
+/* global.css — Flow Trainer Pro base styles */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ftp-bg-canvas, #0B0E13);
+  color: var(--ftp-text-primary, #F4F7FB);
+  font-family: var(--ftp-font-ui, 'Segoe UI', system-ui, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar — thin dark style */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ftp-bg-canvas, #0B0E13);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ftp-border-strong, #354154);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ftp-text-muted, #707C8D);
+}
+
+/* Remove default button styles */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: var(--ftp-shadow-focus, 0 0 0 2px rgba(77, 141, 255, 0.42));
+}
+
+/* Prevent text selection on interactive UI */
+button, [role="toolbar"], [role="group"] {
+  user-select: none;
+}

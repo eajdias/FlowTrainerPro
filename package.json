@@ -1,0 +1,33 @@
+{
+  "name": "flowtrainerpro",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:all": "vitest run",
+    "test:sequential": "vitest run --fileParallelism=false",
+    "test:integration": "vitest run tests/marketData/HistoricalReplay.test.ts tests/marketData/HistoricalMarketProjections.test.ts tests/marketData/BrokerFlowAnalyzer.test.ts",
+    "test:real-csv": "vitest run tests/marketData/HistoricalReplay.test.ts tests/marketData/HistoricalMarketProjections.test.ts tests/marketData/BrokerFlowAnalyzer.test.ts -t \"CSV real|csv real\"",
+    "test:load": "vitest run tests/marketData/HistoricalReplay.test.ts tests/marketData/HistoricalMarketProjections.test.ts tests/marketData/BrokerFlowAnalyzer.test.ts agents-sprint17-flow-analysis-pressure-liquidity/tests/flowAnalysis/FlowAnalysisLoad.test.ts -t \"10.000|100.000|carga\"",
+    "validate:trade-csv": "vite-node scripts/validate-trade-csv.ts"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^6.0.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1",
+    "vitest": "^3.2.7"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "uuid": "^14.0.1",
+    "zustand": "^5.0.14"
+  }
+}

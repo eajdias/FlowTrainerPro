@@ -1,0 +1,272 @@
+.ftp-shell {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 48px minmax(0, 1fr) 26px;
+  background: var(--ftp-bg-canvas);
+  color: var(--ftp-text-secondary);
+  font-family: var(--ftp-font-ui);
+}
+
+.ftp-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  background: rgba(15, 19, 26, 0.96);
+  border-bottom: 1px solid var(--ftp-border-subtle);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.ftp-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 176px;
+  flex-shrink: 0;
+}
+
+.ftp-brandMark {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--ftp-radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ftp-text-primary);
+  background: linear-gradient(135deg, rgba(77, 141, 255, 0.95), rgba(109, 93, 251, 0.8));
+  font: 800 11px/1 var(--ftp-font-ui);
+  box-shadow: 0 0 24px rgba(77, 141, 255, 0.18);
+}
+
+.ftp-brand strong {
+  display: block;
+  color: var(--ftp-text-primary);
+  font-size: 12px;
+  line-height: 1.05;
+}
+
+.ftp-brand span:last-child {
+  display: block;
+  color: var(--ftp-text-muted);
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.ftp-marketContext {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.ftp-instrument {
+  min-width: 112px;
+  display: grid;
+  gap: 2px;
+  padding: 3px 8px;
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-sm);
+  background: rgba(26, 32, 43, 0.72);
+}
+
+.ftp-kicker,
+.ftp-instrument span:last-child {
+  color: var(--ftp-text-muted);
+  font: 800 8px/1 var(--ftp-font-ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ftp-instrument strong {
+  color: var(--ftp-text-primary);
+  font: 800 11px/1 var(--ftp-font-numeric);
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-sourceModes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ftp-sourceButton,
+.ftp-actionButton {
+  height: 26px;
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-sm);
+  background: var(--ftp-bg-panel-elevated);
+  color: var(--ftp-text-muted);
+  font: 800 9px/1 var(--ftp-font-ui);
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.ftp-sourceButton {
+  padding: 0 8px;
+}
+
+.ftp-sourceButton.is-active {
+  border-color: rgba(77, 141, 255, 0.65);
+  color: var(--ftp-text-primary);
+  background: rgba(77, 141, 255, 0.12);
+}
+
+.ftp-sourceButton:disabled {
+  cursor: default;
+  opacity: 0.58;
+}
+
+.ftp-sourceIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 16px;
+  border-radius: var(--ftp-radius-xs);
+  border: 1px solid var(--ftp-border-subtle);
+  color: var(--ftp-info);
+  font: 800 8px/1 var(--ftp-font-numeric);
+}
+
+.ftp-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.ftp-marketState {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.ftp-stat {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--ftp-text-primary);
+  font: 700 11px/1 var(--ftp-font-numeric);
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-stat span {
+  color: var(--ftp-text-muted);
+  font: 700 9px/1 var(--ftp-font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ftp-actionButton {
+  width: 30px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.ftp-actionButton:hover {
+  background: var(--ftp-bg-hover);
+  color: var(--ftp-text-primary);
+}
+
+.ftp-actionButton:focus-visible,
+.ftp-sourceButton:focus-visible {
+  outline: none;
+  box-shadow: var(--ftp-shadow-focus);
+}
+
+.ftp-main {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--ftp-bg-app);
+}
+
+.ftp-statusbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 12px;
+  border-top: 1px solid var(--ftp-border-subtle);
+  background: rgba(11, 14, 19, 0.96);
+  color: var(--ftp-text-muted);
+  font: 600 10px/1 var(--ftp-font-ui);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ftp-statusItem {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.ftp-statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ftp-neutral);
+}
+
+.dot-running { background: var(--ftp-buy-primary); }
+.dot-paused,
+.dot-ready { background: var(--ftp-warning); }
+.dot-completed { background: var(--ftp-info); }
+.dot-error { background: var(--ftp-sell-primary); }
+
+.ftp-statusWarning {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ftp-warning);
+}
+
+@media (max-width: 1440px) {
+  .ftp-sourceButton:not(.is-active) span:last-child,
+  .ftp-clock,
+  .ftp-marketState .ftp-stat:first-of-type {
+    display: none;
+  }
+}
+
+@media (max-width: 1180px) {
+  .ftp-brand span:last-child,
+  .ftp-nav {
+    display: none;
+  }
+
+  .ftp-brand {
+    min-width: 142px;
+  }
+
+  .ftp-sourceButton:not(.is-active) {
+    display: none;
+  }
+
+  .ftp-statusbar .ftp-statusItem:nth-of-type(n + 6) {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .ftp-brand { min-width: auto; }
+  .ftp-brand > div,
+  .ftp-stat,
+  .ftp-instrument,
+  .ftp-statusbar .ftp-statusItem:nth-of-type(n + 4) {
+    display: none;
+  }
+}
