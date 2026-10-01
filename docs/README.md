@@ -1,66 +1,48 @@
 # FlowTrainerPro Documentation
 
-## Visão Geral
-FlowTrainerPro é uma plataforma de treinamento de trading Order Flow construída com React 19, TypeScript e Vite. O objetivo é simular um mercado realista com corretoras identificadas por cor, order flow e treino progressivo.
+Índice da documentação. Cada tema tem **uma fonte única** — não duplicar conteúdo entre arquivos.
 
-## Estado Atual — Sprint 2 (Etapa 1 concluída)
+## Arquitetura e módulos
 
-### O que funciona:
-- **Mercado sintético live** — SyntheticMarketProvider gera ticks a cada 800ms com broker, cor e volume
-- **9 painéis visuais** — todos arrastáveis e redimensionáveis (8 handles)
-- **5 workspaces** — Default, Tape Reading, Scalping, DOM Puro, Replay
-- **Dados live nos painéis:**
-  - Times & Trades: stream de negócios com corretora colorida
-  - PriceLadder: bid/ask por nível de preço atualizado por tick
-  - VolumeProfile: acumulado por preço com POC e Value Area
-  - BrokerHistory: ranking de corretoras por volume e delta
-  - SuperDOM: ladder live com delta por nível
-- **Toolbar funcional** — Play/Pause/Reset + botões de velocidade + contador de ticks
-- **BrokerRegistry** — 37 corretoras reais da B3 com cores e perfis comportamentais
-- **Zustand store separado** — WorkspaceStore (layout) | MarketStore (dados de mercado)
-- **Build TypeScript limpa** — `npx tsc --noEmit` passa sem erros
+- `Architecture.md` — arquitetura, camadas, estrutura real de `src/` e componentes existentes
+- `Modules.md` — status dos módulos (`training` ativo; `dashboard`/`academy`/`analysis` não implementados) e painéis registrados
 
-### Próximos passos (Etapa 2 — Operação):
-- SuperDOM interativo: click → OrderIntent → OrderManager → posição + PnL
-- Painel de posições abertas/fechadas
-- Stop/Gain visual no SuperDOM
-- Flatten funcional
+## Arquitetura detalhada (`architecture/`)
 
-### Backlog (Etapa 3 — Treinamento):
-- Training Engine com cenários (Absorção, Rompimento, etc.)
-- Missões progressivas com pontuação
-- Feedback ao final de cada sessão
-- IA coach
+- `FOUNDATION.md` — fundamentos
+- `FLOW_ANALYSIS_ENGINE.md` — motor de análise de fluxo
+- `HISTORICAL_MARKET_DATA_PIPELINE.md` / `HISTORICAL_REPLAY_ENGINE.md` / `HISTORICAL_MARKET_PROJECTIONS.md` — dados históricos e replay
+- `KERNEL_BOOTSTRAP.md` — inicialização do kernel
+- `MARKET_MICROSTRUCTURE.md` — microestrutura de mercado
+- `RENDERING_AND_PERFORMANCE.md` — renderização e performance
+- `MARKET_DATA_PROVIDER.md` — ⚠️ histórico: descreve `src/market/providers/` (removido; ver `Architecture.md`)
+- `SPRINT*.md` — notas históricas das sprints 2–8 e 10
 
-## Arquitetura
+## Produto (`product/`)
 
-```
-SyntheticMarketProvider (ticks com broker)
-        ↓
-    FlowEngine (redistribui)
-        ↓
- useMarketStore (Zustand)
-        ↓
-  ┌─────────────────────────────────────┐
-  │ SuperDOM · TT · PriceLadder · VV    │
-  │ BrokerHistory · Chart8P · etc.      │
-  └─────────────────────────────────────┘
-```
+- `PRODUCT_VISION.md` — visão do produto
+- `PROJECT_PRINCIPLES.md` — princípios do projeto
+- `SUPERDOM_TRADING_INTERACTIONS.md` — interações do SuperDOM (fonte única; inclui fila FIFO via `getOrderQueueState`)
+- `TIMES_AND_TRADES.md` — painel Times & Trades
+- `BROKER_FLOW_DASHBOARD.md` — dashboard de fluxo de corretoras
+- `GLOBAL_TRADING_CONTROLS.md` — controles globais
+- `HISTORICAL_REPLAY.md` — replay histórico
+- `ATEMPORAL_CHART.md` — gráfico atemporal
 
-## Estrutura de pastas
-- `src/core/` — kernel, engines, market identity, strategies
-- `src/modules/` — training, academy, dashboard, analysis
-- `src/panels/` — componentes visuais dos painéis
-- `src/workspace/` — WorkspaceManager, Store, PanelRegistry
-- `src/store/` — Zustand stores (marketStore)
-- `src/market/` — MarketDataProvider, SyntheticMarketProvider
-- `src/shared/` — hooks, components, types, constants
-- `docs/` — product, architecture, roadmap, standards
+## Design, padrões e roadmap
 
-## Arquiteturas específicas
-- `docs/architecture/FLOW_ANALYSIS_ENGINE.md` — ciclo de vida, contratos e imutabilidade do FlowAnalysisEngine (Sprint 16)
+- `design/FLOWTRAINER_DESIGN_SYSTEM.md` — design system
+- `design/UX_UI_MIGRATION_PLAN.md` — migração UX/UI
+- `standards/FLOWTRAINER_ENGINEERING_HANDBOOK.md` — manual de engenharia e convenções (fonte única)
+- `standards/TESTING_BASELINE.md` — baseline de testes
+- `roadmap/ROADMAP.md` — roadmap
+- `roadmap/BACKLOG.md` — backlog (fonte única dos próximos passos)
+- `roadmap/SPRINT_1.md` / `SPRINT_2.md` — notas de sprint
 
-## Dependências
-- react 19, react-dom 19
-- zustand, uuid
-- typescript 6, vite 8, @vitejs/plugin-react 6
+## Domínio de mercado (raiz de `docs/`)
+
+- `FLOWTRAINER_VISION.md` — visão
+- `FLOW_MARKET_MICROSTRUCTURE.md` / `FLOW_MARKET_DYNAMICS.md` / `FLOW_MARKET_PHENOMENA.md` — mercado
+- `FLOW_MARKET_SCENARIOS.md` — cenários
+- `FLOW_PLAYER_LIBRARY.md` — players
+- `FLOW_BROKER_COLORS.md` — cores das corretoras

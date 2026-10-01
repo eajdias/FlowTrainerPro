@@ -1,30 +1,65 @@
 # Architecture
 
-Este documento apresenta a arquitetura atual do FlowTrainerPro e serve como ponto de entrada para os detalhes técnicos da plataforma.
+Fonte única da arquitetura do FlowTrainerPro. Outros docs **linkam para cá** em vez de repetir o diagrama, a estrutura de pastas ou a lista de componentes.
 
-## Estado Atual
-- Front-end React + TypeScript com Vite.
-- Navegação interna gerenciada por `src/core/AppRouter.tsx` com estado local.
-- Workspace de treinamento integrado ao módulo `training` e renderizado por `src/modules/training/TrainingModule.tsx`.
-- TrainingModule exibe status de mercado ao vivo e controles de engine via `useFlowEngine` e `useMarketStore`.
-- WorkspaceManager agora monta painéis como janelas flutuantes arrastáveis e redimensionáveis em `src/workspace/WorkspaceManager/WorkspaceManager.tsx`.
-- Painéis registrados via `src/workspace/PanelRegistry.ts`.
-- Layout inicial do workspace definido em `src/workspace/defaultWorkspaces.ts` com posições de painel no canvas.
-- Build validada com `npm run build`.
+## Camadas
 
-## Principais Componentes
-- `src/core/AppRouter.tsx`: roteamento por estado entre módulos.
-- `src/core/AppShell.tsx`: layout da aplicação com sidebar e área de conteúdo.
-- `src/modules/training/TrainingModule.tsx`: canvas principal do workspace de treinamento.
-- `src/modules/training/WorkspaceLayout/WorkspaceLayout.tsx`: grid aplicada ao workspace de painéis.
-- `src/workspace/WorkspaceManager/WorkspaceManager.tsx`: monta painéis ativos e gerencia modo docked/floating.
-- `src/workspace/PanelRegistry.ts`: registro centralizado dos painéis disponíveis.
-- `src/workspace/defaultWorkspaces.ts`: configurações padrão de workspaces e distribuição de painéis.
-- `src/panels/SuperDOMPanel/SuperDOM.tsx`: SuperDOM interativo de entrada de ordens.
-- `src/panels/PriceLadderPanel/PriceLadder.tsx`: novo painel de livro de ofertas por nível de preço.
-- `src/panels/ReplayToolbar/ReplayToolbar.tsx`: toolbar inferior de controle de replay e ações de trade.
+```
+UI Layer           → src/panels/, src/workspace/
+State Layer        → src/store/ (Zustand)
+Domain Layer       → src/core/, src/trader/, src/training/
+Infrastructure     → src/services/, src/assets/
+```
 
-## Observações
-- A pasta `src/router/` está presente, mas não é utilizada pela aplicação atual.
-- A aplicação usa navegação por estado local em vez de roteamento via URL/React Router.
-- Documentação detalhada de arquitetura fica em `docs/architecture/FOUNDATION.md`.
+Regras (ver `standards/FLOWTRAINER_ENGINEERING_HANDBOOK.md`):
+
+- Engines concentram lógica; React apenas representa estado.
+- UI nunca implementa regra de negócio.
+
+## Dois universos
+
+- **Mercado:** clock → book (FIFO) → matching (price-time priority) → generator/scenarios → evento `matching:execution:created` → stores de mercado.
+- **Trader (isolado):** `TradingController` (entrada única) → `TraderExecutionBridge` (stateless) → `MatchingEngine`; `PositionStore` atualizado só por executions; `QueueInspector` read-only.
+
+Detalhe dos universos e da camada de treinamento (cenários, missões, avaliação, feedback, replay): ver `PROJECT_STATUS.md` §2 — mantido lá por ser snapshot de homologação, não repetido aqui.
+
+## Estrutura real de `src/` (2026-10-01, via `git ls-files`)
+
+```
+src/
+├── core/               # AppRouter.tsx, AppShell.tsx/.css, App.tsx
+│   └── analytics/volumeAnomaly/  # bocpd, cusum, hawkes, types (+ detector/index untracked)
+├── trader/             # TradingController.ts, TraderExecutionBridge.ts, QueueInspector.ts
+├── training/           # TrainingMissionEngine.ts, MissionLibrary.ts, MissionStore.ts, types.ts
+├── panels/             # SÓ index.ts (barrel) — subdirs dos painéis AUSENTES (ver § Ausências)
+├── workspace/          # PanelRegistry.ts, WorkspaceStore.ts, defaultWorkspaces.ts, types.ts
+├── store/              # 14 stores (book, trade, broker*, historical*, position, traderOrder, market, ...)
+├── services/           # SÓ index.ts (stub vazio)
+├── router/             # SÓ index.ts (stub vazio, não usado — navegação é por estado em AppRouter)
+└── assets/             # global.css + estáticos
+```
+
+## Componentes existentes (verificado em disco)
+
+| Arquivo | Papel |
+|---------|-------|
+| `src/core/AppRouter.tsx` | Roteamento por estado entre módulos |
+| `src/core/AppShell.tsx` | Layout com sidebar e área de conteúdo |
+| `src/trader/TradingController.ts` | Entrada única do trader |
+| `src/trader/TraderExecutionBridge.ts` | Bridge → MatchingEngine |
+| `src/trader/QueueInspector.ts` | Observabilidade read-only da fila |
+| `src/training/*` | Ver `Modules.md` (fonte única do módulo training) |
+| `src/workspace/PanelRegistry.ts` | Registro tipo → componente de painel |
+| `src/workspace/WorkspaceStore.ts` / `defaultWorkspaces.ts` | Estado e layouts do workspace |
+| `src/store/*.ts` | Stores Zustand por domínio |
+
+## Ausências conhecidas (quebram o build)
+
+- `src/panels/*/`: `PanelRegistry.ts` e `panels/index.ts` importam ~20 painéis (`SuperDOM`, `TimesAndTrades`, `PriceLadder`, `AtemporalChart`, inspectors, etc.) — **nenhum subdir existe**. Só `src/panels/index.ts` está commitado.
+- `src/workspace/WorkspaceManager/`, `LayoutManager/`, `DockManager/`: importados por `src/workspace/index.ts` — **não existem**.
+- `src/ui/designSystem`: importado por `src/App.tsx` e `src/core/AppShell.tsx` (`ThemeProvider`, `Badge`, `Button`) — **não existe** (`src/ui/` foi removido por estar vazio).
+- `src/core/kernel/` (`SimulationKernel`, `SimulationClock`, `MatchingEngine`, `OrderBookEngine`, `MarketScenarioEngine`): citados em docs antigos — **não existem** no tree atual.
+- `src/core/marketData/`, `src/core/marketIdentity/`, `src/market/`: citados em docs antigos — **não existem** (só dirs vazios locais `marketData/latency`, `analytics/liquidity`).
+- `src/modules/`: citado em docs antigos — **não existe** (removido; o módulo `training` real vive em `src/training/`).
+
+Docs que descrevem arquivos removidos (`architecture/MARKET_DATA_PROVIDER.md`, `FLOW_PLAYER_LIBRARY.md` §12) são **históricos** — não refletem o tree atual.
