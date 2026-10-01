@@ -10,12 +10,12 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 ## Alta prioridade
 
 - [x] Completar UX 3: Book e Volume Profile → `PriceBook`, `VolumeProfile` implementados
-- [ ] Filtros do Times & Trades + painel expandido de fila do SuperDOM (fila por ordem já visível via `QueueInspector`)
-- [ ] Perfis de agressividade do mercado (lento/normal/agressivo)
-- [ ] TRAINING FIFO opcional (filas menores para mais feedback durante treino)
-- [x] Pressão, Resposta e Liquidez (FlowAnalysisEngine Sprint 17) → `FlowAnalysisEngine` (Hawkes+CUSUM+BOCPD, sweeps, walls) implementado e testado; consumo pelos painéis pendente
-- [ ] Indicador de slippage para ordens agressoras
-- [ ] Estatística de tempo médio de fila por nível
+- [x] Filtros do Times & Trades + painel expandido de fila do SuperDOM → filtros lado/lote + coluna Slip; seção Fila com estados e espera média
+- [x] Perfis de agressividade do mercado (lento/normal/agressivo) → tuning no gerador + seletor na toolbar
+- [x] TRAINING FIFO opcional (filas menores para mais feedback durante treino) → flag no kernel + checkbox
+- [x] Pressão, Resposta e Liquidez (FlowAnalysisEngine Sprint 17) → engine + feed ao vivo (baseline 120 fills) + leitura no Debug
+- [x] Indicador de slippage para ordens agressoras → `slippageTicks` por fill + coluna Slip
+- [x] Estatística de tempo médio de fila por nível → `getQueueTimeStats` + seção Fila
 
 ## Média prioridade
 
