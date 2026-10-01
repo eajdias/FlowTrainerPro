@@ -4,7 +4,7 @@
 
 import { create } from 'zustand';
 import type { MarketTick } from '../market/providers/MarketDataProvider';
-import type { FlowAnalysisSnapshot } from '../core/flowAnalysis';
+import type { FlowAnalysisSnapshot } from '../core/analytics/flowAnalysis';
 
 // ── Re-export FlowTick ────────────────────────────────────────────────────────
 export type FlowTick = MarketTick;
@@ -265,42 +265,20 @@ export const useMarketStore = create<MarketState & MarketActions>((set) => ({
 
 function emptyFlowSnapshot(): FlowAnalysisSnapshot {
   return {
-    metrics: {
-      buyerAggressorVolume: 0,
-      sellerAggressorVolume: 0,
-      delta: 0,
-      cumulativeDelta: 0,
-      tradeCount: 0,
-      tradedVolume: 0,
-      tradeVelocity: 0,
-      tradeVelocityMovingAverage: 0,
-      averageVolumePerTrade: 0,
-      largestRecentAggression: 0,
-      lastAggression: 0,
-      lastAggressorSide: 'NONE',
-      aggressionSequence: 0,
-    },
-    context: {
-      currentPrice: 0,
-      lastTrade: null,
-      currentDelta: 0,
-      currentAggressor: 'NONE',
-      tradeVelocity: 0,
-      marketState: 'UNDEFINED',
-      bookSnapshot: null,
-      timestamp: 0,
-    },
-    signals: {
-      isAbsorption: false,
-      isExhaustion: false,
-      isMomentum: false,
-      isPullback: false,
-      isBreakout: false,
-      isFakeBreakout: false,
-      isReversal: false,
-      isHighFrequency: false,
-      isLowLiquidity: false,
-    },
-    timestamp: 0,
+    pressure: 0,
+    pressureSide: 'neutral',
+    anomaly: false,
+    confidence: 0,
+    severity: 'none',
+    sweepsPending: 0,
+    continuations: 0,
+    absorptions: 0,
+    significantAbsorptions: 0,
+    limitWalls: 0,
+    liquidityPools: 0,
+    lastTimestamp: 0,
+    trained: false,
+    tradesSeen: 0,
+    detection: null,
   };
 }

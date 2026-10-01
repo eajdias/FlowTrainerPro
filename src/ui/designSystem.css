@@ -1,0 +1,47 @@
+/* Design System v0 — tokens + Badge/Button. Cores por variante. */
+.ds-theme {
+  --ds-bg: #0d1117;
+  --ds-fg: #e6e9ef;
+  --ds-neutral: #8b90a0;
+  --ds-info: #4fc3f7;
+  --ds-special: #f5c400;
+  --ds-warning: #ff9800;
+  --ds-buy: #2ecc8a;
+  --ds-sell: #e03a3a;
+  --ds-radius: 6px;
+  --ds-font: Tahoma, sans-serif;
+}
+
+.ds-badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: var(--ds-radius);
+  font: bold 8pt var(--ds-font);
+  background: var(--ds-neutral);
+  color: #0b0e13;
+}
+
+.ds-badge-info { background: var(--ds-info); }
+.ds-badge-special { background: var(--ds-special); }
+.ds-badge-warning { background: var(--ds-warning); }
+.ds-badge-buy { background: var(--ds-buy); }
+.ds-badge-sell { background: var(--ds-sell); }
+
+.ds-button {
+  font: bold 8pt var(--ds-font);
+  border-radius: var(--ds-radius);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.ds-button-primary {
+  background: var(--ds-info);
+  color: #0b0e13;
+  border: none;
+}
+
+.ds-button-ghost {
+  background: transparent;
+  color: var(--ds-fg);
+  border: 1px solid var(--ds-neutral);
+}

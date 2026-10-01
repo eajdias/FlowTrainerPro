@@ -96,7 +96,7 @@ export function AppShell({ current, onNavigate, children }: AppShellProps) {
   const sessionId = useMarketDataSourceStore((state) => state.sessionId);
   const isRunning = useMarketStore((state) => state.isRunning);
   const tickCount = useMarketStore((state) => state.tickCount);
-  const flowTradeCount = useMarketStore((state) => state.flowSnapshot.metrics.tradeCount);
+  const flowTradeCount = useMarketStore((state) => state.flowSnapshot.tradesSeen);
   const lastPrice = useBookStore((state) => state.lastPrice);
   const trainingStatus = useTrainingSessionStore((state) => state.status);
   const historicalTrades = useHistoricalTradeStore((state) => state.totalTrades);
