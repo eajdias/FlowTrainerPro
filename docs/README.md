@@ -2,12 +2,12 @@
 
 Índice da documentação. Cada tema tem **uma fonte única** — não duplicar conteúdo entre arquivos.
 
-Agentes LLM: comecem por `../AGENTS.md`.
+Agentes LLM: comecem por `../AGENTS.md`. Humanos testando pela primeira vez: `../QUICKSTART.md`.
 
 ## Arquitetura e módulos
 
 - `Architecture.md` — arquitetura, camadas, estrutura real de `src/` e componentes existentes
-- `Modules.md` — status dos módulos (`training` ativo; `dashboard`/`academy`/`analysis` não implementados) e painéis registrados
+- `Modules.md` — status dos módulos (training/dashboard/academy/analysis ativos) e painéis registrados
 
 ## Arquitetura detalhada (`architecture/`)
 
@@ -17,7 +17,7 @@ Agentes LLM: comecem por `../AGENTS.md`.
 - `KERNEL_BOOTSTRAP.md` — inicialização do kernel
 - `MARKET_MICROSTRUCTURE.md` — microestrutura de mercado
 - `RENDERING_AND_PERFORMANCE.md` — renderização e performance
-- `MARKET_DATA_PROVIDER.md` — ⚠️ histórico: descreve `src/market/providers/` (removido; ver `Architecture.md`)
+- `MARKET_DATA_PROVIDER.md` — ⚠️ histórico: descreve camada antiga removida; o contrato atual `MarketTick` vive em `src/market/providers/MarketDataProvider.ts` (ver `Architecture.md`)
 - `SPRINT*.md` — notas históricas das sprints 2–8 e 10
 
 ## Produto (`product/`)
