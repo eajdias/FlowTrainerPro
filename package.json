@@ -16,6 +16,7 @@
     "validate:trade-csv": "vite-node scripts/validate-trade-csv.ts"
   },
   "devDependencies": {
+    "@types/node": "^26.6.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/uuid": "^10.0.0",
