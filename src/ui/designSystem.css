@@ -1,4 +1,8 @@
 /* Design System v0 — usa tokens do theme.css (fallback próprio). */
+#root,
+.ds-theme {
+  height: 100%;
+}
 .ds-theme {
   --ds-bg: var(--ftp-bg-panel, #0d1117);
   --ds-fg: var(--ftp-text-primary, #e6e9ef);

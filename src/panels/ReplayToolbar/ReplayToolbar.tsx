@@ -3,6 +3,7 @@
 // Sem regra de negocio — so aciona handlers existentes.
 import { useState } from 'react';
 import { useTrainingSessionStore, type SimulationSpeed } from '../../store/trainingSessionStore';
+import { useMarketStore } from '../../store/marketStore';
 import { useTrainingStore } from '../../store/trainingStore';
 import { usePositionStore } from '../../store/positionStore';
 import { getKernel, type AggressivenessProfile } from '../../core/kernel/SimulationKernel';
@@ -42,6 +43,7 @@ export function ReplayToolbar() {
     getKernel().start();
     setStarted(true);
     start();
+    useMarketStore.getState().setRunning(true);
     const training = useTrainingStore.getState();
     if (training.scenario && training.status !== 'running') training.startSession();
   };
@@ -56,6 +58,7 @@ export function ReplayToolbar() {
   const onFinish = (): void => {
     getKernel().stop();
     finish();
+    useMarketStore.getState().setRunning(false);
     const training = useTrainingStore.getState();
     if (training.status === 'running') {
       const pos = usePositionStore.getState();
@@ -66,6 +69,7 @@ export function ReplayToolbar() {
   const onReset = (): void => {
     getKernel().stop();
     setStarted(false);
+    useMarketStore.getState().setRunning(false);
     reset();
   };
   const onSpeed = (v: SimulationSpeed): void => {
