@@ -33,7 +33,7 @@ Navegação entre eles: estado local em `src/core/AppRouter.tsx` (`src/router/` 
 | TimesTradesPanel | HORA/QTD/PREÇO/COMPRADOR/VENDEDORA |
 | BrokerHistoryPanel / OrderBookByBrokerPanel | Corretoras e book por corretora |
 | VolumeProfilePanel | POC/VAH/VAL |
-| Chart8PPanel | Candles atemporais |
+| Chart8PPanel | Candles range-8 reais (fecha com high-low ≥ 4.00) + saldo de agressão |
 | Large/MediumTradesPanel | Agressões ≥250 / ≥25 |
 | BookPanel / PriceLadderPanel / CandleClockPanel | Livro e relógio |
 | TradeHistoryPanel | P&L e trades do trader |
