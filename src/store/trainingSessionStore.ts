@@ -7,6 +7,7 @@ import { create } from 'zustand';
 import { eventBus } from '../core/engine/EventBus';
 import { SCENARIO_EVENTS } from '../core/kernel/MarketScenarioEngine';
 import { MATCHING_EVENTS } from '../core/kernel/MatchingEngine';
+import { KERNEL_EVENTS, type KernelTickEvent } from '../core/kernel/SimulationKernel';
 import type { MarketRegime } from '../core/kernel/MarketScenarioEngine';
 
 // ── Session status ────────────────────────────────────────────────────────────
@@ -82,6 +83,11 @@ export const useTrainingSessionStore = create<TrainingSessionState & TrainingSes
 }));
 
 // ── Wire: Listen to regime changes and executions ─────────────────────────────
+
+eventBus.on<KernelTickEvent>(KERNEL_EVENTS.TICK, (event) => {
+  useTrainingSessionStore.getState().incrementTick();
+  useTrainingSessionStore.getState().updateElapsed(event.elapsedMs);
+});
 
 eventBus.on(SCENARIO_EVENTS.REGIME_CHANGED, (data: any) => {
   useTrainingSessionStore.setState({ currentRegime: data.regime });
