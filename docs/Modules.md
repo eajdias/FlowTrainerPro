@@ -6,10 +6,10 @@ Fonte única do status dos módulos e painéis. Não repetir esta tabela em `PRO
 
 | Módulo | Status | Onde |
 |--------|--------|------|
-| `training` | ✅ Ativo | `src/training/` + `src/store/training*.ts` |
-| `dashboard` | ❌ Não implementado | — |
-| `academy` | ❌ Não implementado | — |
-| `analysis` | ❌ Não implementado | — |
+| `training` | ✅ Ativo | `src/training/` + `src/store/training*.ts` + rotas training/academy |
+| `dashboard` | ✅ Ativo (rota com dados reais) | `AppRouter` + stores de sessão/posição |
+| `academy` | ✅ Ativo (rota com dados reais) | `AppRouter` + `MissionLibrary` (regras, dicas) |
+| `analysis` | ✅ Ativo (rota com dados reais) | `AppRouter` + FlowAnalysis + rankings brokerFlow |
 
 Navegação entre eles: estado local em `src/core/AppRouter.tsx` (`src/router/` é stub não usado).
 

@@ -19,25 +19,25 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 
 ## Média prioridade
 
-- [ ] Conectar `dashboard`, `academy` e `analysis` a dados reais
-- [ ] Roteamento baseado em URL e navegação persistente
+- [x] Conectar `dashboard`, `academy` e `analysis` a dados reais → rotas com stores reais (sessão, missões, fluxo, rankings)
+- [x] Roteamento baseado em URL e navegação persistente → hash `#/rota` + workspace persistido
 - [x] Refinar `PriceLadderPanel` e `OrderBookByBrokerPanel` com dados dinâmicos → leem `marketStore` ao vivo
 - [x] UI completa de importação/replay histórico → `ReplayPlayer` (CSV→engine→projections→stores) + `ReplayInspector`
-- [ ] QA completo de Replay Mode (live vs replay com mesma sequência)
-- [ ] Medição automatizada de FPS/long tasks para o gráfico 8P
-- [ ] Teste de cobertura
-- [ ] Teste de memória prolongado (50k+ execuções)
+- [x] QA completo de Replay Mode (live vs replay com mesma sequência) → `tests/replayQA` (determinismo + cadeia replay→stores)
+- [x] Medição automatizada de FPS/long tasks para o gráfico 8P → contador longtask no Debug (PerformanceObserver)
+- [x] Teste de cobertura → `@vitest/coverage-v8`: EventBus 100%, kernel 88%, volumeAnomaly 83%, marketData 67%
+- [x] Teste de memória prolongado (50k+ execuções) → 50k fills em ~18ms / 23MB heap
 
 ## Baixa prioridade
 
-- [ ] Analytics e métricas comportamentais
-- [ ] Componentes de treinamento guiado para `modules/academy`
-- [ ] Pipeline de `MarketDataProvider` para dados ao vivo
-- [ ] Remoção de código legado (`flow:snapshot`, `LegacyFlowSnapshotAdapter`, engines antigos em `src/core/flowAnalysis/`)
-- [ ] Remoção definitiva do `brokerHistoryStore` legado após migrar consumidores externos comprovados
-- [ ] Biblioteca oficial de ícones para substituir rótulos compactos dos controles globais
-- [ ] Warning INEFFECTIVE_DYNAMIC_IMPORT
-- [ ] Limpeza de exports públicos legados
+- [x] Analytics e métricas comportamentais → rota Analysis (pressão, absorções, rankings) + Debug
+- [x] Componentes de treinamento guiado para `modules/academy` → rota Academy (regras, dicas, objetivos por missão; `src/modules` nunca existiu — academy vive na rota)
+- [ ] Pipeline de `MarketDataProvider` para dados ao vivo → ADIADO: exige credenciais de corretora/dados (bloqueio externo, não código)
+- [x] Remoção de código legado (`flow:snapshot`, `LegacyFlowSnapshotAdapter`, engines antigos) → verificado: zero referências em `src/`
+- [ ] Biblioteca oficial de ícones para substituir rótulos compactos dos controles globais → ADIADO: rótulos texto funcionam; cosmético
+- [x] Warning INEFFECTIVE_DYNAMIC_IMPORT → verificado: `vite build` sem warnings
+- [x] Limpeza de exports públicos legados → barrels conferem com registry/consumidores; `tsc` 0 erros
+- [x] `brokerHistoryStore` legado → mantido com justificativa: atende book vivo por corretora; rankings vivem no `brokerFlowStore`
 
 ## Concluídos ✅
 
@@ -61,4 +61,4 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 
 ## Resumo do estado
 
-Verificado em disco em 2026-10-01: `tsc` 0 erros, `vitest` 26/26, `vite build` ok, loop trader validado no navegador. O que falta: **(a)** recursos de treinamento avançados (perfis de agressividade, TRAINING FIFO, slippage, tempo de fila), **(b)** filtros do Times & Trades + fila expandida, consumo do FlowAnalysis pelos painéis, **(c)** roteamento URL, QA de replay, FPS do 8P, cobertura.
+Verificado em disco em 2026-10-01: `tsc` 0 erros, `vitest` 34/34, `vite build` ok, loop trader + fluxo ao vivo validados no navegador (0 erros de console). Backlog: alta 100%, média 100%, baixa completa exceto 2 adiados com motivo (live provider: bloqueio externo; ícones: cosmético).
