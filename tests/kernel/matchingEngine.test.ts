@@ -84,4 +84,22 @@ describe('MatchingEngine FIFO', () => {
     expect(level?.askQueue.length).toBe(2);
     expect(level?.askQueue[1]?.sizeAhead).toBe(5);
   });
+
+  it('slippage zero no toque, positiva varrendo níveis', () => {
+    const eng = new MatchingEngine();
+    eng.submit(order({ id: 'a', side: 'sell', price: 5001, size: 2, remainingSize: 2 }), 0, 1);
+    eng.submit(order({ id: 'b', side: 'sell', price: 5002, size: 2, remainingSize: 2 }), 0, 1);
+    eng.submit(order({ id: 'c', side: 'buy', type: 'market', price: 0, size: 3, remainingSize: 3 }), 0, 2);
+    expect(fills.length).toBe(2);
+    expect(fills[0]?.slippageTicks).toBe(0);
+    expect(fills[1]?.slippageTicks).toBe(2);
+  });
+
+  it('tempo médio de fila por nível', () => {
+    const eng = new MatchingEngine();
+    eng.submit(order({ id: 'a', side: 'sell', price: 5001, size: 5, remainingSize: 5 }), 0, 1000);
+    eng.submit(order({ id: 'c', side: 'buy', type: 'market', price: 0, size: 5, remainingSize: 5 }), 0, 2500);
+    const stats = eng.getQueueTimeStats();
+    expect(stats).toEqual([{ price: 5001, avgWaitMs: 1500, fills: 1 }]);
+  });
 });

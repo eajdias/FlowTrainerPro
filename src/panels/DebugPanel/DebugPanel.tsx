@@ -1,9 +1,11 @@
 // panels/DebugPanel/DebugPanel.tsx
-// Diagnóstico read-only: contadores dos stores. Sem ações.
+// Diagnóstico read-only: contadores dos stores + FlowAnalysis. Sem ações.
+import { useEffect, useState } from 'react';
 import { useBookStore } from '../../store/bookStore';
 import { useTradeStore } from '../../store/tradeStore';
 import { useTrainingSessionStore } from '../../store/trainingSessionStore';
 import { useMarketStore } from '../../store/marketStore';
+import { getFlowEngine, type FlowAnalysisSnapshot } from '../../core/analytics/flowAnalysis';
 import { PanelShell } from '../PanelShell/PanelShell';
 
 export function DebugPanel() {
@@ -13,6 +15,12 @@ export function DebugPanel() {
   const ticks = useTrainingSessionStore((s) => s.tickCount);
   const status = useTrainingSessionStore((s) => s.status);
   const marketTicks = useMarketStore((s) => s.tickCount);
+  const [flow, setFlow] = useState<FlowAnalysisSnapshot>(() => getFlowEngine().snapshot());
+
+  useEffect(() => {
+    const id = setInterval(() => setFlow(getFlowEngine().snapshot()), 1000);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <PanelShell title="Debug">
@@ -21,6 +29,14 @@ export function DebugPanel() {
         <li>executions {execs}</li>
         <li>session {status} · tick {ticks}</li>
         <li>market ticks {marketTicks}</li>
+        <li>
+          flow {flow.trained ? 'trained' : 'collecting'} · pressão {flow.pressure.toFixed(2)} (
+          {flow.pressureSide}) · conf {flow.confidence.toFixed(2)} {flow.severity}
+        </li>
+        <li>
+          sweeps pend {flow.sweepsPending} · cont {flow.continuations} · abs {flow.absorptions} (+
+          {flow.significantAbsorptions} signif)
+        </li>
       </ul>
     </PanelShell>
   );

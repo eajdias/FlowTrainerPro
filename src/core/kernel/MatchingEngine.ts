@@ -22,6 +22,8 @@ export interface Execution {
   passiveBrokerId: number;
   aggressorOrderId: string;
   passiveOrderId: string;
+  /** Deslizamento do agressor vs toque, em ticks (>= 0). */
+  slippageTicks: number;
 }
 
 type BookSide = 'bid' | 'ask';
@@ -32,7 +34,16 @@ interface QueueEntry {
   brokerId: number;
   remaining: number;
   sizeAhead: number;
+  restedAt: number;
 }
+
+export interface QueueTimeStat {
+  price: number;
+  avgWaitMs: number;
+  fills: number;
+}
+
+const TICK_SIZE = 0.5;
 
 export interface QueueViewEntry {
   order: { id: string; remainingSize: number };
@@ -56,6 +67,7 @@ function oppositeSide(side: BookSide): BookSide {
 export class MatchingEngine {
   private queues = new Map<string, QueueEntry[]>();
   private execCounter = 0;
+  private queueWaits = new Map<number, { totalMs: number; fills: number }>();
 
   private key(side: BookSide, price: number): string {
     return `${side}:${price}`;
@@ -97,6 +109,7 @@ export class MatchingEngine {
     let remaining = order.remainingSize > 0 ? order.remainingSize : order.size;
     const restingSide = bookSideFor(order.side);
     const takeSide = oppositeSide(restingSide);
+    const touch = this.bestPrice(takeSide);
 
     while (remaining > 0) {
       const best = this.bestPrice(takeSide);
@@ -116,6 +129,14 @@ export class MatchingEngine {
       remaining -= fill;
       this.execCounter += 1;
 
+      this.recordQueueWait(best, head, now);
+      const slip =
+        touch === null
+          ? 0
+          : order.side === 'buy'
+            ? Math.max(0, (best - touch) / TICK_SIZE)
+            : Math.max(0, (touch - best) / TICK_SIZE);
+
       eventBus.emit<Execution>(MATCHING_EVENTS.EXECUTION_CREATED, {
         executionId: `ex-${this.execCounter}`,
         timestamp: now,
@@ -128,6 +149,7 @@ export class MatchingEngine {
         passiveBrokerId: head.brokerId,
         aggressorOrderId: order.id,
         passiveOrderId: head.orderId,
+        slippageTicks: Math.round(slip * 100) / 100,
       });
 
       if (head.remaining <= 0) q.shift();
@@ -143,9 +165,26 @@ export class MatchingEngine {
         brokerId: order.brokerId,
         remaining,
         sizeAhead,
+        restedAt: now,
       });
     }
     void tick;
+  }
+
+  private recordQueueWait(price: number, head: QueueEntry, now: number): void {
+    const stat = this.queueWaits.get(price) ?? { totalMs: 0, fills: 0 };
+    stat.totalMs += Math.max(0, now - head.restedAt);
+    stat.fills += 1;
+    this.queueWaits.set(price, stat);
+  }
+
+  /** Tempo medio de fila por nivel (ms) — so fills contam. */
+  getQueueTimeStats(): QueueTimeStat[] {
+    const out: QueueTimeStat[] = [];
+    for (const [price, s] of this.queueWaits) {
+      out.push({ price, avgWaitMs: s.fills > 0 ? s.totalMs / s.fills : 0, fills: s.fills });
+    }
+    return out.sort((a, b) => a.price - b.price);
   }
 
   cancel(id: string, price: number, side: OrderSide): boolean {

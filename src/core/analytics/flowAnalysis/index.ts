@@ -5,6 +5,7 @@
  */
 
 export { FlowAnalysisEngine, fromExecution, fromHistorical } from './FlowAnalysisEngine.js';
+export { getFlowEngine, initFlowAnalysis } from './flowFeed.js';
 export type {
   FlowTrade,
   FlowPressureSide,

@@ -26,6 +26,7 @@ export interface TradeRecord {
   passiveBrokerColor: string;
   aggressorOrderId:   string;
   passiveOrderId:     string;
+  slippageTicks:      number;
 }
 
 // ── Store state ───────────────────────────────────────────────────────────────
@@ -76,6 +77,7 @@ eventBus.on<Execution>(MATCHING_EVENTS.EXECUTION_CREATED, (exec) => {
       : '#8b90a0',
     aggressorOrderId:     exec.aggressorOrderId,
     passiveOrderId:       exec.passiveOrderId,
+    slippageTicks:        exec.slippageTicks ?? 0,
   };
 
   useTradeStore.setState((s) => ({

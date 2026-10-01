@@ -12,13 +12,39 @@ import {
   cancelOrder,
   flattenPosition,
 } from '../../trader/TradingController';
-import { getOrderQueueState } from '../../trader/QueueInspector';
+import { getOrderQueueState, getAllOrderQueueStates } from '../../trader/QueueInspector';
+import { getKernel } from '../../core/kernel/SimulationKernel';
 import { PanelShell } from '../PanelShell/PanelShell';
 
 const VISIBLE_LEVELS = 15;
 const TICK_SIZE = 0.5;
 const TICK_VALUE = 5.0;
 
+function QueueSection() {
+  const orders = useTraderOrderStore((s) => s.orders);
+  if (orders.length === 0) return null;
+  const states = getAllOrderQueueStates();
+  const waits = getKernel().matching.getQueueTimeStats();
+  const waitByPrice = new Map(waits.map((w) => [w.price, w]));
+
+  return (
+    <div>
+      <strong>Fila ({states.length})</strong>
+      <ul>
+        {states.map((q) => (
+          <li key={q.orderId}>
+            {q.side} {q.remainingQuantity} @ {q.price.toFixed(2)} — #{q.queuePosition} |{' '}
+            {q.volumeAhead} ahead | {Math.round(q.progress * 100)}% | {q.status}
+            {(() => {
+              const w = waitByPrice.get(q.price);
+              return w ? ` | espera média ${Math.round(w.avgWaitMs)}ms (${w.fills})` : '';
+            })()}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 function estimateAt(price: number, side: 'long' | 'short', avg: number, size: number): number {
   const ticks = (price - avg) / TICK_SIZE;
   const pnl = ticks * TICK_VALUE * size;
@@ -94,6 +120,7 @@ export function SuperDOM() {
           </button>
         )}
       </div>
+      <QueueSection />
       <table>
         <thead>
           <tr>

@@ -2,6 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './assets/global.css'
+import { initTraderBridge } from './trader/TraderExecutionBridge'
+import { initHistoricalMarketDataProjection } from './core/marketData/projections'
+import { initFlowAnalysis } from './core/analytics/flowAnalysis'
+
+// Wiring único no boot (todos idempotentes).
+initTraderBridge()
+initHistoricalMarketDataProjection()
+initFlowAnalysis()
 
 // Clear stale workspace layout if version changed
 const APP_VERSION = '5.0'; // bump this to force layout reset
