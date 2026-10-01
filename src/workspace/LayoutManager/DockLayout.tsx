@@ -1,11 +1,16 @@
 // workspace/LayoutManager/DockLayout.tsx
 // Grade docked: resolve cada painel visível via PanelRegistry.
-import { useWorkspaceStore, selectVisiblePanels } from '../WorkspaceStore';
+import { useMemo } from 'react';
+import { useWorkspaceStore } from '../WorkspaceStore';
 import { resolvePanel } from '../PanelRegistry';
 
 export function DockLayout() {
-  const panels = useWorkspaceStore(selectVisiblePanels);
-  const docked = panels.filter((p) => p.mode === 'docked');
+  const workspaces = useWorkspaceStore((s) => s.workspaces);
+  const activeId = useWorkspaceStore((s) => s.activeWorkspaceId);
+  const docked = useMemo(() => {
+    const active = workspaces.find((w) => w.id === activeId);
+    return (active?.panels ?? []).filter((p) => p.visible && p.mode === 'docked');
+  }, [workspaces, activeId]);
 
   return (
     <div className="ftp-dockgrid">

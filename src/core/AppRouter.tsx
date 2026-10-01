@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AppShell } from "./AppShell";
+import { WorkspaceManager } from "../workspace/WorkspaceManager/WorkspaceManager";
 import { listMissions } from "../training/MissionLibrary";
 import { useMissionStore } from "../training/MissionStore";
 
@@ -39,6 +40,7 @@ function TrainingRoute() {
             ))}
         </ul>
       )}
+      <WorkspaceManager />
     </section>
   );
 }

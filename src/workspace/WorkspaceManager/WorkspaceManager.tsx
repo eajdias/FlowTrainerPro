@@ -1,15 +1,18 @@
 // workspace/WorkspaceManager/WorkspaceManager.tsx
 // Seletor de workspace + grade. Painéis flutuantes empilham por zIndex.
-import { useWorkspaceStore, selectVisiblePanels, selectActiveWorkspace } from '../WorkspaceStore';
+import { useMemo } from 'react';
+import { useWorkspaceStore } from '../WorkspaceStore';
 import { resolvePanel } from '../PanelRegistry';
 import { DockLayout } from '../LayoutManager/DockLayout';
 
 export function WorkspaceManager() {
   const workspaces = useWorkspaceStore((s) => s.workspaces);
-  const active = useWorkspaceStore(selectActiveWorkspace);
-  const panels = useWorkspaceStore(selectVisiblePanels);
+  const activeId = useWorkspaceStore((s) => s.activeWorkspaceId);
   const setActive = useWorkspaceStore((s) => s.setActiveWorkspace);
-  const floating = panels.filter((p) => p.mode === 'floating');
+  const floating = useMemo(() => {
+    const active = workspaces.find((w) => w.id === activeId);
+    return (active?.panels ?? []).filter((p) => p.visible && p.mode === 'floating');
+  }, [workspaces, activeId]);
 
   return (
     <div className="ftp-workspace">
@@ -18,7 +21,7 @@ export function WorkspaceManager() {
           <button
             key={w.id}
             role="tab"
-            aria-selected={w.id === active?.id}
+            aria-selected={w.id === activeId}
             type="button"
             onClick={() => setActive(w.id)}
           >
