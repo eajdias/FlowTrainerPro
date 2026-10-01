@@ -25,7 +25,7 @@ Navegação entre eles: estado local em `src/core/AppRouter.tsx` (`src/router/` 
 
 ## Painéis
 
-`src/workspace/PanelRegistry.ts` registra 24 tipos — todos implementados em `src/panels/*/` (2026-10-01). Núcleo UX 3 funcional: SuperDOM (click/Shift+click homologados), Times & Trades, Book, Volume Profile, Chart8P (tape-plot; motor range-8 pendente), ReplayToolbar (sessão+kernel+bridge).
+`src/workspace/PanelRegistry.ts` registra 24 tipos — todos implementados em `src/panels/*/` (2026-10-01). Núcleo UX 3 funcional: SuperDOM (click/Shift+click homologados), Times & Trades, Book, Volume Profile, Chart8P (candles range-8 + agressão), ReplayToolbar (sessão+kernel+bridge).
 
 | Painel (tipo registrado) | Uso |
 |--------|------|
