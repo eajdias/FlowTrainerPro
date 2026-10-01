@@ -13,7 +13,8 @@
     "test:integration": "vitest run tests/marketData/HistoricalReplay.test.ts tests/marketData/HistoricalMarketProjections.test.ts tests/marketData/BrokerFlowAnalyzer.test.ts",
     "test:real-csv": "vitest run tests/marketData/HistoricalReplay.test.ts tests/marketData/HistoricalMarketProjections.test.ts tests/marketData/BrokerFlowAnalyzer.test.ts -t \"CSV real|csv real\"",
     "test:load": "vitest run tests/marketData/HistoricalReplay.test.ts tests/marketData/HistoricalMarketProjections.test.ts tests/marketData/BrokerFlowAnalyzer.test.ts tests/flowAnalysis/FlowAnalysisLoad.test.ts -t \"10.000|100.000|carga\"",
-    "validate:trade-csv": "vite-node scripts/validate-trade-csv.ts"
+    "validate:trade-csv": "vite-node scripts/validate-trade-csv.ts",
+    "materials": "vite-node scripts/build-materials.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",

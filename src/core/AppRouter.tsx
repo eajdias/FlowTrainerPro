@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "./AppShell";
 import { WorkspaceManager } from "../workspace/WorkspaceManager/WorkspaceManager";
 import { listMissions } from "../training/MissionLibrary";
@@ -12,6 +12,54 @@ import { getFlowEngine, type FlowAnalysisSnapshot } from "../core/analytics/flow
 type AppRoute = "dashboard" | "academy" | "training" | "analysis";
 
 const ROUTES: AppRoute[] = ["dashboard", "academy", "training", "analysis"];
+
+interface StudySession {
+  date: string;
+  range: number;
+  volume: number;
+  gapPct: number;
+  regime: string;
+}
+
+interface StudyMaterial {
+  symbol: string;
+  generatedAt: string;
+  sessions: StudySession[];
+}
+
+function loadStudyMaterials(): StudyMaterial[] {
+  const modules = import.meta.glob<{ default: StudyMaterial }>(
+    '../../data/materials/*.json',
+    { eager: true },
+  );
+  return Object.values(modules).map((m) => m.default);
+}
+
+function StudySessions({ materials }: { materials: StudyMaterial[] }) {
+  if (materials.length === 0) {
+    return <p>Sem materiais de estudo — rode `npm run materials -- --symbol PETR4`.</p>;
+  }
+  return (
+    <div>
+      <h3>Sessões de estudo</h3>
+      {materials.map((doc) => (
+        <article key={doc.symbol}>
+          <h4>
+            {doc.symbol} ({doc.sessions.length} sessões)
+          </h4>
+          <ul>
+            {doc.sessions.slice(-10).map((s) => (
+              <li key={s.date}>
+                {s.date} · range {s.range.toFixed(2)} · vol {s.volume} · gap{' '}
+                {s.gapPct.toFixed(2)}% · {s.regime}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  );
+}
 
 function routeFromHash(): AppRoute {
   const h = window.location.hash.replace(/^#\/?/, "");
@@ -86,10 +134,12 @@ function DashboardRoute() {
 function AcademyRoute() {
   const missions = listMissions();
   const [openId, setOpenId] = useState<string | null>(null);
+  const materials = useMemo(() => loadStudyMaterials(), []);
 
   return (
     <section aria-label="Academy">
       <h2>Academy</h2>
+      <StudySessions materials={materials} />
       <ul>
         {missions.map((m) => (
           <li key={m.id}>

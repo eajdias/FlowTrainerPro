@@ -38,6 +38,7 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 - [x] Warning INEFFECTIVE_DYNAMIC_IMPORT → verificado: `vite build` sem warnings
 - [x] Limpeza de exports públicos legados → barrels conferem com registry/consumidores; `tsc` 0 erros
 - [x] `brokerHistoryStore` legado → mantido com justificativa: atende book vivo por corretora; rankings vivem no `brokerFlowStore`
+- [x] Pipeline de dados históricos → COTAHIST → DuckDB local → `data/materials/*.json` → Academy (specs 1–4; `npm run materials`)
 
 ## Concluídos ✅
 
