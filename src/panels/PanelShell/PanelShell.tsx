@@ -9,11 +9,12 @@ export interface PanelShellProps {
   title: string;
   children: ReactNode;
   mode?: PanelMode;
+  className?: string;
 }
 
-export function PanelShell({ title, children }: PanelShellProps) {
+export function PanelShell({ title, children, className }: PanelShellProps) {
   return (
-    <section className="ftp-panel" aria-label={title}>
+    <section className={`ftp-panel${className ? ` ${className}` : ''}`} aria-label={title}>
       <header className="ftp-panel-title">{title}</header>
       <div className="ftp-panel-body">{children}</div>
     </section>

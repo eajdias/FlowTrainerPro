@@ -1,6 +1,8 @@
 // training/MissionLibrary.ts
 // Biblioteca de missões de treinamento.
-// Cada missão aponta para um scenarioId existente na ScenarioLibrary.
+// Cada missão aponta para um scenarioId existente em src/store/scenarios.ts
+// (absorption | breakout | pullback). A missão define o objetivo/regras;
+// o cenário fornece o contexto de mercado (sinal, zona ideal de entrada).
 // NÃO cria cenários novos.
 
 import type { TrainingMission } from './types';
@@ -10,7 +12,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_canal_rompimento_comprador',
     title: 'Canal + Rompimento Comprador',
     description: 'O mercado está lateralizado em um canal. Identifique o momento do rompimento comprador e entre na operação.',
-    scenarioId: 'canal_rompimento_comprador',
+    scenarioId: 'breakout',
     difficulty: 'beginner',
     category: 'Rompimento',
     objective: 'Comprar no rompimento do topo do canal e sair com lucro.',
@@ -34,7 +36,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_canal_rompimento_vendedor',
     title: 'Canal + Rompimento Vendedor',
     description: 'O mercado está lateralizado. Identifique o momento do rompimento vendedor e entre vendido.',
-    scenarioId: 'canal_rompimento_vendedor',
+    scenarioId: 'breakout',
     difficulty: 'beginner',
     category: 'Rompimento',
     objective: 'Vender no rompimento do fundo do canal e sair com lucro.',
@@ -58,7 +60,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_pullback',
     title: 'Pullback após Rompimento',
     description: 'O mercado já rompeu. Aguarde o pullback e entre na continuação.',
-    scenarioId: 'pullback_rompimento',
+    scenarioId: 'pullback',
     difficulty: 'intermediate',
     category: 'Continuação',
     objective: 'Entrar no pullback e surfar a continuação do movimento.',
@@ -82,7 +84,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_absorcao_topo',
     title: 'Absorção no Topo',
     description: 'O mercado subiu forte. Identifique a absorção institucional no topo e entre vendido na reversão.',
-    scenarioId: 'absorcao_topo',
+    scenarioId: 'absorption',
     difficulty: 'intermediate',
     category: 'Reversão',
     objective: 'Identificar absorção e vender na reversão.',
@@ -106,7 +108,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_absorcao_fundo',
     title: 'Absorção no Fundo',
     description: 'O mercado caiu forte. Identifique a absorção no fundo e compre na reversão.',
-    scenarioId: 'absorcao_fundo',
+    scenarioId: 'absorption',
     difficulty: 'intermediate',
     category: 'Reversão',
     objective: 'Identificar absorção vendedora no fundo e comprar na reversão.',
@@ -130,7 +132,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_falso_rompimento',
     title: 'Falso Rompimento (Armadilha)',
     description: 'O mercado vai parecer romper. NÃO entre. Espere o retorno e opere na direção oposta.',
-    scenarioId: 'falso_rompimento',
+    scenarioId: 'breakout',
     difficulty: 'advanced',
     category: 'Armadilha',
     objective: 'Não cair na armadilha e lucrar com a reversão.',
@@ -154,7 +156,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_reversao',
     title: 'Reversão',
     description: 'O mercado está em tendência de alta mas perdendo força. Identifique a reversão e entre vendido.',
-    scenarioId: 'reversao',
+    scenarioId: 'pullback',
     difficulty: 'advanced',
     category: 'Reversão',
     objective: 'Identificar exaustão e vender no início da reversão.',
@@ -178,7 +180,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_tendencia_forte',
     title: 'Tendência Forte',
     description: 'O mercado está em forte movimento direcional. Acompanhe a tendência e lucre com pullbacks.',
-    scenarioId: 'tendencia_forte',
+    scenarioId: 'breakout',
     difficulty: 'beginner',
     category: 'Tendência',
     objective: 'Comprar nos pullbacks e surfar a tendência.',
@@ -202,7 +204,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_exaustao',
     title: 'Exaustão',
     description: 'O mercado está perdendo força. Identifique os sinais de exaustão e NÃO entre comprado.',
-    scenarioId: 'exaustao',
+    scenarioId: 'absorption',
     difficulty: 'intermediate',
     category: 'Leitura',
     objective: 'Identificar exaustão e NÃO operar (ou sair da posição).',
@@ -226,7 +228,7 @@ export const MISSION_LIBRARY: TrainingMission[] = [
     id: 'mission_lateralizacao',
     title: 'Lateralização — Não Operar',
     description: 'O mercado está completamente equilibrado. O objetivo é NÃO operar.',
-    scenarioId: 'lateralizacao',
+    scenarioId: 'absorption',
     difficulty: 'beginner',
     category: 'Disciplina',
     objective: 'Reconhecer mercado sem oportunidade e manter-se FLAT.',

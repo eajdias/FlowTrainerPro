@@ -129,7 +129,13 @@ export function initTraderBridge(): void {
     // Training: primeira participação do aluno na sessão (tick do kernel).
     const training = useTrainingStore.getState();
     if (training.scenario && training.traderEnteredAt === null) {
-      training.recordEntry(traderSide === 'buy' ? 'long' : 'short', getKernel().getTick());
+      const tick = getKernel().getTick();
+      training.recordEntry(traderSide === 'buy' ? 'long' : 'short', tick);
+      const sc = training.scenario;
+      if (tick >= sc.signalStart) training.completeObjective('wait_signal');
+      if (tick >= sc.idealEntryStart && tick <= sc.idealEntryEnd + 20) {
+        training.completeObjective('entry_after');
+      }
     }
 
     // Update PositionStore based on execution
@@ -144,7 +150,12 @@ export function initTraderBridge(): void {
       (pos.side === 'short' && traderSide === 'buy')
     ) {
       // Closing position (opposite side)
+      const before = usePositionStore.getState().realizedPnL;
       usePositionStore.getState().closePosition(exec.price);
+      const after = usePositionStore.getState().realizedPnL;
+      if (after > before && useTrainingStore.getState().scenario) {
+        useTrainingStore.getState().completeObjective('profit');
+      }
     } else {
       // Scaling in (same side)
       usePositionStore.getState().openPosition(pos.side, exec.price, exec.size);

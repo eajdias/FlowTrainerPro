@@ -6,6 +6,7 @@ import { useTrainingSessionStore, type SimulationSpeed } from '../../store/train
 import { useMarketStore } from '../../store/marketStore';
 import { useTrainingStore } from '../../store/trainingStore';
 import { usePositionStore } from '../../store/positionStore';
+import { useMissionStore } from '../../training/MissionStore';
 import { getKernel, type AggressivenessProfile } from '../../core/kernel/SimulationKernel';
 import { initTraderBridge } from '../../trader/TraderExecutionBridge';
 import { PanelShell } from '../PanelShell/PanelShell';
@@ -64,6 +65,9 @@ export function ReplayToolbar() {
       const pos = usePositionStore.getState();
       const trades = useTrainingSessionStore.getState().totalTrades;
       training.finishSession(pos.realizedPnL, trades);
+      if (useTrainingStore.getState().result?.score.passed) {
+        useMissionStore.getState().clear();
+      }
     }
   };
   const onReset = (): void => {

@@ -131,27 +131,49 @@
 
 .ftp-panel strong { color: var(--ftp-text-primary); }
 
-/* SuperDOM: colunas de compra (1-2) e venda (4-5), preço (3) em destaque */
-.ftp-panel td:nth-child(1),
-.ftp-panel td:nth-child(2) {
+/* SuperDOM: grade fixa (robusta a zoom/fonte), compra (1-2), preço (3), venda (4-5) */
+.ftp-superdom table {
+  table-layout: fixed;
+}
+
+.ftp-superdom th:nth-child(1),
+.ftp-superdom td:nth-child(1) { width: 18%; }
+.ftp-superdom th:nth-child(2),
+.ftp-superdom td:nth-child(2) { width: 16%; }
+.ftp-superdom th:nth-child(3),
+.ftp-superdom td:nth-child(3) { width: 22%; }
+.ftp-superdom th:nth-child(4),
+.ftp-superdom td:nth-child(4) { width: 16%; }
+.ftp-superdom th:nth-child(5),
+.ftp-superdom td:nth-child(5) { width: 18%; }
+.ftp-superdom th:nth-child(6),
+.ftp-superdom td:nth-child(6) { width: 10%; }
+
+.ftp-superdom td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ftp-superdom td:nth-child(1),
+.ftp-superdom td:nth-child(2) {
   background: var(--ftp-buy-dim);
   cursor: pointer;
 }
 
-.ftp-panel td:nth-child(4),
-.ftp-panel td:nth-child(5) {
+.ftp-superdom td:nth-child(4),
+.ftp-superdom td:nth-child(5) {
   background: var(--ftp-sell-dim);
   cursor: pointer;
 }
 
-.ftp-panel td:nth-child(3) {
+.ftp-superdom td:nth-child(3) {
   color: var(--ftp-text-primary);
   font-weight: 800;
   text-align: center;
   background: rgba(77, 141, 255, 0.07);
 }
 
-.ftp-panel td:nth-child(6) {
+.ftp-superdom td:nth-child(6) {
   color: var(--ftp-text-muted);
 }
 

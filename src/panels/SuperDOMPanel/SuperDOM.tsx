@@ -111,7 +111,7 @@ export function SuperDOM() {
   }
 
   return (
-    <PanelShell title="SuperDOM">
+    <PanelShell title="SuperDOM" className="ftp-superdom">
       <div>
         <span>
           {posSide ? `${posSide.toUpperCase()} ${posSize} @ ${avgPrice.toFixed(2)}` : 'FLAT'}

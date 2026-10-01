@@ -3,6 +3,8 @@ import { AppShell } from "./AppShell";
 import { WorkspaceManager } from "../workspace/WorkspaceManager/WorkspaceManager";
 import { listMissions } from "../training/MissionLibrary";
 import { useMissionStore } from "../training/MissionStore";
+import { getScenarioById } from "../store/scenarios";
+import { useTrainingStore } from "../store/trainingStore";
 import { useTrainingSessionStore } from "../store/trainingSessionStore";
 import { usePositionStore } from "../store/positionStore";
 import { useTradeStore } from "../store/tradeStore";
@@ -70,27 +72,53 @@ function TrainingRoute() {
   const missions = listMissions();
   const currentMission = useMissionStore((s) => s.currentMission);
   const setMission = useMissionStore((s) => s.setMission);
-  const clear = useMissionStore((s) => s.clear);
+  const clearMission = useMissionStore((s) => s.clear);
+  const loadScenario = useTrainingStore((s) => s.loadScenario);
+  const resetTraining = useTrainingStore((s) => s.reset);
+  const trainingStatus = useTrainingStore((s) => s.status);
+  const objectives = useTrainingStore((s) => s.objectives);
+  const feedback = useTrainingStore((s) => s.feedback);
+  const result = useTrainingStore((s) => s.result);
+  const scenario = useTrainingStore((s) => s.scenario);
+
+  const step = !currentMission
+    ? 1
+    : result
+      ? 4
+      : trainingStatus === 'running'
+        ? 3
+        : 2;
+
+  const chooseMission = (id: string): void => {
+    const m = missions.find((x) => x.id === id);
+    if (!m) return;
+    resetTraining();
+    setMission(m);
+    const sc = getScenarioById(m.scenarioId);
+    if (sc) loadScenario(sc);
+  };
+
+  const newMission = (): void => {
+    resetTraining();
+    clearMission();
+  };
 
   return (
     <section aria-label="Training missions">
       <h2>Training</h2>
-      {currentMission ? (
-        <article>
-          <h3>{currentMission.title}</h3>
-          <p>{currentMission.description}</p>
-          <p>Objective: {currentMission.objective}</p>
-          <button type="button" onClick={clear}>
-            Clear mission
-          </button>
-        </article>
-      ) : (
+      <ol>
+        <li aria-current={step === 1 ? 'step' : undefined}>1. Escolher missão</li>
+        <li aria-current={step === 2 ? 'step' : undefined}>2. Ler briefing e iniciar</li>
+        <li aria-current={step === 3 ? 'step' : undefined}>3. Operar no SuperDOM</li>
+        <li aria-current={step === 4 ? 'step' : undefined}>4. Ver resultado</li>
+      </ol>
+      {step === 1 && (
         <ul>
           {missions
             .filter((m) => m.enabled)
             .map((m) => (
               <li key={m.id}>
-                <button type="button" onClick={() => setMission(m)}>
+                <button type="button" onClick={() => chooseMission(m.id)}>
                   {m.title}
                 </button>
                 <span>
@@ -99,6 +127,64 @@ function TrainingRoute() {
               </li>
             ))}
         </ul>
+      )}
+      {step === 2 && currentMission && (
+        <article>
+          <h3>{currentMission.title}</h3>
+          <p>{currentMission.description}</p>
+          <p>Objetivo: {currentMission.objective}</p>
+          <ul>
+            {currentMission.rules.map((r) => (
+              <li key={r}>Regra: {r}</li>
+            ))}
+          </ul>
+          <ul>
+            {currentMission.tips.map((t) => (
+              <li key={t}>Dica: {t}</li>
+            ))}
+          </ul>
+          <p>Cenário: {scenario ? scenario.name : '—'}</p>
+          <p>Aperte ▶ Iniciar na barra Replay para começar, opere no SuperDOM e finalize para ver o resultado.</p>
+          <button type="button" onClick={newMission}>
+            Trocar de missão
+          </button>
+        </article>
+      )}
+      {step === 3 && (
+        <div>
+          <h3>Objetivos ao vivo</h3>
+          <ul>
+            {objectives.map((o) => (
+              <li key={o.id}>
+                {o.description} — {o.status}
+                {o.hint ? ` (${o.hint})` : ''}
+              </li>
+            ))}
+          </ul>
+          <h3>Feedback</h3>
+          {feedback.length === 0 ? (
+            <p>Sem feedback ainda — opere para receber orientação.</p>
+          ) : (
+            <ul>
+              {feedback.slice(-5).map((f) => (
+                <li key={f.id}>
+                  [{f.type}] {f.message}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+      {step === 4 && result && (
+        <article>
+          <h3>
+            Resultado: {result.score.total} ({result.score.passed ? 'aprovado' : 'reprovado'})
+          </h3>
+          <p>{result.coachMessage}</p>
+          <button type="button" onClick={newMission}>
+            Nova missão
+          </button>
+        </article>
       )}
       <WorkspaceManager />
     </section>

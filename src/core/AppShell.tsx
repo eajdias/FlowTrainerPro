@@ -142,17 +142,14 @@ export function AppShell({ current, onNavigate, children }: AppShellProps) {
               const meta = getSourceMeta(mode);
               const active = mode === sourceMode;
               return (
-                <button
+                <span
                   key={mode}
-                  type="button"
                   className={`ftp-sourceButton ${active ? 'is-active' : ''}`}
-                  aria-pressed={active}
-                  disabled={!active}
                   title={active ? meta.tooltip : `${meta.tooltip} Troca de fonte exige fluxo dedicado para evitar perda de estado.`}
                 >
                   <span className="ftp-sourceIcon" aria-hidden="true">{meta.icon}</span>
                   <span>{meta.label}</span>
-                </button>
+                </span>
               );
             })}
           </div>
