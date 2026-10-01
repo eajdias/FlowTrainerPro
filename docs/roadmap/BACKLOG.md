@@ -5,7 +5,7 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 ## Item 0 — Pré-requisito (concluído ✅ 2026-10-01)
 
 - ~~Restaurar módulos `src/` ausentes que quebram build e testes~~ → criados a partir dos contratos (imports + testes como spec); nada existia no histórico para restaurar.
-- Evidência: `npx tsc --noEmit` → **0 erros**; `npx vitest run` → **26/26**; `npx vite build` ok; validado no navegador (kernel RUNNING, ladder ao vivo, click→posição, 0 erros de console).
+- Evidência: `npx tsc --noEmit` → **0 erros**; `npx vitest run` → **42/42**; `npx vite build` ok; validado no navegador (kernel RUNNING, ladder e candles ao vivo, click→posição, fluxo/brokers ao vivo, 0 erros de console).
 
 ## Alta prioridade
 
@@ -61,4 +61,4 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 
 ## Resumo do estado
 
-Verificado em disco em 2026-10-01: `tsc` 0 erros, `vitest` 34/34, `vite build` ok, loop trader + fluxo ao vivo validados no navegador (0 erros de console). Backlog: alta 100%, média 100%, baixa completa exceto 2 adiados com motivo (live provider: bloqueio externo; ícones: cosmético).
+Verificado em disco em 2026-10-01: `tsc` 0 erros, `vitest` 42/42, `vite build` ok, loop trader + fluxo/brokers/candles ao vivo validados no navegador (0 erros de console). Backlog: alta 100%, média 100%, baixa completa exceto 2 adiados com motivo (live provider: bloqueio externo; ícones: cosmético).
