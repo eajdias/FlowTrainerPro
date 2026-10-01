@@ -1,0 +1,532 @@
+{
+  "symbol": "WDO",
+  "contract": "WDOV26",
+  "generatedAt": "2026-10-01T08:55:58.949Z",
+  "sessions": [
+    {
+      "date": "2025-10-03",
+      "range": 0,
+      "volume": 25,
+      "gapPct": 0,
+      "regime": "range"
+    },
+    {
+      "date": "2025-12-01",
+      "range": 0.5,
+      "volume": 25,
+      "gapPct": -1.7304183164055849,
+      "regime": "range"
+    },
+    {
+      "date": "2026-05-29",
+      "range": 25,
+      "volume": 2,
+      "gapPct": -9.354471402294823,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-06-02",
+      "range": 0,
+      "volume": 75,
+      "gapPct": -0.27954501638712165,
+      "regime": "range"
+    },
+    {
+      "date": "2026-06-19",
+      "range": 43.5,
+      "volume": 84,
+      "gapPct": 2.109366843885935,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-06-22",
+      "range": 30,
+      "volume": 46,
+      "gapPct": -0.2881105641802319,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-06-25",
+      "range": 13,
+      "volume": 3,
+      "gapPct": 0.845204178537512,
+      "regime": "range"
+    },
+    {
+      "date": "2026-06-26",
+      "range": 0,
+      "volume": 2,
+      "gapPct": -0.6677953348382243,
+      "regime": "range"
+    },
+    {
+      "date": "2026-06-29",
+      "range": 10.5,
+      "volume": 7,
+      "gapPct": 0.11362560363601933,
+      "regime": "range"
+    },
+    {
+      "date": "2026-06-30",
+      "range": 29,
+      "volume": 6,
+      "gapPct": -0.06145990922844176,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-07-01",
+      "range": 31,
+      "volume": 44,
+      "gapPct": 0.690886699507392,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-07-02",
+      "range": 54,
+      "volume": 95,
+      "gapPct": -0.2796390298928332,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-07-03",
+      "range": 29,
+      "volume": 389,
+      "gapPct": -0.24967037106799977,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-06",
+      "range": 58,
+      "volume": 162,
+      "gapPct": -0.2781966281492649,
+      "regime": "trend-down"
+    },
+    {
+      "date": "2026-07-07",
+      "range": 35.5,
+      "volume": 157,
+      "gapPct": 0.41103461464908003,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-08",
+      "range": 31,
+      "volume": 223,
+      "gapPct": -0.3132612407512752,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-09",
+      "range": 30,
+      "volume": 103,
+      "gapPct": -0.5179965720815048,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-10",
+      "range": 26,
+      "volume": 134,
+      "gapPct": -0.10844529750479148,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-13",
+      "range": 22.5,
+      "volume": 131,
+      "gapPct": 0.3735613411470844,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-14",
+      "range": 58,
+      "volume": 99,
+      "gapPct": -1.1395375501624232,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-07-15",
+      "range": 26,
+      "volume": 111,
+      "gapPct": -0.06086704083608355,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-16",
+      "range": 21,
+      "volume": 88,
+      "gapPct": 0.4532390820180158,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-17",
+      "range": 27.5,
+      "volume": 59,
+      "gapPct": 0.40304607673028625,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-20",
+      "range": 26.5,
+      "volume": 49,
+      "gapPct": -0.38920946335833184,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-21",
+      "range": 12.5,
+      "volume": 118,
+      "gapPct": -0.4742542716478484,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-22",
+      "range": 24,
+      "volume": 101,
+      "gapPct": -0.2226404112910982,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-23",
+      "range": 23.5,
+      "volume": 186,
+      "gapPct": 0.45654205607477255,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-24",
+      "range": 38.5,
+      "volume": 428,
+      "gapPct": -0.2197423229681225,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-27",
+      "range": 34.5,
+      "volume": 172,
+      "gapPct": 0.2667892749975791,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-28",
+      "range": 16,
+      "volume": 74,
+      "gapPct": 0.07900211905219916,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-29",
+      "range": 43,
+      "volume": 222,
+      "gapPct": -0.28457692307691873,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-30",
+      "range": 43.5,
+      "volume": 423,
+      "gapPct": -0.8854226843828146,
+      "regime": "range"
+    },
+    {
+      "date": "2026-07-31",
+      "range": 22,
+      "volume": 986,
+      "gapPct": 0.19865614957639144,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-03",
+      "range": 35.5,
+      "volume": 1570,
+      "gapPct": -0.10997864492331515,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-04",
+      "range": 75,
+      "volume": 3294,
+      "gapPct": 0.5406243940275375,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-08-05",
+      "range": 35,
+      "volume": 3116,
+      "gapPct": -0.1698661788774452,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-06",
+      "range": 36.5,
+      "volume": 1760,
+      "gapPct": -0.32718858465098044,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-07",
+      "range": 30,
+      "volume": 1903,
+      "gapPct": -0.4732437916706983,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-10",
+      "range": 37,
+      "volume": 2302,
+      "gapPct": 0.4072122861586337,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-11",
+      "range": 78,
+      "volume": 2652,
+      "gapPct": 0.6438443670151068,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-08-12",
+      "range": 56,
+      "volume": 2937,
+      "gapPct": 0.12586983609699615,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-13",
+      "range": 23,
+      "volume": 2464,
+      "gapPct": -0.10718095238096013,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-14",
+      "range": 75.5,
+      "volume": 3328,
+      "gapPct": 0.5855111195952958,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-17",
+      "range": 41,
+      "volume": 1721,
+      "gapPct": -0.30706016321882873,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-18",
+      "range": 31,
+      "volume": 1130,
+      "gapPct": 0.0355492154065561,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-19",
+      "range": 53.5,
+      "volume": 1699,
+      "gapPct": -0.7509451885627404,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-20",
+      "range": 23,
+      "volume": 1384,
+      "gapPct": 0.25061255742725197,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-21",
+      "range": 50,
+      "volume": 2942,
+      "gapPct": -0.7844539818788746,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-24",
+      "range": 21.5,
+      "volume": 3044,
+      "gapPct": 0.08775785617890264,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-25",
+      "range": 26,
+      "volume": 3860,
+      "gapPct": -0.21190499086450676,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-26",
+      "range": 25,
+      "volume": 5731,
+      "gapPct": 0.0725835983424809,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-27",
+      "range": 33,
+      "volume": 56766,
+      "gapPct": 0.2632401157184251,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-28",
+      "range": 73.5,
+      "volume": 139743,
+      "gapPct": 0.6866538461538486,
+      "regime": "range"
+    },
+    {
+      "date": "2026-08-31",
+      "range": 30,
+      "volume": 1827866,
+      "gapPct": -0.18891335567257034,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-01",
+      "range": 64.5,
+      "volume": 2336630,
+      "gapPct": -0.49410750215578914,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-02",
+      "range": 83.5,
+      "volume": 2648243,
+      "gapPct": -0.622884133410453,
+      "regime": "volatile"
+    },
+    {
+      "date": "2026-09-03",
+      "range": 44,
+      "volume": 2253491,
+      "gapPct": 0.013243612248880189,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-04",
+      "range": 41.5,
+      "volume": 1767670,
+      "gapPct": 0.3874719922065215,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-08",
+      "range": 57.5,
+      "volume": 2122525,
+      "gapPct": -0.7145267649340642,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-09",
+      "range": 35,
+      "volume": 1857365,
+      "gapPct": 0.19507235041063078,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-10",
+      "range": 64.5,
+      "volume": 2686509,
+      "gapPct": 0.23340809361286877,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-11",
+      "range": 61.5,
+      "volume": 2366761,
+      "gapPct": -0.07439048176322031,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-14",
+      "range": 42.5,
+      "volume": 2453867,
+      "gapPct": 0.6848897094548632,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-15",
+      "range": 35.5,
+      "volume": 1826520,
+      "gapPct": 0.0246514329976789,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-16",
+      "range": 30,
+      "volume": 2176002,
+      "gapPct": -0.0581318893831041,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-17",
+      "range": 54,
+      "volume": 2363426,
+      "gapPct": -0.023906310491670007,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-18",
+      "range": 45,
+      "volume": 1958894,
+      "gapPct": 0.4663618677042714,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-21",
+      "range": 35.5,
+      "volume": 2040635,
+      "gapPct": -0.6666408143480292,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-22",
+      "range": 41,
+      "volume": 2292854,
+      "gapPct": 0.013912195121946108,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-23",
+      "range": 54.5,
+      "volume": 2919489,
+      "gapPct": 0.9153146100401219,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-24",
+      "range": 37.5,
+      "volume": 2700760,
+      "gapPct": 0.3496230427218295,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-25",
+      "range": 41,
+      "volume": 2362514,
+      "gapPct": 0.009983649129561081,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-28",
+      "range": 39.5,
+      "volume": 2567790,
+      "gapPct": 0.5188361113787491,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-29",
+      "range": 44.5,
+      "volume": 2473359,
+      "gapPct": -0.12854272318437746,
+      "regime": "range"
+    },
+    {
+      "date": "2026-09-30",
+      "range": 55,
+      "volume": 159274,
+      "gapPct": -0.383413415337298,
+      "regime": "range"
+    }
+  ]
+}

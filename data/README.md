@@ -7,10 +7,11 @@ Sem tick a tick, sem tempo real — só dados passados para estudo (decisão reg
 | Fonte | Granularidade | Uso |
 |---|---|---|
 | B3 COTAHIST anual (`COTAHIST_Ayyy.ZIP`) | diária | `scripts/fetch-history.ts --year YYYY` → `data/raw/` |
+| brapi futuros (sem token: WIN/WDO) | diária (~1 ano) | `npm run materials:wdo` → banco + `data/materials/WDO.json` |
 | brapi / bolsai / backtester free | diária / M1 limitado | futuro (WDO intradiário); ver U2 na spec 3 |
 
-> O COTAHIST à vista **não contém futuros de WDO** (só vista/opções/termo). Materiais v1 usam
-> ações (ex.: PETR4). WDO intradiário segue pendente de fonte gratuita.
+> O COTAHIST à vista **não contém futuros de WDO** (só vista/opções/termo). WDO diário vem da
+> brapi (`npm run materials:wdo`, front vigente). WDO intradiário segue pendente de fonte gratuita.
 > Arquivo anual (~650MB) excede o limite de string do Node: processar por mês.
 
 ## Pipeline

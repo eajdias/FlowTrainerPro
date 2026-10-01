@@ -1,0 +1,81 @@
+{
+ "future": {
+  "symbol": "WDOX26",
+  "underlyingAsset": "WDO",
+  "assetDescription": "Minicontrato de D\u00f3lar Comercial",
+  "segment": "financial",
+  "quotationType": "price",
+  "expirationDate": "2026-11-03",
+  "firstTradeDate": "2025-10-13",
+  "lastTradeDate": "2026-10-30",
+  "contractMultiplier": 10,
+  "allocationRoundLot": 1,
+  "tradingCurrency": "BRL",
+  "deliveryType": "Financial",
+  "exerciseType": "Price",
+  "isin": "BRBMEFWDO5I4",
+  "cficCode": "FFCCSX",
+  "history": [
+   {
+    "date": 1790726400,
+    "open": null,
+    "high": 5249,
+    "low": 5192,
+    "average": 5208.186,
+    "close": 5215.5,
+    "settlement": 5197.615,
+    "settlementRate": null,
+    "referencePrice": null,
+    "oscillationPct": -0.56,
+    "trades": 605717,
+    "volume": 3096960,
+    "financialVolume": 161295450000
+   },
+   {
+    "date": 1790640000,
+    "open": null,
+    "high": 5271.5,
+    "low": 5228.5,
+    "average": 5248.353,
+    "close": 5234.5,
+    "settlement": 5245.091,
+    "settlementRate": null,
+    "referencePrice": null,
+    "oscillationPct": -0.28,
+    "trades": 24060,
+    "volume": 160055,
+    "financialVolume": 8400253000
+   },
+   {
+    "date": 1760400000,
+    "open": null,
+    "high": null,
+    "low": null,
+    "average": null,
+    "close": null,
+    "settlement": 5957.325,
+    "settlementRate": null,
+    "referencePrice": null,
+    "oscillationPct": null,
+    "trades": null,
+    "volume": null,
+    "financialVolume": null
+   },
+   {
+    "date": 1760313600,
+    "open": null,
+    "high": null,
+    "low": null,
+    "average": null,
+    "close": null,
+    "settlement": 5943.438,
+    "settlementRate": null,
+    "referencePrice": null,
+    "oscillationPct": null,
+    "trades": null,
+    "volume": null,
+    "financialVolume": null
+   }
+  ]
+ }
+}
