@@ -3,11 +3,12 @@
 // Sem regra de negocio — so aciona handlers existentes.
 import { useState } from 'react';
 import { useTrainingSessionStore, type SimulationSpeed } from '../../store/trainingSessionStore';
-import { getKernel } from '../../core/kernel/SimulationKernel';
+import { getKernel, type AggressivenessProfile } from '../../core/kernel/SimulationKernel';
 import { initTraderBridge } from '../../trader/TraderExecutionBridge';
 import { PanelShell } from '../PanelShell/PanelShell';
 
 const SPEEDS: SimulationSpeed[] = [0.5, 1, 2, 4, 8, 16];
+const PROFILES: AggressivenessProfile[] = ['slow', 'normal', 'aggressive'];
 
 let bridgeReady = false;
 function ensureBridge(): void {
@@ -25,11 +26,17 @@ export function ReplayToolbar() {
   const finish = useTrainingSessionStore((s) => s.finish);
   const reset = useTrainingSessionStore((s) => s.reset);
   const setSpeed = useTrainingSessionStore((s) => s.setSpeed);
+  const profile = useTrainingSessionStore((s) => s.profile);
+  const setProfile = useTrainingSessionStore((s) => s.setProfile);
+  const trainingFifo = useTrainingSessionStore((s) => s.trainingFifo);
+  const setTrainingFifo = useTrainingSessionStore((s) => s.setTrainingFifo);
   const [started, setStarted] = useState(false);
 
   const onStart = (): void => {
     ensureBridge();
     getKernel().setSpeed(speed);
+    getKernel().setProfile(profile);
+    getKernel().setTrainingFifo(trainingFifo);
     getKernel().start();
     setStarted(true);
     start();
@@ -54,6 +61,14 @@ export function ReplayToolbar() {
   const onSpeed = (v: SimulationSpeed): void => {
     setSpeed(v);
     getKernel().setSpeed(v);
+  };
+  const onProfile = (v: AggressivenessProfile): void => {
+    setProfile(v);
+    getKernel().setProfile(v);
+  };
+  const onTrainingFifo = (v: boolean): void => {
+    setTrainingFifo(v);
+    getKernel().setTrainingFifo(v);
   };
 
   return (
@@ -91,6 +106,24 @@ export function ReplayToolbar() {
             </option>
           ))}
         </select>
+      </label>
+      <label>
+        Mercado
+        <select value={profile} onChange={(e) => onProfile(e.target.value as AggressivenessProfile)}>
+          {PROFILES.map((v) => (
+            <option key={v} value={v}>
+              {v}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={trainingFifo}
+          onChange={(e) => onTrainingFifo(e.target.checked)}
+        />
+        TRAINING FIFO
       </label>
     </PanelShell>
   );

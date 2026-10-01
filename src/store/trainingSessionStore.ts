@@ -9,6 +9,7 @@ import { SCENARIO_EVENTS } from '../core/kernel/MarketScenarioEngine';
 import { MATCHING_EVENTS } from '../core/kernel/MatchingEngine';
 import { KERNEL_EVENTS, type KernelTickEvent } from '../core/kernel/SimulationKernel';
 import type { MarketRegime } from '../core/kernel/MarketScenarioEngine';
+import type { AggressivenessProfile } from '../core/kernel/SimulationKernel';
 
 // ── Session status ────────────────────────────────────────────────────────────
 
@@ -20,6 +21,8 @@ export type SimulationSpeed = 0.5 | 1 | 2 | 4 | 8 | 16;
 interface TrainingSessionState {
   status:         SessionStatus;
   speed:          SimulationSpeed;
+  profile:        AggressivenessProfile;
+  trainingFifo:   boolean;
   startedAt:      number | null;    // timestamp when session started
   elapsedMs:      number;           // total time elapsed (paused time excluded)
   tickCount:      number;           // ticks since session start
@@ -35,6 +38,8 @@ interface TrainingSessionActions {
   finish:     () => void;
   reset:      () => void;
   setSpeed:   (speed: SimulationSpeed) => void;
+  setProfile: (profile: AggressivenessProfile) => void;
+  setTrainingFifo: (enabled: boolean) => void;
   incrementTick: () => void;
   updateElapsed: (ms: number) => void;
 }
@@ -44,6 +49,8 @@ interface TrainingSessionActions {
 export const useTrainingSessionStore = create<TrainingSessionState & TrainingSessionActions>((set) => ({
   status:        'idle',
   speed:         1,
+  profile:       'normal',
+  trainingFifo:  false,
   startedAt:     null,
   elapsedMs:     0,
   tickCount:     0,
@@ -67,6 +74,8 @@ export const useTrainingSessionStore = create<TrainingSessionState & TrainingSes
   reset: () => set({
     status: 'idle',
     speed: 1,
+    profile: 'normal',
+    trainingFifo: false,
     startedAt: null,
     elapsedMs: 0,
     tickCount: 0,
@@ -76,6 +85,10 @@ export const useTrainingSessionStore = create<TrainingSessionState & TrainingSes
   }),
 
   setSpeed: (speed) => set({ speed }),
+
+  setProfile: (profile) => set({ profile }),
+
+  setTrainingFifo: (trainingFifo) => set({ trainingFifo }),
 
   incrementTick: () => set((s) => ({ tickCount: s.tickCount + 1 })),
 

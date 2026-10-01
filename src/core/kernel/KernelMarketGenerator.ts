@@ -11,6 +11,22 @@ const TICK_SIZE = 0.5;
 const ANCHOR_PRICE = 5069.0;
 const BROKERS = [3, 114, 85, 308, 39];
 
+export type AggressivenessProfile = 'slow' | 'normal' | 'aggressive';
+
+interface ProfileTuning {
+  minOrders: number;
+  maxOrders: number;
+  minSize: number;
+  maxSize: number;
+  crossProbability: number;
+}
+
+const PROFILES: Record<AggressivenessProfile, ProfileTuning> = {
+  slow: { minOrders: 1, maxOrders: 1, minSize: 1, maxSize: 3, crossProbability: 0.4 },
+  normal: { minOrders: 1, maxOrders: 3, minSize: 1, maxSize: 10, crossProbability: 0.6 },
+  aggressive: { minOrders: 2, maxOrders: 5, minSize: 1, maxSize: 15, crossProbability: 0.75 },
+};
+
 let orderCounter = 0;
 
 function snap(price: number): number {
@@ -21,10 +37,21 @@ export class KernelMarketGenerator {
   private seed = 123456789;
   private readonly matching: MatchingEngine;
   private readonly scenario: MarketScenarioEngine;
+  private profile: AggressivenessProfile = 'normal';
+  /** TRAINING FIFO: filas menores (seed 1-3, descansos 1-2) p/ mais feedback. */
+  private trainingFifo = false;
 
   constructor(matching: MatchingEngine, scenario: MarketScenarioEngine) {
     this.matching = matching;
     this.scenario = scenario;
+  }
+
+  setProfile(profile: AggressivenessProfile): void {
+    this.profile = profile;
+  }
+
+  setTrainingFifo(enabled: boolean): void {
+    this.trainingFifo = enabled;
   }
 
   /** PRNG deterministico (mulberry32) — replay da sessao gera o mesmo fluxo. */
@@ -37,8 +64,9 @@ export class KernelMarketGenerator {
   }
 
   seedBook(): void {
+    const seedMax = this.trainingFifo ? 3 : 20;
     for (let i = 1; i <= 12; i++) {
-      const size = 5 + Math.floor(this.rand() * 16);
+      const size = 1 + Math.floor(this.rand() * seedMax);
       this.rest('buy', snap(ANCHOR_PRICE - i * TICK_SIZE), size, 3);
       this.rest('sell', snap(ANCHOR_PRICE + i * TICK_SIZE), size, 114);
     }
@@ -47,13 +75,18 @@ export class KernelMarketGenerator {
   onTick(tick: number, now: number): void {
     const regime = this.scenario.getRegime();
     const mid = this.mid() ?? ANCHOR_PRICE;
-    const orders = 1 + Math.floor(this.rand() * 3);
+    const tuning = PROFILES[this.profile];
+    const span = tuning.maxOrders - tuning.minOrders + 1;
+    const orders = tuning.minOrders + Math.floor(this.rand() * span);
 
     for (let i = 0; i < orders; i++) {
       const side = this.pickSide(regime);
       const broker = BROKERS[Math.floor(this.rand() * BROKERS.length)]!;
-      const size = 1 + Math.floor(this.rand() * 10);
-      const cross = this.rand() < 0.6;
+      const sizeSpan = tuning.maxSize - tuning.minSize + 1;
+      const size = this.trainingFifo
+        ? 1 + Math.floor(this.rand() * 2)
+        : tuning.minSize + Math.floor(this.rand() * sizeSpan);
+      const cross = this.rand() < tuning.crossProbability;
 
       if (cross) {
         const price = side === 'buy' ? snap(mid + TICK_SIZE) : snap(mid - TICK_SIZE);

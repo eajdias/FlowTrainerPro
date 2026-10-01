@@ -6,7 +6,7 @@ import { eventBus } from '../engine/EventBus';
 import { MatchingEngine } from './MatchingEngine';
 import { OrderBookEngine } from './OrderBookEngine';
 import { MarketScenarioEngine } from './MarketScenarioEngine';
-import { KernelMarketGenerator } from './KernelMarketGenerator';
+import { KernelMarketGenerator, type AggressivenessProfile } from './KernelMarketGenerator';
 
 export const KERNEL_EVENTS = {
   TICK: 'kernel:tick',
@@ -79,6 +79,14 @@ class Kernel {
     }
   }
 
+  setProfile(profile: AggressivenessProfile): void {
+    this.generator.setProfile(profile);
+  }
+
+  setTrainingFifo(enabled: boolean): void {
+    this.generator.setTrainingFifo(enabled);
+  }
+
   /** Avanco manual (testes / stepping). */
   step(now: number = Date.now()): void {
     this.tick += 1;
@@ -133,3 +141,4 @@ export function disposeKernel(): void {
 }
 
 export type SimulationKernel = Kernel;
+export type { AggressivenessProfile };
