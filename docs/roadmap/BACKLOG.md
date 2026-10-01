@@ -5,7 +5,7 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 ## Item 0 — Pré-requisito (concluído ✅ 2026-10-01)
 
 - ~~Restaurar módulos `src/` ausentes que quebram build e testes~~ → criados a partir dos contratos (imports + testes como spec); nada existia no histórico para restaurar.
-- Evidência: `npx tsc --noEmit` → **0 erros**; `npx vitest run` → **42/42**; `npx vite build` ok; validado no navegador (kernel RUNNING, ladder e candles ao vivo, click→posição, fluxo/brokers ao vivo, 0 erros de console).
+- Evidência: `npx tsc --noEmit` → **0 erros**; `npx vitest run` → **43/43**; `npx vite build` ok; validado no navegador (kernel RUNNING, ladder e candles ao vivo, click→posição, fluxo/brokers ao vivo, 0 erros de console).
 
 ## Alta prioridade
 
@@ -34,7 +34,7 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 - [x] Componentes de treinamento guiado para `modules/academy` → rota Academy (regras, dicas, objetivos por missão; `src/modules` nunca existiu — academy vive na rota)
 - [ ] Pipeline de `MarketDataProvider` para dados ao vivo → ADIADO: exige credenciais de corretora/dados (bloqueio externo, não código)
 - [x] Remoção de código legado (`flow:snapshot`, `LegacyFlowSnapshotAdapter`, engines antigos) → verificado: zero referências em `src/`
-- [ ] Biblioteca oficial de ícones para substituir rótulos compactos dos controles globais → ADIADO: rótulos texto funcionam; cosmético
+- [x] Biblioteca oficial de ícones para substituir rótulos compactos dos controles globais → ícones SVG no designSystem; botões mortos removidos, IMP navega
 - [x] Warning INEFFECTIVE_DYNAMIC_IMPORT → verificado: `vite build` sem warnings
 - [x] Limpeza de exports públicos legados → barrels conferem com registry/consumidores; `tsc` 0 erros
 - [x] `brokerHistoryStore` legado → mantido com justificativa: atende book vivo por corretora; rankings vivem no `brokerFlowStore`
@@ -61,4 +61,4 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 
 ## Resumo do estado
 
-Verificado em disco em 2026-10-01: `tsc` 0 erros, `vitest` 42/42, `vite build` ok, loop trader + fluxo/brokers/candles ao vivo validados no navegador (0 erros de console). Backlog: alta 100%, média 100%, baixa completa exceto 2 adiados com motivo (live provider: bloqueio externo; ícones: cosmético).
+Verificado em disco em 2026-10-01: `tsc` 0 erros, `vitest` 43/43, `vite build` ok, loop trader + fluxo/brokers/candles ao vivo validados no navegador (0 erros de console). Backlog: alta 100%, média 100%, baixa completa exceto live provider (bloqueio externo: credenciais).

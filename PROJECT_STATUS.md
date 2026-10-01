@@ -3,7 +3,7 @@
 **Atualizado:** Outubro 2026
 **Stack:** React 19 + TypeScript 6 + Vite 8 + Zustand (+ Electron)
 **Build:** ✅ `npx tsc --noEmit` → 0 erros; `npx vite build` ok (2026-10-01)
-**Testes:** ✅ `npx vitest run` → 42/42 (kernel 12 + flowAnalysis 18 + replayQA 3 + brokerFlowLive 1 + candles 4 + training 2 + wiring 2). Loop trader + fluxo/brokers ao vivo validados no navegador (0 erros de console).
+**Testes:** ✅ `npx vitest run` → 43/43 (kernel 12 + flowAnalysis 18 + replayQA 3 + brokerFlowLive 1 + candles 4 + training 2 + wiring 2 + trader 1). Loop trader + fluxo/brokers ao vivo validados no navegador (0 erros de console).
 
 Arquitetura, módulos e backlog têm fonte única — este arquivo é só o snapshot de status e **linka** para elas.
 
