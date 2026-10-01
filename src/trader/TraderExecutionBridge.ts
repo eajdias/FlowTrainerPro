@@ -150,6 +150,9 @@ export function initTraderBridge(): void {
     // Notify TraderOrderStore that order was filled
     eventBus.emit(TRADER_EVENTS.ORDER_FILLED, { id: orderId });
 
+    // Mark-to-market da posição em cada execução
+    usePositionStore.getState().updatePnL(exec.price);
+
     // Also check stop triggers (price changed)
     checkStopTriggers(exec.price);
   });

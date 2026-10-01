@@ -5,6 +5,7 @@
 import { eventBus } from '../../engine/EventBus';
 import { MATCHING_EVENTS, type Execution } from '../../kernel/MatchingEngine';
 import { FlowAnalysisEngine, fromExecution, type FlowTrade } from './FlowAnalysisEngine';
+import { useMarketStore } from '../../../store/marketStore';
 
 const BASELINE_TRADES = 120;
 
@@ -37,5 +38,6 @@ export function initFlowAnalysis(): void {
       return;
     }
     eng.onTrade(trade);
+    useMarketStore.getState().syncFlowSnapshot(eng.snapshot());
   });
 }

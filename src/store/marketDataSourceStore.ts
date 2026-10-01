@@ -6,6 +6,7 @@ import {
   type MarketProjectionResetEvent,
 } from '../core/marketData/projections';
 import type { MarketDataSourceMode } from '../core/marketData/replay';
+import { useTrainingSessionStore } from './trainingSessionStore';
 
 interface MarketDataSourceState {
   sourceMode: MarketDataSourceMode;
@@ -20,11 +21,19 @@ export const useMarketDataSourceStore = create<MarketDataSourceState>((set) => (
   sessionId: null,
   isHistorical: false,
 
-  setSource: (sourceMode, sessionId = null) => set({
-    sourceMode,
-    sessionId,
-    isHistorical: sourceMode === 'HISTORICAL_FILE',
-  }),
+  setSource: (sourceMode, sessionId = null) => {
+    // Guard de fonte autoritativa: sem troca destrutiva com sessão rodando.
+    const training = useTrainingSessionStore.getState();
+    const current = useMarketDataSourceStore.getState().sourceMode;
+    if (current !== sourceMode && (training.status === 'running' || training.status === 'paused')) {
+      return;
+    }
+    set({
+      sourceMode,
+      sessionId,
+      isHistorical: sourceMode === 'HISTORICAL_FILE',
+    });
+  },
 
   reset: () => set({ sourceMode: 'SYNTHETIC', sessionId: null, isHistorical: false }),
 }));

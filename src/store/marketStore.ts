@@ -3,6 +3,9 @@
 // Kernel → KernelMarketGenerator → EventBus → applyTick → panels read from here.
 
 import { create } from 'zustand';
+import { eventBus } from '../core/engine/EventBus';
+import { MATCHING_EVENTS, type Execution } from '../core/kernel/MatchingEngine';
+import { brokerRegistry } from '../core/marketIdentity/BrokerRegistry';
 import type { MarketTick } from '../market/providers/MarketDataProvider';
 import type { FlowAnalysisSnapshot } from '../core/analytics/flowAnalysis';
 
@@ -282,3 +285,19 @@ function emptyFlowSnapshot(): FlowAnalysisSnapshot {
     detection: null,
   };
 }
+
+// ── Wire: Execution ao vivo → tick de mercado ─────────────────────────────────
+
+eventBus.on<Execution>(MATCHING_EVENTS.EXECUTION_CREATED, (exec) => {
+  const broker = brokerRegistry.getBroker(exec.aggressorBrokerId);
+  const tick: MarketTick = {
+    price: exec.price,
+    volume: exec.size,
+    delta: exec.side === 'buy' ? exec.size : -exec.size,
+    timestamp: exec.timestamp,
+    brokerId: exec.aggressorBrokerId,
+    brokerName: broker?.name ?? `B${exec.aggressorBrokerId}`,
+    brokerColor: brokerRegistry.getOrderColor(exec.aggressorBrokerId, exec.size),
+  };
+  useMarketStore.getState().applyTick(tick);
+});
