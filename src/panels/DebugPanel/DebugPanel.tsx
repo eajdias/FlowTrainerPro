@@ -16,10 +16,22 @@ export function DebugPanel() {
   const status = useTrainingSessionStore((s) => s.status);
   const marketTicks = useMarketStore((s) => s.tickCount);
   const [flow, setFlow] = useState<FlowAnalysisSnapshot>(() => getFlowEngine().snapshot());
+  const [longTasks, setLongTasks] = useState(0);
 
   useEffect(() => {
     const id = setInterval(() => setFlow(getFlowEngine().snapshot()), 1000);
     return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (typeof PerformanceObserver === 'undefined') return;
+    try {
+      const obs = new PerformanceObserver(() => setLongTasks((n) => n + 1));
+      obs.observe({ entryTypes: ['longtask'] });
+      return () => obs.disconnect();
+    } catch {
+      return;
+    }
   }, []);
 
   return (
@@ -37,6 +49,7 @@ export function DebugPanel() {
           sweeps pend {flow.sweepsPending} · cont {flow.continuations} · abs {flow.absorptions} (+
           {flow.significantAbsorptions} signif)
         </li>
+        <li>longtasks {longTasks}</li>
       </ul>
     </PanelShell>
   );

@@ -29,3 +29,6 @@ data/imports/*.csv
 # Playwright CLI session artifacts
 .playwright-cli/
 
+# Coverage output
+coverage/
+
