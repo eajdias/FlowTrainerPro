@@ -72,9 +72,11 @@ export function createDefaultWorkspace(): WorkspaceConfig {
       panel('OrderBookByBrokerPanel',546, 526, 260, 270, 1, true),
       panel('LargeTradesPanel',      810, 526, 284, 270, 1, true),
 
+      // Bottom strip — CandleClock (PriceLadder fica oculto: painel vertical)
+      panel('CandleClockPanel',      2,   800, 1092, 56, 1, true),
+
       // Hidden panels
       panel('PriceLadderPanel',      2,   2,   1, 1, 1, false),
-      panel('CandleClockPanel',      2,   2,   1, 1, 1, false),
       panel('TrainingPanel',         2,   2,   1, 1, 1, false),
       panel('ScenarioEditorPanel',   2,   2,   500, 600, 5, false),
       panel('ScenarioInspectorPanel',2,   2,   260, 400, 5, false),

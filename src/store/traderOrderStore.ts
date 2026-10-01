@@ -29,8 +29,12 @@ export interface TraderOrder {
 
 // ── Store state ───────────────────────────────────────────────────────────────
 
+// Corretora do aluno (era fixa em XP no bridge). Default 3 = XP.
+export const DEFAULT_TRADER_BROKER_ID = 3;
+
 interface TraderOrderState {
   orders: TraderOrder[];
+  brokerId: number;
 }
 
 interface TraderOrderActions {
@@ -40,6 +44,8 @@ interface TraderOrderActions {
   removeOrder: (orderId: string) => void;
   /** Remove todas as ordens. */
   clearAll:    () => void;
+  /** Troca a corretora do aluno (vale p/ próximas ordens). */
+  setBrokerId: (brokerId: number) => void;
   /** Reset completo. */
   reset:       () => void;
 }
@@ -48,6 +54,7 @@ interface TraderOrderActions {
 
 export const useTraderOrderStore = create<TraderOrderState & TraderOrderActions>((set) => ({
   orders: [],
+  brokerId: DEFAULT_TRADER_BROKER_ID,
 
   addOrder: (side, price, size, label) => {
     const order: TraderOrder = {
@@ -70,7 +77,9 @@ export const useTraderOrderStore = create<TraderOrderState & TraderOrderActions>
 
   clearAll: () => set({ orders: [] }),
 
-  reset: () => set({ orders: [] }),
+  setBrokerId: (brokerId) => set({ brokerId }),
+
+  reset: () => set({ orders: [], brokerId: DEFAULT_TRADER_BROKER_ID }),
 }));
 
 // ── Wire: "trader:order:filled" → remove from store ───────────────────────────

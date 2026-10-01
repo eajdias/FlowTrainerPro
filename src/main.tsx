@@ -16,7 +16,7 @@ initCandleFeed()
 initLiveBrokerFlow()
 
 // Clear stale workspace layout if version changed
-const APP_VERSION = '5.0'; // bump this to force layout reset
+const APP_VERSION = '5.1'; // bump this to force layout reset
 const storedVersion = localStorage.getItem('ftp-version');
 if (storedVersion !== APP_VERSION) {
   localStorage.removeItem('flowtrainerpro-workspace');

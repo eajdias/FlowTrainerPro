@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Badge, Button } from '../ui/designSystem';
+import { Badge, Button, Icon } from '../ui/designSystem';
 import { useMarketDataSourceStore } from '../store/marketDataSourceStore';
 import { useMarketStore } from '../store/marketStore';
 import { useBookStore } from '../store/bookStore';
@@ -186,10 +186,15 @@ export function AppShell({ current, onNavigate, children }: AppShellProps) {
             {formatClock()}
           </span>
           <Badge variant={statusVariant(sessionStatus)}>{sessionStatus}</Badge>
-          <button type="button" className="ftp-actionButton" title="Importação histórica: fluxo visual dedicado ainda não está aberto nesta fase.">IMP</button>
-          <button type="button" className="ftp-actionButton" title="Configurações globais: preferências, densidade, atalhos e replay.">CFG</button>
-          <button type="button" className="ftp-actionButton" title="Layout: restaurar, salvar e organizar workspaces.">LAY</button>
-          <button type="button" className="ftp-actionButton" title="Ajuda e referência de controles globais.">?</button>
+          <button
+            type="button"
+            className="ftp-actionButton"
+            title="Importação histórica: abrir a estação de training (painel Replay Player)."
+            aria-label="Importar"
+            onClick={() => onNavigate('training')}
+          >
+            <Icon name="import" label="Importar" />
+          </button>
         </div>
       </header>
 

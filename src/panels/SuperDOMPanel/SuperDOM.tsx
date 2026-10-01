@@ -14,6 +14,7 @@ import {
 } from '../../trader/TradingController';
 import { getOrderQueueState, getAllOrderQueueStates } from '../../trader/QueueInspector';
 import { getKernel } from '../../core/kernel/SimulationKernel';
+import { BROKERS } from '../../core/marketIdentity/data/brokers';
 import { PanelShell } from '../PanelShell/PanelShell';
 
 const VISIBLE_LEVELS = 15;
@@ -62,6 +63,8 @@ export function SuperDOM() {
   const avgPrice = usePositionStore((s) => s.averagePrice);
   const unrealized = usePositionStore((s) => s.unrealizedPnL);
   const orders = useTraderOrderStore((s) => s.orders);
+  const brokerId = useTraderOrderStore((s) => s.brokerId);
+  const setBrokerId = useTraderOrderStore((s) => s.setBrokerId);
 
   const prices = useMemo(() => {
     const set = new Set<number>();
@@ -114,6 +117,16 @@ export function SuperDOM() {
           {posSide ? `${posSide.toUpperCase()} ${posSize} @ ${avgPrice.toFixed(2)}` : 'FLAT'}
         </span>
         <span>P&L {unrealized.toFixed(2)}</span>
+        <label>
+          Corretora
+          <select value={brokerId} onChange={(e) => setBrokerId(Number(e.target.value))}>
+            {BROKERS.map((b) => (
+              <option key={b.code} value={b.code}>
+                {b.code} {b.name}
+              </option>
+            ))}
+          </select>
+        </label>
         {posSide && (
           <button type="button" onClick={() => flattenPosition()}>
             ZERAR

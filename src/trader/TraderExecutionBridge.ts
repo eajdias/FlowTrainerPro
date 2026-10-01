@@ -23,7 +23,10 @@ import { useTrainingStore } from '../store/trainingStore';
 import type { Order } from '../core/orderflow/models/Order';
 
 const TRADER_PLAYER_ID = 'trader_user';
-const TRADER_BROKER_ID = 3; // XP (placeholder)
+
+function traderBrokerId(): number {
+  return useTraderOrderStore.getState().brokerId;
+}
 
 let initialized = false;
 
@@ -49,7 +52,7 @@ export function initTraderBridge(): void {
     const order: Order = {
       id:            payload.id,
       playerId:      TRADER_PLAYER_ID,
-      brokerId:      TRADER_BROKER_ID,
+      brokerId:      traderBrokerId(),
       type:          payload.type,
       side:          payload.side,
       price:         payload.type === 'market' ? 0 : payload.price,
@@ -90,7 +93,7 @@ export function initTraderBridge(): void {
     const order: Order = {
       id:            payload.id + '_stop_exec',
       playerId:      TRADER_PLAYER_ID,
-      brokerId:      TRADER_BROKER_ID,
+      brokerId:      traderBrokerId(),
       type:          'market',
       side:          payload.side,
       price:         0,
