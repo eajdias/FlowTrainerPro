@@ -1,0 +1,27 @@
+/* theme.css — tokens Profit-like (dark denso profissional) */
+:root {
+  --ftp-bg-canvas: #101216;
+  --ftp-bg-app: #14161b;
+  --ftp-bg-panel: #1a1d23;
+  --ftp-bg-panel-elevated: #20242c;
+  --ftp-bg-hover: #262b34;
+  --ftp-border-subtle: #262b33;
+  --ftp-border-strong: #353c47;
+  --ftp-text-primary: #e8ebf0;
+  --ftp-text-secondary: #b9c0cb;
+  --ftp-text-muted: #707c8d;
+  --ftp-buy-primary: #00c853;
+  --ftp-buy-dim: rgba(0, 200, 83, 0.13);
+  --ftp-sell-primary: #ff5252;
+  --ftp-sell-dim: rgba(255, 82, 82, 0.13);
+  --ftp-info: #4d8dff;
+  --ftp-warning: #ff9800;
+  --ftp-special: #f5c400;
+  --ftp-neutral: #8b90a0;
+  --ftp-font-ui: Tahoma, 'Segoe UI', system-ui, sans-serif;
+  --ftp-font-numeric: Tahoma, 'Consolas', monospace;
+  --ftp-radius-xs: 2px;
+  --ftp-radius-sm: 3px;
+  --ftp-radius-md: 4px;
+  --ftp-shadow-focus: 0 0 0 2px rgba(77, 141, 255, 0.42);
+}

@@ -1,0 +1,259 @@
+/* panels.css — chrome dos painéis, tabelas densas, workspace, rotas */
+
+.ftp-panel {
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-sm);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--ftp-font-ui);
+  font-size: 11px;
+  color: var(--ftp-text-secondary);
+}
+
+.ftp-panel-title {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ftp-text-muted);
+  background: var(--ftp-bg-panel-elevated);
+  border-bottom: 1px solid var(--ftp-border-subtle);
+  padding: 4px 8px;
+  flex-shrink: 0;
+}
+
+.ftp-panel-body {
+  padding: 4px 6px;
+  overflow: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-panel-body > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: center;
+  padding: 2px 0 4px;
+}
+
+.ftp-panel table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--ftp-font-numeric);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-panel th {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ftp-text-muted);
+  text-align: right;
+  padding: 2px 5px;
+  border-bottom: 1px solid var(--ftp-border-subtle);
+  position: sticky;
+  top: 0;
+  background: var(--ftp-bg-panel);
+}
+
+.ftp-panel td {
+  padding: 1px 5px;
+  text-align: right;
+  border-bottom: 1px solid rgba(38, 43, 51, 0.5);
+  white-space: nowrap;
+}
+
+.ftp-panel tbody tr:hover td {
+  background: var(--ftp-bg-hover);
+}
+
+.ftp-panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ftp-panel li {
+  padding: 2px 4px;
+  border-bottom: 1px solid rgba(38, 43, 51, 0.5);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ftp-panel p {
+  color: var(--ftp-text-muted);
+  padding: 6px 4px;
+}
+
+.ftp-panel button {
+  background: var(--ftp-bg-panel-elevated);
+  border: 1px solid var(--ftp-border-strong);
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-primary);
+  font-family: var(--ftp-font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+}
+
+.ftp-panel button:hover {
+  background: var(--ftp-bg-hover);
+  border-color: var(--ftp-info);
+}
+
+.ftp-panel select,
+.ftp-panel input[type="number"],
+.ftp-panel input[type="text"] {
+  background: #0d0f13;
+  border: 1px solid var(--ftp-border-strong);
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-primary);
+  font-family: var(--ftp-font-numeric);
+  font-size: 11px;
+  padding: 2px 5px;
+}
+
+.ftp-panel label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ftp-text-muted);
+  font-size: 10px;
+}
+
+.ftp-panel strong { color: var(--ftp-text-primary); }
+
+/* SuperDOM: colunas de compra (1-2) e venda (4-5), preço (3) em destaque */
+.ftp-panel td:nth-child(1),
+.ftp-panel td:nth-child(2) {
+  background: var(--ftp-buy-dim);
+  cursor: pointer;
+}
+
+.ftp-panel td:nth-child(4),
+.ftp-panel td:nth-child(5) {
+  background: var(--ftp-sell-dim);
+  cursor: pointer;
+}
+
+.ftp-panel td:nth-child(3) {
+  color: var(--ftp-text-primary);
+  font-weight: 800;
+  text-align: center;
+  background: rgba(77, 141, 255, 0.07);
+}
+
+.ftp-panel td:nth-child(6) {
+  color: var(--ftp-text-muted);
+}
+
+/* Workspace */
+.ftp-workspace {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+.ftp-workspace [role="tablist"] {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.ftp-workspace [role="tab"] {
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 12px;
+}
+
+.ftp-workspace [role="tab"][aria-selected="true"] {
+  color: var(--ftp-text-primary);
+  border-color: var(--ftp-info);
+}
+
+.ftp-dockgrid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(120px, auto);
+  grid-auto-flow: dense;
+  gap: 6px;
+}
+
+.ftp-dockgrid > div {
+  grid-column: span 4;
+  min-height: 140px;
+  display: flex;
+}
+
+.ftp-dockgrid > div > section {
+  flex: 1;
+}
+
+.ftp-float {
+  position: absolute;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  z-index: 10;
+}
+
+.ftp-float > section {
+  height: 100%;
+}
+
+/* Rotas (dashboard/academy/training missions/analysis) */
+.ftp-main section[aria-label] > h2 {
+  font-size: 13px;
+  color: var(--ftp-text-primary);
+  padding: 8px 12px 2px;
+}
+
+.ftp-main section[aria-label] ul {
+  list-style: none;
+  padding: 4px 12px;
+}
+
+.ftp-main section[aria-label] li {
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(38, 43, 51, 0.5);
+  color: var(--ftp-text-secondary);
+  font-size: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ftp-main section[aria-label] button {
+  background: var(--ftp-bg-panel-elevated);
+  border: 1px solid var(--ftp-border-strong);
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-primary);
+  font-size: 11px;
+  padding: 3px 10px;
+}
+
+.ftp-main section[aria-label] article {
+  margin: 6px 12px;
+  padding: 8px 10px;
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-secondary);
+  font-size: 12px;
+}

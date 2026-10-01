@@ -1,15 +1,15 @@
-/* Design System v0 — tokens + Badge/Button. Cores por variante. */
+/* Design System v0 — usa tokens do theme.css (fallback próprio). */
 .ds-theme {
-  --ds-bg: #0d1117;
-  --ds-fg: #e6e9ef;
-  --ds-neutral: #8b90a0;
-  --ds-info: #4fc3f7;
-  --ds-special: #f5c400;
-  --ds-warning: #ff9800;
-  --ds-buy: #2ecc8a;
-  --ds-sell: #e03a3a;
-  --ds-radius: 6px;
-  --ds-font: Tahoma, sans-serif;
+  --ds-bg: var(--ftp-bg-panel, #0d1117);
+  --ds-fg: var(--ftp-text-primary, #e6e9ef);
+  --ds-neutral: var(--ftp-text-muted, #8b90a0);
+  --ds-info: var(--ftp-info, #4fc3f7);
+  --ds-special: var(--ftp-special, #f5c400);
+  --ds-warning: var(--ftp-warning, #ff9800);
+  --ds-buy: var(--ftp-buy-primary, #2ecc8a);
+  --ds-sell: var(--ftp-sell-primary, #e03a3a);
+  --ds-radius: var(--ftp-radius-sm, 6px);
+  --ds-font: var(--ftp-font-ui, Tahoma, sans-serif);
 }
 
 .ds-badge {
