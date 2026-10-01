@@ -358,6 +358,8 @@ Como nesta fase há **um participante ativo por vez** (decisão 13.3), a passage
 
 > Esta seção registra, de forma rastreável (princípio 4.9), uma divergência conhecida entre a implementação atual e a Constituição, para orientar o realinhamento. Ela **não** é uma especificação de implementação — apenas documenta o gap.
 
+> Nota (2026-10): `src/market/providers/SyntheticMarketProvider.ts` citado abaixo foi **removido** do tree. A divergência descrita continua válida como direção, mas o ponto de partida mudou — ver `docs/Architecture.md` § Ausências antes de planejar o realinhamento.
+
 O `SyntheticMarketProvider` atual (`src/market/providers/SyntheticMarketProvider.ts`) gera o preço por `bias + ruído` via PRNG e atribui broker/volume de forma aleatória, **sem** que as decisões partam de objetivos, perfis e restrições dos participantes. Isso conflita com:
 
 - **Princípio 4.2** — "Fluxo é causa. Preço é consequência. O preço nunca é gerado arbitrariamente." (Hoje o preço é gerado diretamente, não emerge de matching.)

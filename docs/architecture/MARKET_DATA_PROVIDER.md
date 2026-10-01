@@ -1,5 +1,7 @@
 # Market Data Provider
 
+> ⚠️ DOCUMENTO HISTÓRICO — descreve `src/market/providers/` (MarketDataProvider, SyntheticMarketProvider), **removidos do tree atual**. A camada foi substituída por KernelMarketGenerator + MarketScenarioEngine (ver `docs/Architecture.md` § Ausências e `SPRINT8_MIGRATION_COMPLETE.md`). Mantido como contexto; não implementar contra ele sem revisar a arquitetura atual.
+
 ## Objetivo da camada
 A camada `MarketDataProvider` introduz uma separação clara entre a origem dos dados de mercado e o consumidor desses dados.
 Ela permite que o sistema consuma ticks de mercado sem que o `FlowEngine` precise gerar preços internamente.

@@ -14,6 +14,7 @@ npm test
 
 ## Docs
 
+- `AGENTS.md` — guia para agentes LLM (leia primeiro)
 - `docs/README.md` — índice de toda a documentação
 - `PROJECT_STATUS.md` — estado atual, sprints e problemas conhecidos
 - `docs/Architecture.md` — arquitetura (fonte única)

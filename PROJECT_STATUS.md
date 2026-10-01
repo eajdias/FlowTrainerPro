@@ -3,7 +3,7 @@
 **Atualizado:** Outubro 2026
 **Stack:** React 19 + TypeScript 6 + Vite 8 + Zustand (+ Electron)
 **Build:** ⚠️ Quebrado — imports para arquivos inexistentes (ver § Problemas conhecidos)
-**Testes:** 268/268 passando (último registro: julho 2026)
+**Testes:** ⚠️ 2026-10-01: `npx vitest run` → 1/18 arquivos passa (`brokerFlowStore`, 5 testes); 17 falham na coleta pelos mesmos imports ausentes. O "268/268" de julho/2026 refere-se ao tree da época.
 
 Arquitetura, módulos e backlog têm fonte única — este arquivo é só o snapshot de status e **linka** para elas.
 

@@ -2,6 +2,8 @@
 
 Índice da documentação. Cada tema tem **uma fonte única** — não duplicar conteúdo entre arquivos.
 
+Agentes LLM: comecem por `../AGENTS.md`.
+
 ## Arquitetura e módulos
 
 - `Architecture.md` — arquitetura, camadas, estrutura real de `src/` e componentes existentes
