@@ -3,6 +3,8 @@
 // Sem regra de negocio — so aciona handlers existentes.
 import { useState } from 'react';
 import { useTrainingSessionStore, type SimulationSpeed } from '../../store/trainingSessionStore';
+import { useTrainingStore } from '../../store/trainingStore';
+import { usePositionStore } from '../../store/positionStore';
 import { getKernel, type AggressivenessProfile } from '../../core/kernel/SimulationKernel';
 import { initTraderBridge } from '../../trader/TraderExecutionBridge';
 import { PanelShell } from '../PanelShell/PanelShell';
@@ -40,6 +42,8 @@ export function ReplayToolbar() {
     getKernel().start();
     setStarted(true);
     start();
+    const training = useTrainingStore.getState();
+    if (training.scenario && training.status !== 'running') training.startSession();
   };
   const onPause = (): void => {
     getKernel().pause();
@@ -52,6 +56,12 @@ export function ReplayToolbar() {
   const onFinish = (): void => {
     getKernel().stop();
     finish();
+    const training = useTrainingStore.getState();
+    if (training.status === 'running') {
+      const pos = usePositionStore.getState();
+      const trades = useTrainingSessionStore.getState().totalTrades;
+      training.finishSession(pos.realizedPnL, trades);
+    }
   };
   const onReset = (): void => {
     getKernel().stop();

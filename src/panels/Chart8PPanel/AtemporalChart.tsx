@@ -1,51 +1,52 @@
 // panels/Chart8PPanel/AtemporalChart.tsx
-// v0 honesto: tape-plot das execucoes (pontos preco x tempo).
-// Agregacao range-8 vive em futuro ChartEngine — sem candles fabricados aqui.
-import { useTradeStore } from '../../store/tradeStore';
+// Gráfico 8P: candles range (fecha com high-low >= 4.00) + saldo de agressão.
+// Motor: RangeCandleEngine alimentado por execuções (candleFeed).
+import { useEffect, useState } from 'react';
+import { getCandleEngine, type RangeCandle } from '../../core/marketData/candles';
 import { PanelShell } from '../PanelShell/PanelShell';
 
-const MAX_DOTS = 60;
+function AggressionBar({ c }: { c: RangeCandle }) {
+  const total = c.buyVolume + c.sellVolume;
+  const buyPct = total > 0 ? Math.round((c.buyVolume / total) * 100) : 50;
+  return (
+    <span aria-label={`agressão C${c.buyVolume} V${c.sellVolume}`}>
+      C{c.buyVolume}/V{c.sellVolume} ({buyPct}%)
+    </span>
+  );
+}
 
 export function AtemporalChart() {
-  const trades = useTradeStore((s) => s.trades);
-  const dots = trades.slice(0, MAX_DOTS).reverse();
+  const [candles, setCandles] = useState<RangeCandle[]>(() => getCandleEngine().snapshot());
 
-  if (dots.length === 0) {
+  useEffect(() => {
+    const id = setInterval(() => setCandles(getCandleEngine().snapshot()), 500);
+    return () => clearInterval(id);
+  }, []);
+
+  if (candles.length === 0) {
     return (
       <PanelShell title="Gráfico 8P">
-        <p>Sem execuções na sessão. Motor de candles 8P pendente.</p>
+        <p>Sem execuções na sessão.</p>
       </PanelShell>
     );
   }
 
-  const prices = dots.map((t) => t.price);
-  const hi = Math.max(...prices);
-  const lo = Math.min(...prices);
-  const span = hi - lo > 0 ? hi - lo : 1;
-
   return (
     <PanelShell title="Gráfico 8P">
-      <p>
-        Tape-plot das últimas {dots.length} execuções (faixa {lo.toFixed(2)}–{hi.toFixed(2)}). Motor
-        de candles range-8 pendente.
-      </p>
-      <ol>
-        {dots.map((t) => (
-          <li key={t.tradeId}>
-            <span
-              style={{
-                display: 'inline-block',
-                width: `${Math.max(2, ((t.price - lo) / span) * 40)}px`,
-              }}
-            >
-              {t.aggressorSide === 'BUY' ? '▲' : '▼'}
-            </span>
+      <ul>
+        {candles.map((c, i) => (
+          <li
+            key={`${c.startTimestamp}-${i}`}
+            style={c.closed ? undefined : { borderStyle: 'dashed' }}
+            title={c.closed ? 'candle fechado' : 'candle em formação'}
+          >
             <span>
-              {t.price.toFixed(2)} × {t.size}
-            </span>
+              O{c.open.toFixed(2)} H{c.high.toFixed(2)} L{c.low.toFixed(2)} C{c.close.toFixed(2)}
+            </span>{' '}
+            <AggressionBar c={c} />
           </li>
         ))}
-      </ol>
+      </ul>
     </PanelShell>
   );
 }

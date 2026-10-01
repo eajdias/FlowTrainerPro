@@ -19,6 +19,7 @@ import { getKernel } from '../core/kernel/SimulationKernel';
 import { TRADER_EVENTS } from './TradingController';
 import { useTraderOrderStore } from '../store/traderOrderStore';
 import { usePositionStore } from '../store/positionStore';
+import { useTrainingStore } from '../store/trainingStore';
 import type { Order } from '../core/orderflow/models/Order';
 
 const TRADER_PLAYER_ID = 'trader_user';
@@ -121,6 +122,12 @@ export function initTraderBridge(): void {
     // Trader is involved in this execution
     const traderSide = isTraderAggressor ? exec.side : (exec.side === 'buy' ? 'sell' : 'buy');
     const orderId = isTraderPassive ? exec.passiveOrderId : exec.aggressorOrderId;
+
+    // Training: primeira participação do aluno na sessão (tick do kernel).
+    const training = useTrainingStore.getState();
+    if (training.scenario && training.traderEnteredAt === null) {
+      training.recordEntry(traderSide === 'buy' ? 'long' : 'short', getKernel().getTick());
+    }
 
     // Update PositionStore based on execution
     const pos = usePositionStore.getState();

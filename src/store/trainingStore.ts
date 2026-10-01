@@ -3,6 +3,8 @@
 // Manages: scenario, objectives, feedback, score, session state.
 
 import { create } from 'zustand';
+import { eventBus } from '../core/engine/EventBus';
+import { KERNEL_EVENTS, type KernelTickEvent } from '../core/kernel/SimulationKernel';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -227,3 +229,10 @@ export const useTrainingStore = create<TrainingState & TrainingActions>((set, ge
     });
   },
 }));
+
+// ── Wire: kernel tick avança a sessão de treino ───────────────────────────────
+
+eventBus.on<KernelTickEvent>(KERNEL_EVENTS.TICK, () => {
+  const s = useTrainingStore.getState();
+  if (s.status === 'running') s.advanceTick();
+});

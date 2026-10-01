@@ -1,22 +1,24 @@
 // panels/FeedbackInspectorPanel/FeedbackInspector.tsx
-// Técnico: entradas disponíveis p/ feedback. Motor de feedback pendente.
-import { useMissionStore } from '../../training/MissionStore';
-import { usePositionStore } from '../../store/positionStore';
+// Técnico: feedback gerado na sessão — dados reais do trainingStore.
+import { useTrainingStore } from '../../store/trainingStore';
 import { PanelShell } from '../PanelShell/PanelShell';
 
 export function FeedbackInspector() {
-  const mission = useMissionStore((s) => s.currentMission);
-  const realized = usePositionStore((s) => s.realizedPnL);
-  const totalTrades = usePositionStore((s) => s.totalTrades);
+  const feedback = useTrainingStore((s) => s.feedback);
 
   return (
     <PanelShell title="Feedback Inspector">
-      <ul>
-        <li>missão {mission ? mission.id : '—'}</li>
-        <li>trades {totalTrades}</li>
-        <li>realizado {realized.toFixed(2)}</li>
-      </ul>
-      <p>Motor de feedback pendente.</p>
+      {feedback.length === 0 ? (
+        <p>Sem feedback na sessão.</p>
+      ) : (
+        <ul>
+          {feedback.map((f) => (
+            <li key={f.id}>
+              [tick {f.tick}] [{f.type}] {f.message}
+            </li>
+          ))}
+        </ul>
+      )}
     </PanelShell>
   );
 }

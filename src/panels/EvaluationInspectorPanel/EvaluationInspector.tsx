@@ -1,20 +1,45 @@
 // panels/EvaluationInspectorPanel/EvaluationInspector.tsx
-// Técnico: entradas disponíveis p/ avaliação. Motor de avaliação pendente.
-import { useMissionStore } from '../../training/MissionStore';
-import { useTradeStore } from '../../store/tradeStore';
+// Técnico: resultado da avaliação (score, objetivos) — dados reais do trainingStore.
+import { useTrainingStore } from '../../store/trainingStore';
 import { PanelShell } from '../PanelShell/PanelShell';
 
 export function EvaluationInspector() {
-  const mission = useMissionStore((s) => s.currentMission);
-  const execs = useTradeStore((s) => s.totalExecs);
+  const result = useTrainingStore((s) => s.result);
+  const objectives = useTrainingStore((s) => s.objectives);
+  const status = useTrainingStore((s) => s.status);
 
   return (
     <PanelShell title="Evaluation Inspector">
-      <ul>
-        <li>missão {mission ? mission.id : '—'}</li>
-        <li>execuções {execs}</li>
-      </ul>
-      <p>Motor de avaliação pendente.</p>
+      <div>
+        <span>sessão {status}</span>
+      </div>
+      {result ? (
+        <ul>
+          <li>
+            score {result.score.total} ({result.score.passed ? 'aprovado' : 'reprovado'})
+          </li>
+          <li>
+            reconhecimento {result.score.recognition} · timing {result.score.entryTiming} ·
+            disciplina {result.score.discipline} · risco {result.score.riskMgmt}
+          </li>
+          <li>
+            trades {result.tradesMade} · P&L {result.realizedPnL.toFixed(2)}
+          </li>
+          <li>{result.coachMessage}</li>
+        </ul>
+      ) : (
+        <ul>
+          {objectives.length === 0 ? (
+            <li>Sem cenário carregado.</li>
+          ) : (
+            objectives.map((o) => (
+              <li key={o.id}>
+                {o.description} — {o.status}
+              </li>
+            ))
+          )}
+        </ul>
+      )}
     </PanelShell>
   );
 }

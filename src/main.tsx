@@ -5,12 +5,14 @@ import './assets/global.css'
 import { initTraderBridge } from './trader/TraderExecutionBridge'
 import { initHistoricalMarketDataProjection } from './core/marketData/projections'
 import { initFlowAnalysis } from './core/analytics/flowAnalysis'
+import { initCandleFeed } from './core/marketData/candles'
 import { initLiveBrokerFlow } from './store/brokerFlowStore'
 
 // Wiring único no boot (todos idempotentes).
 initTraderBridge()
 initHistoricalMarketDataProjection()
 initFlowAnalysis()
+initCandleFeed()
 initLiveBrokerFlow()
 
 // Clear stale workspace layout if version changed
