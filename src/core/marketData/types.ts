@@ -25,6 +25,6 @@ export interface MarketTrade {
   buyerBroker: MarketBroker;
   sellerBroker: MarketBroker;
   aggressor: AggressorType;
-  source: 'csv';
+  source: 'csv' | 'live';
   syntheticReplayOffsetMs?: number;
 }

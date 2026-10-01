@@ -1,5 +1,10 @@
 import { create } from 'zustand';
+import { eventBus } from '../core/engine/EventBus';
+import { MATCHING_EVENTS, type Execution } from '../core/kernel/MatchingEngine';
+import { BrokerFlowAnalyzer } from '../core/analytics/brokerFlow';
+import { brokerRegistry } from '../core/marketIdentity/BrokerRegistry';
 import type { MarketDataSourceMode } from '../core/marketData/replay';
+import type { MarketTrade } from '../core/marketData/types';
 import type { BrokerFlowMarketSnapshot, BrokerFlowSnapshot } from '../core/analytics/brokerFlow';
 
 export type BrokerFlowWindowKey = '1s' | '5s' | '15s' | '30s' | '60s' | '5min' | 'session';
@@ -265,4 +270,59 @@ function stableSort<T>(items: readonly T[], compare: (a: T, b: T) => number): re
       return result === 0 ? a.index - b.index : result;
     })
     .map(({ item }) => item);
+}
+
+// ── Live feed: executions do kernel → analyzer → snapshot ────────────────────
+// RLP/DIRECT/AUCTION/UNKNOWN nunca ocorrem no matching interno (só BUY/SELL).
+
+const FLUSH_EVERY = 10;
+
+let liveAnalyzer: BrokerFlowAnalyzer | null = null;
+let liveWired = false;
+let liveSinceFlush = 0;
+
+function executionToTrade(exec: Execution): MarketTrade {
+  const buyerCode = exec.side === 'buy' ? exec.aggressorBrokerId : exec.passiveBrokerId;
+  const sellerCode = exec.side === 'buy' ? exec.passiveBrokerId : exec.aggressorBrokerId;
+  const buyerName = brokerRegistry.getBroker(buyerCode)?.name ?? `B${buyerCode}`;
+  const sellerName = brokerRegistry.getBroker(sellerCode)?.name ?? `B${sellerCode}`;
+  return {
+    tradeId: `live-${exec.executionId}`,
+    sourceLine: 0,
+    sourceSequence: 0,
+    chronologicalSequence: 0,
+    asset: 'WDO',
+    tradeDate: '',
+    tradeTime: '',
+    timestamp: exec.timestamp,
+    price: exec.price,
+    priceInTicks: exec.price,
+    quantity: exec.size,
+    buyerBroker: { code: buyerCode, name: buyerName, raw: buyerName },
+    sellerBroker: { code: sellerCode, name: sellerName, raw: sellerName },
+    aggressor: exec.side === 'buy' ? 'BUY' : 'SELL',
+    source: 'live',
+  };
+}
+
+/** Liga o feed ao vivo uma vez (boot). Idempotente. */
+export function initLiveBrokerFlow(
+  sourceMode: MarketDataSourceMode = 'SYNTHETIC',
+  sessionId: string | null = 'live',
+): void {
+  if (liveWired) return;
+  liveWired = true;
+  liveAnalyzer = new BrokerFlowAnalyzer({ sourceMode, sessionId });
+  eventBus.on<Execution>(MATCHING_EVENTS.EXECUTION_CREATED, (exec) => {
+    liveAnalyzer?.processTrade(executionToTrade(exec));
+    liveSinceFlush += 1;
+    if (liveSinceFlush >= FLUSH_EVERY) flushLiveBrokerFlow();
+  });
+}
+
+/** Publica o snapshot acumulado no store. */
+export function flushLiveBrokerFlow(): void {
+  if (!liveAnalyzer) return;
+  liveSinceFlush = 0;
+  useBrokerFlowStore.getState().receiveSnapshot(liveAnalyzer.flushSnapshot());
 }

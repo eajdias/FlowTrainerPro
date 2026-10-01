@@ -5,11 +5,13 @@ import './assets/global.css'
 import { initTraderBridge } from './trader/TraderExecutionBridge'
 import { initHistoricalMarketDataProjection } from './core/marketData/projections'
 import { initFlowAnalysis } from './core/analytics/flowAnalysis'
+import { initLiveBrokerFlow } from './store/brokerFlowStore'
 
 // Wiring único no boot (todos idempotentes).
 initTraderBridge()
 initHistoricalMarketDataProjection()
 initFlowAnalysis()
+initLiveBrokerFlow()
 
 // Clear stale workspace layout if version changed
 const APP_VERSION = '5.0'; // bump this to force layout reset
