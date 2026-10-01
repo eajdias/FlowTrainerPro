@@ -75,6 +75,10 @@ export function createDefaultWorkspace(): WorkspaceConfig {
       // Bottom strip — CandleClock (PriceLadder fica oculto: painel vertical)
       panel('CandleClockPanel',      2,   800, 1092, 56, 1, true),
 
+      // Replay + Dados (scroll vertical do workspace)
+      panel('ReplayPlayerPanel',     2,   860, 540, 220, 1, true),
+      panel('DataPanel',             546, 860, 548, 220, 1, true),
+
       // Hidden panels
       panel('PriceLadderPanel',      2,   2,   1, 1, 1, false),
       panel('TrainingPanel',         2,   2,   1, 1, 1, false),

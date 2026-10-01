@@ -28,7 +28,8 @@ export type PanelType =
   | 'EvaluationInspectorPanel'
   | 'FeedbackInspectorPanel'
   | 'ReplayInspectorPanel'
-  | 'ReplayPlayerPanel';
+  | 'ReplayPlayerPanel'
+  | 'DataPanel';
   // Future: 'HeatmapPanel' | 'AgressorPanel' | 'PlayerRankingPanel'
 
 export type PanelMode = 'docked' | 'floating';

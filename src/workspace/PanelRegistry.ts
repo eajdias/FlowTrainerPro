@@ -29,6 +29,7 @@ import { EvaluationInspector } from '../panels/EvaluationInspectorPanel/Evaluati
 import { FeedbackInspector } from '../panels/FeedbackInspectorPanel/FeedbackInspector';
 import { ReplayInspector } from '../panels/ReplayInspectorPanel/ReplayInspector';
 import { ReplayPlayer } from '../panels/ReplayPlayerPanel/ReplayPlayer';
+import { DataPanel } from '../panels/DataPanel/DataPanel';
 
 export const PANEL_REGISTRY: Record<PanelType, React.ComponentType<any>> = {
   BookPanel:              PriceBook,
@@ -54,6 +55,7 @@ export const PANEL_REGISTRY: Record<PanelType, React.ComponentType<any>> = {
   FeedbackInspectorPanel: FeedbackInspector,
   ReplayInspectorPanel:  ReplayInspector,
   ReplayPlayerPanel:     ReplayPlayer,
+  DataPanel:             DataPanel,
 };
 
 /** Resolve a panel component by type. Returns null if not found (safe). */

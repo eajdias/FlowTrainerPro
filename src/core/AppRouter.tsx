@@ -10,36 +10,22 @@ import { usePositionStore } from "../store/positionStore";
 import { useTradeStore } from "../store/tradeStore";
 import { useBrokerFlowStore, selectBrokerFlowRankings } from "../store/brokerFlowStore";
 import { getFlowEngine, type FlowAnalysisSnapshot } from "../core/analytics/flowAnalysis";
+import { useDataAssetStore } from "../store/dataAssetStore";
+import {
+  loadStudyMaterials,
+  readWdoCache,
+  wdoCacheToCandles,
+  type StudyMaterial,
+} from "../core/marketData/history/materials";
+import { buildSessionStats } from "../core/analytics/history/sessionStats";
 
 type AppRoute = "dashboard" | "academy" | "training" | "analysis";
 
 const ROUTES: AppRoute[] = ["dashboard", "academy", "training", "analysis"];
 
-interface StudySession {
-  date: string;
-  range: number;
-  volume: number;
-  gapPct: number;
-  regime: string;
-}
-
-interface StudyMaterial {
-  symbol: string;
-  generatedAt: string;
-  sessions: StudySession[];
-}
-
-function loadStudyMaterials(): StudyMaterial[] {
-  const modules = import.meta.glob<{ default: StudyMaterial }>(
-    '../../data/materials/*.json',
-    { eager: true },
-  );
-  return Object.values(modules).map((m) => m.default);
-}
-
 function StudySessions({ materials }: { materials: StudyMaterial[] }) {
   if (materials.length === 0) {
-    return <p>Sem materiais de estudo — rode `npm run materials -- --symbol PETR4`.</p>;
+    return <p>Sem materiais de estudo — importe na aba Dados & Ativos ou rode `npm run materials`.</p>;
   }
   return (
     <div>
@@ -47,7 +33,7 @@ function StudySessions({ materials }: { materials: StudyMaterial[] }) {
       {materials.map((doc) => (
         <article key={doc.symbol}>
           <h4>
-            {doc.symbol} ({doc.sessions.length} sessões)
+            {doc.symbol} ({doc.sessions.length} sessões){doc.live ? ' · atualizado' : ''}
           </h4>
           <ul>
             {doc.sessions.slice(-10).map((s) => (
@@ -70,6 +56,21 @@ function routeFromHash(): AppRoute {
 
 function TrainingRoute() {
   const missions = listMissions();
+  const [showTour, setShowTour] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('ftp-tour-seen') !== '1';
+    } catch {
+      return true;
+    }
+  });
+  const dismissTour = (): void => {
+    try {
+      localStorage.setItem('ftp-tour-seen', '1');
+    } catch {
+      /* sem persistência — só fecha */
+    }
+    setShowTour(false);
+  };
   const currentMission = useMissionStore((s) => s.currentMission);
   const setMission = useMissionStore((s) => s.setMission);
   const clearMission = useMissionStore((s) => s.clear);
@@ -106,6 +107,19 @@ function TrainingRoute() {
   return (
     <section aria-label="Training missions">
       <h2>Training</h2>
+      {showTour && (
+        <div className="ftp-tour" role="note" aria-label="Primeiros passos">
+          <strong>Primeiros passos</strong>
+          <ol>
+            <li>Escolha uma missão abaixo.</li>
+            <li>Leia o briefing e aperte ▶ Iniciar.</li>
+            <li>Opere no SuperDOM (clique = limite, Shift+clique = a mercado).</li>
+          </ol>
+          <button type="button" onClick={dismissTour}>
+            Começar
+          </button>
+        </div>
+      )}
       <ol>
         <li aria-current={step === 1 ? 'step' : undefined}>1. Escolher missão</li>
         <li aria-current={step === 2 ? 'step' : undefined}>2. Ler briefing e iniciar</li>
@@ -220,7 +234,26 @@ function DashboardRoute() {
 function AcademyRoute() {
   const missions = listMissions();
   const [openId, setOpenId] = useState<string | null>(null);
-  const materials = useMemo(() => loadStudyMaterials(), []);
+  const asset = useDataAssetStore((s) => s.asset);
+  const materials = useMemo(() => {
+    const docs = loadStudyMaterials();
+    if (asset === 'SYNTHETIC') return docs;
+    if (asset === 'CSV') return [];
+    const cache =
+      asset === 'WDO' ? readWdoCache(typeof localStorage !== 'undefined' ? localStorage : undefined) : null;
+    if (cache) {
+      const sessions = buildSessionStats(wdoCacheToCandles(cache, asset));
+      return [
+        {
+          symbol: asset,
+          generatedAt: cache.savedAt,
+          sessions,
+          live: true,
+        },
+      ];
+    }
+    return docs.filter((d) => d.symbol === asset);
+  }, [asset]);
 
   return (
     <section aria-label="Academy">

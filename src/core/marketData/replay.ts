@@ -52,8 +52,7 @@ const INITIAL_STATE: HistoricalReplayState = {
  * Replay historico com lifecycle load/start/pause/resume/stop/reset/unload.
  * Estado imutavel; timestamps historicos preservados; sem efeitos no matching.
  */
-export class HistoricalReplayEngine {
-  private state: HistoricalReplayState = INITIAL_STATE;
+export class HistoricalReplayEngine {  private state: HistoricalReplayState = INITIAL_STATE;
   private trades: MarketTrade[] = [];
   private timer: ReturnType<typeof setTimeout> | null = null;
 
@@ -173,4 +172,14 @@ export class HistoricalReplayEngine {
       this.timer = null;
     }
   }
+}
+
+// ─── Instância compartilhada (DataPanel carrega, ReplayPlayer toca) ───────────
+
+let shared: HistoricalReplayEngine | null = null;
+
+/** Motor único do replay histórico na sessão. */
+export function getSharedReplayEngine(): HistoricalReplayEngine {
+  if (!shared) shared = new HistoricalReplayEngine();
+  return shared;
 }

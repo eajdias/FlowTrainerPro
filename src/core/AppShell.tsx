@@ -5,6 +5,7 @@ import { useMarketStore } from '../store/marketStore';
 import { useBookStore } from '../store/bookStore';
 import { useTrainingSessionStore, type SessionStatus } from '../store/trainingSessionStore';
 import { useHistoricalTradeStore } from '../store/historicalTradeStore';
+import { useDataAssetStore, ASSET_LABELS } from '../store/dataAssetStore';
 import { useBrokerFlowStore } from '../store/brokerFlowStore';
 import type { MarketDataSourceMode } from '../core/marketData/replay';
 import './AppShell.css';
@@ -94,6 +95,7 @@ function formatClock(date = new Date()): string {
 export function AppShell({ current, onNavigate, children }: AppShellProps) {
   const sourceMode = useMarketDataSourceStore((state) => state.sourceMode);
   const sessionId = useMarketDataSourceStore((state) => state.sessionId);
+  const asset = useDataAssetStore((state) => state.asset);
   const isRunning = useMarketStore((state) => state.isRunning);
   const tickCount = useMarketStore((state) => state.tickCount);
   const flowTradeCount = useMarketStore((state) => state.flowSnapshot.tradesSeen);
@@ -131,9 +133,9 @@ export function AppShell({ current, onNavigate, children }: AppShellProps) {
         </div>
 
         <div className="ftp-marketContext" aria-label="Contexto de mercado">
-          <div className="ftp-instrument" title="Nenhum ativo carregado por um fluxo homologado.">
+          <div className="ftp-instrument" title="Ativo em estudo. O motor ao vivo é sintético (WDO).">
             <span className="ftp-kicker">Ativo</span>
-            <strong>Nenhum ativo</strong>
+            <strong>{ASSET_LABELS[asset]}</strong>
             <span>{source.label}</span>
           </div>
 

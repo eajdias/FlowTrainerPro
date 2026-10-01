@@ -177,6 +177,43 @@
   color: var(--ftp-text-muted);
 }
 
+.ftp-panel button,
+.ftp-main section[aria-label] button,
+.ftp-workspace [role="tab"],
+.ftp-sourceButton,
+.ftp-actionButton {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 120ms ease;
+}
+
+.ftp-panel button:active,
+.ftp-main section[aria-label] button:active {
+  transform: translateY(1px);
+}
+
+.ftp-workspace [role="tab"]:hover {
+  border-color: var(--ftp-border-strong);
+  color: var(--ftp-text-primary);
+}
+
+/* Tour de primeiros passos */
+.ftp-tour {
+  margin: 6px 12px;
+  padding: 8px 10px;
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-info);
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-secondary);
+  font-size: 12px;
+}
+
+.ftp-tour ol {
+  margin: 6px 0 6px 18px;
+}
+
 /* Workspace */
 .ftp-workspace {
   position: relative;

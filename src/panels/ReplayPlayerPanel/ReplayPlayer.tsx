@@ -2,13 +2,13 @@
 // Player de replay histórico: arquivo CSV -> HistoricalReplayEngine.
 // Emite historical:trade:executed; projections atualizam os stores.
 import { useEffect, useState } from 'react';
-import { HistoricalReplayEngine } from '../../core/marketData/replay';
+import { getSharedReplayEngine } from '../../core/marketData/replay';
 import { initHistoricalMarketDataProjection } from '../../core/marketData/projections';
 import { parseCsvTrades } from '../../core/marketData/import';
 import { PanelShell } from '../PanelShell/PanelShell';
 
 export function ReplayPlayer() {
-  const [engine] = useState(() => new HistoricalReplayEngine());
+  const [engine] = useState(() => getSharedReplayEngine());
   const [, setTick] = useState(0);
   const [error, setError] = useState<string | null>(null);
 

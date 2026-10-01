@@ -42,7 +42,20 @@ export function TimesAndTrades() {
         </label>
       </div>
       {visible.length === 0 ? (
-        <p>Sem execuções no filtro atual.</p>
+        <div>
+          <p>Sem execuções no filtro atual.</p>
+          {(side !== 'all' || minSize > 0) && (
+            <button
+              type="button"
+              onClick={() => {
+                setSide('all');
+                setMinSize(0);
+              }}
+            >
+              Limpar filtros
+            </button>
+          )}
+        </div>
       ) : (
         <table>
         <thead>
