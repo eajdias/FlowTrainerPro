@@ -2,19 +2,18 @@
 
 Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROADMAP.md` linkam para cá — não duplicar listas lá.
 
-## Item 0 — Pré-requisito (bloqueia tudo)
+## Item 0 — Pré-requisito (concluído ✅ 2026-10-01)
 
-- [ ] Restaurar módulos `src/` ausentes que quebram build e testes (lista: `docs/Architecture.md` § Ausências).
-- Evidência atual (2026-10-01): `npx vitest run` → **17/18 arquivos falham** na coleta (imports de `src/core/kernel/*`, `src/core/flowAnalysis/*`, `src/panels/*/` inexistentes); só `tests/brokerFlow/brokerFlowStore.test.ts` passa (5 testes). `tsc` falha pelos mesmos imports.
-- Sem isso, nenhum item abaixo é verificável.
+- ~~Restaurar módulos `src/` ausentes que quebram build e testes~~ → criados a partir dos contratos (imports + testes como spec); nada existia no histórico para restaurar.
+- Evidência: `npx tsc --noEmit` → **0 erros**; `npx vitest run` → **26/26**; `npx vite build` ok; validado no navegador (kernel RUNNING, ladder ao vivo, click→posição, 0 erros de console).
 
 ## Alta prioridade
 
-- [ ] Completar UX 3: Book e Volume Profile
-- [ ] Filtros do Times & Trades + painel expandido de fila do SuperDOM
+- [x] Completar UX 3: Book e Volume Profile → `PriceBook`, `VolumeProfile` implementados
+- [ ] Filtros do Times & Trades + painel expandido de fila do SuperDOM (fila por ordem já visível via `QueueInspector`)
 - [ ] Perfis de agressividade do mercado (lento/normal/agressivo)
 - [ ] TRAINING FIFO opcional (filas menores para mais feedback durante treino)
-- [ ] Pressão, Resposta e Liquidez (FlowAnalysisEngine Sprint 17)
+- [x] Pressão, Resposta e Liquidez (FlowAnalysisEngine Sprint 17) → `FlowAnalysisEngine` (Hawkes+CUSUM+BOCPD, sweeps, walls) implementado e testado; consumo pelos painéis pendente
 - [ ] Indicador de slippage para ordens agressoras
 - [ ] Estatística de tempo médio de fila por nível
 
@@ -22,9 +21,9 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 
 - [ ] Conectar `dashboard`, `academy` e `analysis` a dados reais
 - [ ] Roteamento baseado em URL e navegação persistente
-- [ ] Refinar `PriceLadderPanel` e `OrderBookByBrokerPanel` com dados dinâmicos
+- [x] Refinar `PriceLadderPanel` e `OrderBookByBrokerPanel` com dados dinâmicos → leem `marketStore` ao vivo
+- [x] UI completa de importação/replay histórico → `ReplayPlayer` (CSV→engine→projections→stores) + `ReplayInspector`
 - [ ] QA completo de Replay Mode (live vs replay com mesma sequência)
-- [ ] UI completa de importação/replay histórico
 - [ ] Medição automatizada de FPS/long tasks para o gráfico 8P
 - [ ] Teste de cobertura
 - [ ] Teste de memória prolongado (50k+ execuções)
@@ -62,4 +61,4 @@ Fonte única do que falta fazer. Ordem = prioridade. `PROJECT_STATUS.md` e `ROAD
 
 ## Resumo do estado
 
-Núcleo sólido e homologado (simulação, matching, treinamento) com suíte de testes registrada. Arquitetura bem separada entre universo do mercado e universo do trader. O que falta é principalmente: **(a)** restaurar os módulos `src/` ausentes (item 0), **(b)** polimento de UX (completar painéis), **(c)** recursos de treinamento avançados (perfis de agressividade, slippage, fila) e **(d)** integração com dados reais (`dashboard`, `academy`, `analysis` ainda não conectados).
+Verificado em disco em 2026-10-01: `tsc` 0 erros, `vitest` 26/26, `vite build` ok, loop trader validado no navegador. O que falta: **(a)** recursos de treinamento avançados (perfis de agressividade, TRAINING FIFO, slippage, tempo de fila), **(b)** filtros do Times & Trades + fila expandida, consumo do FlowAnalysis pelos painéis, **(c)** roteamento URL, QA de replay, FPS do 8P, cobertura.

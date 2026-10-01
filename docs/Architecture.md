@@ -28,12 +28,19 @@ Detalhe dos universos e da camada de treinamento (cenários, missões, avaliaç�
 ```
 src/
 ├── core/               # AppRouter.tsx, AppShell.tsx/.css, App.tsx
-│   └── analytics/volumeAnomaly/  # bocpd, cusum, hawkes, types (+ detector/index untracked)
+│   ├── engine/               # EventBus
+│   ├── kernel/               # MatchingEngine, OrderBookEngine, MarketScenarioEngine, SimulationKernel, KernelMarketGenerator
+│   ├── orderflow/models/     # Order
+│   ├── marketData/           # types, replay, projections, import, latency/
+│   ├── marketIdentity/       # BrokerRegistry + data/brokers
+│   └── analytics/            # volumeAnomaly/, liquidity/, brokerFlow/, flowAnalysis/
 ├── trader/             # TradingController.ts, TraderExecutionBridge.ts, QueueInspector.ts
 ├── training/           # TrainingMissionEngine.ts, MissionLibrary.ts, MissionStore.ts, types.ts
-├── panels/             # SÓ index.ts (barrel) — subdirs dos painéis AUSENTES (ver § Ausências)
-├── workspace/          # PanelRegistry.ts, WorkspaceStore.ts, defaultWorkspaces.ts, types.ts
+├── panels/             # 24 tipos do registry implementados (ver Modules.md)
+├── workspace/          # PanelRegistry.ts, WorkspaceStore.ts, defaultWorkspaces.ts, types.ts + Manager/Layout/DockManager
 ├── store/              # 14 stores (book, trade, broker*, historical*, position, traderOrder, market, ...)
+├── market/providers/   # MarketDataProvider (MarketTick)
+├── ui/                 # designSystem (ThemeProvider, Badge, Button)
 ├── services/           # SÓ index.ts (stub vazio)
 ├── router/             # SÓ index.ts (stub vazio, não usado — navegação é por estado em AppRouter)
 └── assets/             # global.css + estáticos
@@ -52,14 +59,12 @@ src/
 | `src/workspace/PanelRegistry.ts` | Registro tipo → componente de painel |
 | `src/workspace/WorkspaceStore.ts` / `defaultWorkspaces.ts` | Estado e layouts do workspace |
 | `src/store/*.ts` | Stores Zustand por domínio |
+| `src/core/kernel/*` | Matching, book, cenário, kernel 150ms, gerador sintético |
+| `src/core/marketData/*` | Tipos, replay histórico, projections, import CSV, latência |
+| `src/core/analytics/*` | volumeAnomaly, liquidity, brokerFlow, flowAnalysis |
+| `src/panels/*/` | 24 painéis do registry (UX 3 + treinamento + replay) |
+| `src/ui/designSystem` | ThemeProvider, Badge, Button |
 
-## Ausências conhecidas (quebram o build)
+## Ausências conhecidas (2026-10-01: nenhuma quebrando o build)
 
-- `src/panels/*/`: `PanelRegistry.ts` e `panels/index.ts` importam ~20 painéis (`SuperDOM`, `TimesAndTrades`, `PriceLadder`, `AtemporalChart`, inspectors, etc.) — **nenhum subdir existe**. Só `src/panels/index.ts` está commitado.
-- `src/workspace/WorkspaceManager/`, `LayoutManager/`, `DockManager/`: importados por `src/workspace/index.ts` — **não existem**.
-- `src/ui/designSystem`: importado por `src/App.tsx` e `src/core/AppShell.tsx` (`ThemeProvider`, `Badge`, `Button`) — **não existe** (`src/ui/` foi removido por estar vazio).
-- `src/core/kernel/` (`SimulationKernel`, `SimulationClock`, `MatchingEngine`, `OrderBookEngine`, `MarketScenarioEngine`): citados em docs antigos — **não existem** no tree atual.
-- `src/core/marketData/`, `src/core/marketIdentity/`, `src/market/`: citados em docs antigos — **não existem** (só dirs vazios locais `marketData/latency`, `analytics/liquidity`).
-- `src/modules/`: citado em docs antigos — **não existe** (removido; o módulo `training` real vive em `src/training/`).
-
-Docs que descrevem arquivos removidos (`architecture/MARKET_DATA_PROVIDER.md`, `FLOW_PLAYER_LIBRARY.md` §12) são **históricos** — não refletem o tree atual.
+`tsc` 0 erros. Docs que descrevem arquivos removidos (`architecture/MARKET_DATA_PROVIDER.md`, `FLOW_PLAYER_LIBRARY.md` §12) são **históricos** — não refletem o tree atual. Motores de avaliação/feedback/replay-recorder (`src/training/evaluation|feedback|replay|rules`) e `modules/academy` não existem — inspectores correspondentes exibem entradas disponíveis com nota de pendência.

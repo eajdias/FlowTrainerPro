@@ -2,8 +2,8 @@
 
 **Atualizado:** Outubro 2026
 **Stack:** React 19 + TypeScript 6 + Vite 8 + Zustand (+ Electron)
-**Build:** ⚠️ Quebrado — imports para arquivos inexistentes (ver § Problemas conhecidos)
-**Testes:** ⚠️ 2026-10-01: `npx vitest run` → 1/18 arquivos passa (`brokerFlowStore`, 5 testes); 17 falham na coleta pelos mesmos imports ausentes. O "268/268" de julho/2026 refere-se ao tree da época.
+**Build:** ✅ `npx tsc --noEmit` → 0 erros; `npx vite build` ok (2026-10-01)
+**Testes:** ✅ `npx vitest run` → 26/26 (kernel 8 + flowAnalysis 18). Loop trader validado no navegador (kernel RUNNING, ladder ao vivo, click→posição, 0 erros de console).
 
 Arquitetura, módulos e backlog têm fonte única — este arquivo é só o snapshot de status e **linka** para elas.
 
@@ -45,6 +45,8 @@ Interações do SuperDOM e semântica da fila FIFO: ver `docs/product/SUPERDOM_T
 
 ## 3. Sprints concluídas
 
+Histórico de homologações do tree de julho/2026 (motores da época, fora deste tree):
+
 | Sprint | Descrição | Testes |
 |--------|-----------|--------|
 | 1-8 | Kernel Migration | ✅ |
@@ -61,15 +63,19 @@ Interações do SuperDOM e semântica da fila FIFO: ver `docs/product/SUPERDOM_T
 | — | Passive Fill Diagnostic | 17/17 ✅ |
 | — | Performance (Clock 150ms) | ✅ |
 
-## 4. Problemas conhecidos
+Reconstrução outubro/2026 (neste tree, ver commits):
 
-Build (`tsc`) falha por imports para arquivos não commitados (detalhe: `docs/Architecture.md` § Ausências):
+| Fase | Descrição | Evidência |
+|--------|-----------|--------|
+| Fundação | EventBus, designSystem, marketData, brokerRegistry, brokerFlow | tsc 0, scripts ok |
+| Kernel | Matching FIFO, book, cenário, kernel 150ms, gerador | 8 testes ✅ |
+| Painéis | 24 tipos do registry + workspace managers | browser validado ✅ |
+| Analytics | FlowAnalysis (Hawkes/CUSUM/BOCPD), liquidity, latency | 18 testes ✅ |
 
-- `src/panels/*/` (20+ painéis importados pelo registry; só o barrel `index.ts` existe)
-- `src/workspace/WorkspaceManager/`, `LayoutManager/`, `DockManager/`
-- `src/ui/designSystem` (`ThemeProvider`, `Badge`, `Button` usados em `App.tsx`/`AppShell.tsx`)
-- `src/core/kernel/` (SimulationKernel, MatchingEngine, etc. citados em docs antigos)
+## 4. Problemas conhecidos (resolvidos em 2026-10-01)
+
+Os imports quebrados (§ anterior) foram criados a partir dos contratos: `tsc` 0 erros. Histórico preservado acima para auditoria.
 
 ## 5. Próximos passos
 
-Fonte única: `docs/roadmap/BACKLOG.md`. Não duplicar a lista aqui. Item zero antes de qualquer feature: corrigir os imports quebrados (§4).
+Fonte única: `docs/roadmap/BACKLOG.md`. Não duplicar a lista aqui.

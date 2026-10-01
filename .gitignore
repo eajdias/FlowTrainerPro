@@ -26,3 +26,6 @@ dist-ssr
 # Real market data imports
 data/imports/*.csv
 
+# Playwright CLI session artifacts
+.playwright-cli/
+

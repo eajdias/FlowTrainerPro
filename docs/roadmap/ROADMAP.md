@@ -14,9 +14,9 @@ Fases concluídas + fase atual. A lista do que falta fazer vive em `BACKLOG.md` 
 
 Detalhe por sprint: `SPRINT_1.md`, `SPRINT_2.md`, `docs/architecture/SPRINT*.md`.
 
-## Fase atual — Restauração + UX 3 + treinamento avançado
+## Fase atual — treinamento avançado + backlog
 
-1. **Item 0 (bloqueante):** restaurar módulos `src/` ausentes — sem isso build e testes não passam.
-2. **Depois:** executar `BACKLOG.md` na ordem de prioridade (alta → média → baixa).
+1. **Alta (ordem):** perfis de agressividade → TRAINING FIFO → slippage agressoras → tempo médio de fila → filtros T&T + fila expandida + consumo do FlowAnalysis nos painéis.
+2. **Depois:** `BACKLOG.md` média → baixa.
 
 Notas históricas em `SPRINT_1.md`/`SPRINT_2.md` descrevem o plano original das sprints (ex.: citam `SyntheticMarketProvider` e engines que não existem mais no tree) — valem como contexto, não como estado atual.

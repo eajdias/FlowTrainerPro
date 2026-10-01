@@ -25,9 +25,7 @@ Navegação entre eles: estado local em `src/core/AppRouter.tsx` (`src/router/` 
 
 ## Painéis
 
-`src/workspace/PanelRegistry.ts` registra 24 tipos (`SuperDOMPanel`, `TimesTradesPanel`, `VolumeProfilePanel`, `Chart8PPanel`, `Large/MediumTradesPanel`, inspectors, `ReplayPlayerPanel`, etc.).
-
-⚠️ **Implementações ausentes:** só `src/panels/index.ts` (barrel) existe — nenhum subdir `src/panels/*/` está commitado. Ou seja: a tabela abaixo é o **contrato do registry**, não painéis funcionais. Ver `docs/Architecture.md` § Ausências.
+`src/workspace/PanelRegistry.ts` registra 24 tipos — todos implementados em `src/panels/*/` (2026-10-01). Núcleo UX 3 funcional: SuperDOM (click/Shift+click homologados), Times & Trades, Book, Volume Profile, Chart8P (tape-plot; motor range-8 pendente), ReplayToolbar (sessão+kernel+bridge).
 
 | Painel (tipo registrado) | Uso |
 |--------|------|
