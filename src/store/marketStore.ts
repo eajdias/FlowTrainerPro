@@ -9,9 +9,6 @@ import { brokerRegistry } from '../core/marketIdentity/BrokerRegistry';
 import type { MarketTick } from '../market/providers/MarketDataProvider';
 import type { FlowAnalysisSnapshot } from '../core/analytics/flowAnalysis';
 
-// ── Re-export FlowTick ────────────────────────────────────────────────────────
-export type FlowTick = MarketTick;
-
 // ── Trade entry (Times & Trades) ──────────────────────────────────────────────
 export interface TradeEntry {
   id:          string;

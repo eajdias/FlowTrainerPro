@@ -1,5 +1,6 @@
 # Sprint 7 — MatchingEngine Movimenta o Mercado
 
+> ⚠️ DOCUMENTO HISTÓRICO — narrativa de migração de outro tree (FlowEngine, SyntheticMarketProvider, players com IA). Mantido como contexto; o estado real vive em `docs/Architecture.md`, `docs/roadmap/BACKLOG.md` e nos testes.
 ## Objetivo
 O preço agora é **consequência** do casamento de ordens, não de cálculo direto. Players colocam ordens no `OrderBookEngine`. O `MatchingEngine` cruza essas ordens (FIFO price-time priority). Executions produzem os MarketTicks que alimentam a UI.
 

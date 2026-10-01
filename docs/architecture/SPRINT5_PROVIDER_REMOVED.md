@@ -1,5 +1,6 @@
 # Sprint 5 — SyntheticMarketProvider Desligado
 
+> ⚠️ DOCUMENTO HISTÓRICO — narrativa de migração de outro tree (FlowEngine, SyntheticMarketProvider, players com IA). Mantido como contexto; o estado real vive em `docs/Architecture.md`, `docs/roadmap/BACKLOG.md` e nos testes.
 ## Objetivo
 O `SyntheticMarketProvider` é removido do pipeline ativo. Quem gera mercado agora é o `KernelMarketGenerator` — um componente interno do Kernel. O hook `useFlowEngine` não importa mais nenhum provider.
 

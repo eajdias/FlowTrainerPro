@@ -14,41 +14,28 @@ Regras:
 - respeitar `prefers-reduced-motion`;
 - manter numeros com `tabular-nums`.
 
-## Paleta
+## Paleta (tokens em `src/assets/theme.css`)
 
-- Canvas: `#0B0E13`
-- App: `#0F131A`
-- Panel: `#151A23`
-- Panel elevated: `#1A202B`
-- Hover: `#202735`
-- Border subtle: `#283140`
-- Border strong: `#354154`
-- Text primary: `#F4F7FB`
-- Text secondary: `#A7B0BF`
-- Text muted: `#707C8D`
-- Accent primary: `#4D8DFF`
-- Accent secondary: `#6D5DFB`
-- Buy: `#23C483`
-- Sell: `#FF5B68`
-- Warning: `#F4B740`
-- Info: `#42B8F5`
-- Neutral: `#8B95A5`
+- Canvas: `#101216`
+- App: `#14161b`
+- Panel: `#1a1d23`
+- Panel elevated: `#20242c`
+- Hover: `#262b34`
+- Border subtle: `#262b33`
+- Border strong: `#353c47`
+- Text primary: `#e8ebf0`
+- Text secondary: `#b9c0cb`
+- Text muted: `#828da0` (contraste ≥ 4.64 — Lighthouse a11y 100)
+- Accent: `#4d8dff`
+- Buy: `#00c853`
+- Sell: `#ff5252`
+- Warning: `#ff9800`
+- Info: `#4fc3f7`
+- Special: `#f5c400`
 
 ## Tipografia
 
-Fonte UI:
-
-```txt
-Inter, Segoe UI, system-ui
-```
-
-Fonte numerica:
-
-```txt
-IBM Plex Mono, SFMono-Regular, Consolas
-```
-
-Numeros de mercado devem usar `font-variant-numeric: tabular-nums`.
+Fonte UI e numérica: Tahoma (produto), fallback Segoe UI/system. Números sempre `tabular-nums`.
 
 ## Espacamento
 
@@ -61,36 +48,26 @@ Escala oficial:
 ## Radius
 
 ```txt
-xs 3px
-sm 5px
-md 8px
-lg 12px
+xs 2px
+sm 3px
+md 4px
 ```
 
 ## Movimento
 
 ```txt
-fast 100ms
+fast 120ms
 normal 160ms
-slow 240ms
 ```
 
-Animacoes devem ser funcionais: hover, foco, estado e feedback.
+Transições só em hover/foco/estado (`panels.css`); sem animação decorativa.
 
-## Componentes
-
-Criados na Fase UX 1:
+## Componentes (`src/ui/designSystem.tsx`)
 
 - `ThemeProvider`
-- `Button`
-- `IconButton`
-- `Badge`
-- `Panel`
-- `Card`
-- `Surface`
-- `Divider`
-- `Text`
-- `Tooltip`
+- `Button` (`primary`/`ghost`)
+- `Badge` (`neutral/info/special/warning/buy/sell`)
+- `Icon` (SVG inline: `import/config/layout/help`)
 
 ## Controles Globais UX 2
 
@@ -102,34 +79,27 @@ Header, StatusBar e ReplayToolbar devem seguir o vocabulario oficial:
 
 Regras:
 
-- nao usar emoji como icone profissional;
-- nao criar botao sem handler real;
+- nao usar emoji como icone profissional (SVG inline no DS);
+- nao criar botao sem handler real (source modes viraram indicadores; mortos removidos);
 - nao misturar ordens de trading com transporte de replay;
-- tooltips devem explicar estado, atalho ou motivo de indisponibilidade;
-- controles desabilitados devem ter aparencia consistente;
-- barra de progresso da ReplayToolbar e visual enquanto seek seguro nao estiver homologado.
+- tooltips devem explicar estado, atalho ou motivo de indisponibilidade.
 
-## Painéis de Mercado UX 3
+## Painéis de Mercado UX 3 (implementado)
 
-SuperDOM e Times & Trades seguem:
+SuperDOM, Times & Trades, Book, Volume Profile e Chart8P seguem:
 
-- densidade compacta;
+- densidade compacta com grade fixa e ellipsis (robusto a zoom de fonte);
 - números com `tabular-nums`;
-- barras translúcidas, nunca blocos sólidos saturados;
+- tints translúcidos compra/venda escopados ao SuperDOM;
 - ordens do aluno visualmente diferentes de liquidez do book;
-- tipos especiais do Times & Trades separados de BUY/SELL;
-- truncamento com tooltip para nomes longos;
-- foco visível em controles;
-- `prefers-reduced-motion` respeitado.
+- fila expandida com espera média; Slip no T&T; filtros de lado/lote.
 
-## Baseline Tecnico UX 1
+## Baseline tecnico (2026-10-01, verificado)
 
-- build validado com `npm run build`;
-- testes do Design System: 7/7;
-- suite completa estabilizada: 29 arquivos, 163 testes;
-- testes com CSV real classificados como integracao pesada, nao unidade comum;
-- comando completo oficial: `npm test` ou `npm run test:all`;
-- warning conhecido fora do escopo UX 1: `INEFFECTIVE_DYNAMIC_IMPORT` em `SimulationKernel.ts`.
+- `npm run build` ok; `tsc` 0 erros
+- suíte: 59+ testes verdes (cobertura engines 66–100%)
+- Lighthouse (navegador): acessibilidade 100, best practices 100
+- warning `INEFFECTIVE_DYNAMIC_IMPORT`: não reproduz no build atual
 
 Detalhes em `docs/standards/TESTING_BASELINE.md`.
 

@@ -1,5 +1,6 @@
 # Sprint 6 — PlayerEngine Gera Ordens (Bots no Mercado)
 
+> ⚠️ DOCUMENTO HISTÓRICO — narrativa de migração de outro tree (FlowEngine, SyntheticMarketProvider, players com IA). Mantido como contexto; o estado real vive em `docs/Architecture.md`, `docs/roadmap/BACKLOG.md` e nos testes.
 ## Objetivo
 O mercado agora é gerado por **players reais** com perfis comportamentais individuais — não mais por ruído aleatório. Cada tick, 1-3 players "agem" baseados em sua personalidade, e o preço se move como consequência.
 

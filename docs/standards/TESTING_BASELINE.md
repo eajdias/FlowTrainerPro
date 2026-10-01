@@ -1,4 +1,10 @@
-# Testing Baseline — Fase UX 1
+# Testing Baseline
+
+> ⚠️ Seções "Fase UX 1/UX 2" abaixo são HISTÓRICAS (suíte e arquivos da época, já removidos).
+> Baseline vigente (2026-10-01): `npx vitest run` → 59+ testes verdes, `tsc` 0 erros,
+> cobertura engines 66–100%, memória 50k execs ~18ms. Detalhe: `PROJECT_STATUS.md`.
+
+# Fase UX 1 (histórico)
 
 ## Diagnostico do timeout
 

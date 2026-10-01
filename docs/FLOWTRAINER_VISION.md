@@ -182,7 +182,7 @@ A partir dele, serão criados documentos especializados que detalham cada aspect
 |-----------|-----------------|
 | `FLOWTRAINER_VISION.md` | Visão, missão, princípios, filosofias (este documento) |
 | `FLOW_MARKET_MICROSTRUCTURE.md` | Como o motor de mercado funciona (OrderBook, Matching, Events) |
-| `FLOW_MARKET_BEHAVIOR_ENGINE.md` | Como os players se comportam e tomam decisões |
+| `FLOW_MARKET_BEHAVIOR_ENGINE.md` | Como os players se comportam e tomam decisões **(não escrito — futuro)** |
 | `FLOW_TRAINING_ENGINE.md` | Como o sistema de treinamento avalia o aluno |
 | `FLOW_MARKET_SCENARIOS.md` | Biblioteca de cenários e como são construídos |
 | `FLOW_PLAYER_LIBRARY.md` | Perfis comportamentais dos participantes do mercado |

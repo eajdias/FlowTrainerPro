@@ -1,5 +1,6 @@
 # Sprint 3 — MarketStateEngine como Fonte de Verdade
 
+> ⚠️ DOCUMENTO HISTÓRICO — narrativa de migração de outro tree (FlowEngine, SyntheticMarketProvider, players com IA). Mantido como contexto; o estado real vive em `docs/Architecture.md`, `docs/roadmap/BACKLOG.md` e nos testes.
 ## Objetivo
 O `MarketStateEngine` do Kernel passa a ser alimentado a cada tick e torna-se a **fonte autoritativa** de estado do mercado. O Zustand store lê dados consolidados do Kernel em vez de calculá-los sozinho.
 

@@ -9,7 +9,6 @@ Nao foram alterados:
 - `MatchingEngine`;
 - FIFO;
 - `TradingController`;
-- `OrderManager`;
 - `TraderExecutionBridge`;
 - `PositionStore`;
 - stops;

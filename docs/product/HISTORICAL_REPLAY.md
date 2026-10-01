@@ -1,25 +1,27 @@
 # Historical Replay
 
-O replay historico permite reproduzir negocios reais importados de CSV como mercado observado.
+O replay histórico reproduz negócios reais importados de CSV como mercado observado.
 
-Nesta fase, o replay alimenta:
+## Cadeia real
 
-- Times & Trades;
-- Volume Profile;
-- Broker History;
-- ultimo preco observado;
-- grafico atemporal;
-- FlowAnalysis.
+```txt
+CSV → MarketTrade[] → HistoricalReplayEngine (load/start/pause/step/seek/speed)
+  → historical:trade:executed
+  → projections (market:trade:observed, last-price)
+  → historicalTradeStore / historicalVolumeProfileStore /
+    historicalBrokerHistoryStore / historicalLastPriceStore
+  → BrokerHistoryPanel, ReplayInspector (+ Times & Trades histórico: pendente)
+```
 
-O replay historico nao executa ordens do aluno e nao altera posicao, stops, P&L ou FIFO.
+O replay **não** alimenta os painéis ao vivo (SuperDOM, Book, T&T live, Volume Profile live,
+gráfico 8P) e **não** executa ordens do aluno nem altera posição, stops, P&L ou FIFO.
 
-Categorias preservadas:
+## Categorias preservadas
 
-- BUY;
-- SELL;
-- RLP;
-- DIRECT;
-- AUCTION;
-- UNKNOWN.
+`BUY`, `SELL`, `RLP`, `DIRECT`, `AUCTION`, `UNKNOWN` — as quatro últimas nunca forçadas
+para lado direcional.
 
-RLP, DIRECT, AUCTION e UNKNOWN permanecem auditaveis e nao sao tratados como agressao direcional.
+## UI
+
+Painel Replay Player (arquivo CSV, transporte, velocidade, step) + painel Dados & Ativos
+(importação com avisos honestos). Validação: `npm run validate:trade-csv -- <arquivo>`.

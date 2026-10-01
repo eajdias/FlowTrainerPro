@@ -381,7 +381,12 @@ Recomenda-se que qualquer construção da Etapa 2 que dependa de comportamento d
 As quatro decisões abaixo foram tomadas e passam a orientar este documento e a implementação futura.
 
 ### 13.1. Granularidade: por corretora individual
-O comportamento é modelado **por corretora individual**, não por categoria. Cada corretora possui seu próprio `BrokerProfile` (já implementado em `src/core/marketIdentity/data/brokers.ts`), com `aggressionStyle`, `lotRange`, `tendencies` e `executionPatterns` próprios.
+O comportamento é modelado **por corretora individual**, não por categoria. O registro
+oficial de corretoras vive em `src/core/marketIdentity/data/brokers.ts` (código, nome,
+cor primária/secundária). Perfis comportamentais por corretora (`aggressionStyle`,
+`lotRange`, `tendencies`, `executionPatterns`) e o Behavior Engine são **futuros**
+(ver `FLOW_MARKET_BEHAVIOR_ENGINE.md`, ainda não escrito); o gerador atual usa tamanhos
+e vieses globais por regime, não por corretora.
 
 A categoria (`BrokerCategory`) continua existindo como **agrupamento descritivo** (para leitura pedagógica e filtros), mas a fonte de verdade do comportamento é o perfil individual da corretora. Exemplos reais já no código:
 - **JP MORGAN** (`foreign`): `aggressive`, lote avg 250 / max 800, `sweeps` 0.45, padrões `iceberg`+`sweep`+`single_large`+`absorption`.

@@ -1,5 +1,6 @@
 # Sprint 4 — FlowEngine Removido do Pipeline
 
+> ⚠️ DOCUMENTO HISTÓRICO — narrativa de migração de outro tree (FlowEngine, SyntheticMarketProvider, players com IA). Mantido como contexto; o estado real vive em `docs/Architecture.md`, `docs/roadmap/BACKLOG.md` e nos testes.
 ## Objetivo
 O `FlowEngine` é removido do pipeline de geração de mercado. O `SyntheticMarketProvider` agora é acionado diretamente pelo clock tick do Kernel e emite ticks via EventBus. O store e o MarketStateEngine ouvem o EventBus diretamente.
 

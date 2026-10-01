@@ -1,5 +1,6 @@
 # Sprint 2 — SimulationClock Assume o Tempo
 
+> ⚠️ DOCUMENTO HISTÓRICO — narrativa de migração de outro tree (FlowEngine, SyntheticMarketProvider, players com IA). Mantido como contexto; o estado real vive em `docs/Architecture.md`, `docs/roadmap/BACKLOG.md` e nos testes.
 ## Objetivo
 O `SimulationClock` do Kernel passa a ser o único tick master da simulação. O `SyntheticMarketProvider` deixa de usar `setInterval` próprio e gera dados apenas quando o clock manda.
 

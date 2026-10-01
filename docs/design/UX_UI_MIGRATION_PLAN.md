@@ -1,82 +1,38 @@
-# UX/UI Migration Plan
+# UX/UI Migration Plan (estado real)
 
-## Fase UX 1
+## Fase UX 1 — concluída e vigente
 
-Concluida:
+Tokens em `src/assets/theme.css`, componentes em `src/ui/designSystem.tsx`
+(`ThemeProvider`, `Button`, `Badge`, `Icon`), App Shell com TopBar e StatusBar.
 
-- design system oficial;
-- tokens centralizados;
-- tema dark premium;
-- App Shell com TopBar e StatusBar;
-- superficies principais;
-- componentes basicos.
+## Fase UX 2 — concluída
 
-Nao redesenha internamente os paineis de mercado.
+Header (marca, ativo em estudo, source modes como indicadores, sessão, último preço,
+hora, estado, Importar), ReplayToolbar (transporte + velocidade + perfis + TRAINING FIFO),
+StatusBar diagnóstica. Sem atalhos globais de teclado, sem barra de progresso.
 
-Baseline tecnico:
+## Fase UX 3 — concluída
 
-- suite completa estabilizada;
-- testes CSV real separados por comandos oficiais;
-- `npm test` e `npm run test:all` rodam o conjunto completo;
-- detalhes em `docs/standards/TESTING_BASELINE.md`.
+24 painéis implementados: SuperDOM (click/Shift+click, fila expandida), Times & Trades
+(filtros + Slip), Book, Volume Profile (POC/VAH/VAL/ZIM), Chart8P (candles range-8 reais),
+PriceLadder, OrderBookByBroker, BrokerHistory, CandleClock (progresso 8P), Large/Medium,
+TradeHistory, Training/HUD, ScenarioEditor, 5 inspectors, ReplayInspector/Player, Debug,
+DataPanel. Treino guiado em 4 passos + tour de primeiros passos na rota training.
 
-## Fase UX 2
+## Fase UX 4 — concluída
 
-Concluida estruturalmente:
+Broker Flow (analyzer + rankings + feed ao vivo + rota Analysis), Broker History
+(vivo e histórico), Flow Analysis (pressão/resposta/liquidez no Debug/Analysis),
+Training HUD.
 
-- Header global refinado com ativo, source mode, sessao, estado, hora e acoes globais;
-- ReplayToolbar compacta com Play, Pause, Stop, Reset, velocidade e progresso visual;
-- StatusBar diagnostica com Kernel, Fonte, Replay, Sessao, Flow, Broker Flow, warnings e versao;
-- tooltips para estados e indisponibilidades;
-- atalhos seguros para Play/Pause e velocidade;
-- remocao de compra, venda, flatten e cenario/editor da toolbar global;
-- documentacao em `docs/product/GLOBAL_TRADING_CONTROLS.md`.
+## Fase UX 5 — concluída (escopo ajustado)
 
-Limitacoes mantidas para fases futuras:
+Layout em grade com scroll, tipografia Tahoma tabular, QA via chrome-devtools
+(Lighthouse a11y 100) + playwright-cli, sem overflow. Canvas do 8P com viewport/drag/zoom:
+fase futura (lista honesta no lugar).
 
-- biblioteca oficial de icones ainda nao instalada;
-- importacao historica visual dedicada ainda nao implementada;
-- seek por timeline e step forward/back ainda sem handler homologado.
+## Riscos (vigentes)
 
-## Fase UX 3
-
-Parcial concluida nesta etapa:
-
-- SuperDOM ergonomico com barras de liquidez discretas, best bid/ask, last price e overlay de ordens do aluno;
-- fila exposta de forma compacta quando a API read-only esta disponivel;
-- Times & Trades com modo compacto/detalhado, badges de tipo, limite visual e auto-scroll;
-- helpers puros e testes de UX para os dois paineis;
-- documentacao de produto e performance.
-
-Ainda pendente para UX 3:
-
-- Book;
-- Volume Profile;
-- filtros do Times & Trades;
-- medicao automatizada de FPS/long tasks.
-
-## Fase UX 4
-
-- Broker Flow;
-- Broker History;
-- Flow Analysis;
-- Training HUD.
-
-## Fase UX 5
-
-- grafico atemporal: viewport horizontal explicito, janela deslizante e auto-follow implementados sem alterar a regra 8P;
-- animacoes;
-- responsividade;
-- QA visual;
-- polimento final.
-
-## Riscos
-
-- quebrar drag/resize;
-- duplicar headers;
-- reduzir contraste em informacao critica;
-- alterar acidentalmente fluxos de dados.
-
-## Criterio Permanente
-
-Novos componentes visuais devem usar o Design System oficial.
+- SuperDOM com muitas linhas sem virtualização (limite atual: 30 níveis);
+- seletores derivados em stores precisam de `useMemo` (loop infinito de render);
+- watcher do Vite pode perder edições (conferir servido ou reiniciar).

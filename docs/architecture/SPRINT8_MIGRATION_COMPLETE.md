@@ -1,5 +1,6 @@
 # Sprint 8 — Migração Completa
 
+> ⚠️ DOCUMENTO HISTÓRICO — narrativa de migração de outro tree (FlowEngine, SyntheticMarketProvider, players com IA). Mantido como contexto; o estado real vive em `docs/Architecture.md`, `docs/roadmap/BACKLOG.md` e nos testes.
 ## Status: ✅ CONCLUÍDA
 
 A migração de 8 sprints está finalizada. O FlowTrainerPro agora possui um mercado que funciona como uma bolsa de valores real.

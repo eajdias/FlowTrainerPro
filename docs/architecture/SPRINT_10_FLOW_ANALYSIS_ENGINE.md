@@ -1,5 +1,6 @@
 # Sprint 10 — Flow Analysis Engine
 
+> ⚠️ DOCUMENTO HISTÓRICO — narrativa de migração de outro tree (FlowEngine, SyntheticMarketProvider, players com IA). Mantido como contexto; o estado real vive em `docs/Architecture.md`, `docs/roadmap/BACKLOG.md` e nos testes.
 ## Objetivo
 Criar uma nova engine que interpreta o fluxo de ordens em tempo real. Ela observa Executions e produz um diagnóstico contínuo do estado do mercado (FlowSnapshot). Ela NÃO altera preços, NÃO executa ordens — apenas observa e interpreta.
 

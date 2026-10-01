@@ -2,105 +2,23 @@
 
 ## Objetivo
 
-O Times & Trades apresenta negócios observados com leitura rápida e baixa confusão visual.
+O Times & Trades apresenta execuções ao vivo com leitura rápida e baixa confusão visual.
 
-A Fase UX 3 altera somente a apresentação. Não altera parser, replay, projections, `MatchingEngine`, `FlowAnalysis` ou `BrokerFlow`.
+## Colunas
 
-## Modos
+- Hora, Qtd, Preço, Comprador, Vendedora, Slip (ticks de deslizamento da agressora).
 
-### Compacto
+## Filtros locais
 
-Colunas:
-
-- Hora;
-- Preço;
-- Qtd;
-- Agressor.
-
-### Detalhado
-
-Colunas:
-
-- Hora;
-- Preço;
-- Qtd;
-- Compradora;
-- Vendedora;
-- Tipo.
-
-O modo compacto e o padrão para preservar densidade em painéis menores.
+Lado (todos/compra/venda) e lote mínimo, com botão "Limpar filtros" quando o filtro esvazia a lista.
 
 ## Tipos de Negócio
 
-| Tipo | Badge |
-|---|---|
-| `BUY` | `BUY` |
-| `SELL` | `SELL` |
-| `RLP` | `RLP` |
-| `DIRECT` | `DIRETO` |
-| `AUCTION` | `LEILÃO` |
-| `UNKNOWN` | `DESCONH.` |
-
-Tipos especiais não são convertidos para compra ou venda.
-
-## Destaque de Lotes
-
-Faixas visuais:
-
-| Faixa | Quantidade |
-|---|---|
-| normal | menor que 25 |
-| medio | 25 a 99 |
-| grande | 100 a 249 |
-| excepcional | 250 ou mais |
-
-Essas faixas são apenas visuais e não alteram dados.
-
-## Auto-scroll
-
-Como a lista mostra negócios recentes primeiro:
-
-- auto-scroll acompanha o topo quando o usuário está no fluxo atual;
-- ao subir no histórico, o estado passa para `PAUSED`;
-- novos negócios acumulam contador visual;
-- botão `LIVE` volta para o fluxo atual.
-
-## Limite Visual
-
-A UI limita a renderização a 250 negócios por vez. O estado lógico pode manter mais dados.
-
-Resumo exibido:
-
-```txt
-VIS 250/500
-```
+Execuções do simulador são sempre direcionais (`BUY`/`SELL`). Categorias históricas
+(`RLP`, `DIRECT`, `AUCTION`, `UNKNOWN`) aparecem apenas nos painéis de replay histórico,
+nunca forçadas para lado.
 
 ## Estados
 
-Estado vazio:
-
-```txt
-Aguardando negócios.
-```
-
-Replay concluído deve ser indicado por camada global ou futura integração de status do replay.
-
-## Performance
-
-A view foi separada em `TimesAndTradesView`, com normalização visual em `normalizeTradeViewModel` e `useMemo`.
-
-Chaves de linha usam `tradeId`, preservando estabilidade.
-
-## Acessibilidade
-
-- botões com texto;
-- tooltips em nomes truncados;
-- números tabulares;
-- contraste por texto e borda, não apenas cor;
-- `prefers-reduced-motion` respeitado no CSS.
-
-## Limitações
-
-- Filtros ainda não foram implementados.
-- O modo detalhado usa dados disponíveis; em live, a regra histórica de exibir apenas o agressor foi preservada.
-- Não foi adicionada virtualização porque o limite visual de 250 linhas e suficiente para esta fase.
+- Vazio: "Sem execuções na sessão." (ou "no filtro atual" com ação de limpar).
+- Fonte: exclusivamente `tradeStore` (máx. 100 execuções recentes).

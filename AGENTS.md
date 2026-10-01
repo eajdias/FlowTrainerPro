@@ -28,9 +28,13 @@ npx tsc --noEmit        # typecheck
 
 ## Estado real (2026-10-01, verificado em disco)
 
-- **Build quebrado e 17/18 arquivos de teste falhando** — `PanelRegistry`, `panels/index`, `workspace/index`, `App.tsx`/`AppShell.tsx` importam módulos não commitados (`src/panels/*/`, `WorkspaceManager/`, `src/ui/designSystem`, `src/core/kernel/`). Lista completa em `docs/Architecture.md` § Ausências.
-- **Item 0 do BACKLOG** (restaurar esses módulos) bloqueia qualquer outra verificação. Não declare "pronto" sem `tsc` + `vitest` verdes.
-- Docs que citam `src/market/`, `src/modules/`, `SyntheticMarketProvider` são **históricos** — o tree atual não os tem.
+- **Build verde:** `npx tsc --noEmit` → 0 erros; `vite build` ok; suíte 59+ testes verdes.
+- **Módulos criados a partir dos contratos** (nada existia no histórico para restaurar):
+  kernel (`MatchingEngine`, `OrderBookEngine`, `MarketScenarioEngine`, `SimulationKernel`),
+  24 painéis, `ui/designSystem`, `marketData`, `marketIdentity`, workspace managers.
+  Lista atual em `docs/Architecture.md` (tree real).
+- Docs que citam `src/market/` legado, `src/modules/`, `SyntheticMarketProvider`, `FlowEngine`,
+  `flow:snapshot` ou eventos `TRADE_EXECUTED`/`BOOK_UPDATE`/`trade:executed` são **históricos
 
 ## Regras
 
