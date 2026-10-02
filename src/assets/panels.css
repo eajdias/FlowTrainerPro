@@ -156,63 +156,92 @@
 
 .ftp-panel strong { color: var(--ftp-text-primary); }
 
-/* ═══ SUPERDOM — grade assimétrica: trader compacto, book largo, preço destacado ═══ */
+/* ═══ SUPERDOM + LADDER fundidos: 9 colunas ═══
+   [Δ exec] [Ord.C] [Qtd.C] [PREÇO] [Qtd.V] [Ord.V] [Exec.C] [Exec.V] [R$] */
 
 .ftp-superdom table {
   table-layout: fixed;
 }
 
 .ftp-superdom th:nth-child(1),
-.ftp-superdom td:nth-child(1) { width: 11%; }
+.ftp-superdom td:nth-child(1) { width: 6%; }
 .ftp-superdom th:nth-child(2),
-.ftp-superdom td:nth-child(2) { width: 21%; }
+.ftp-superdom td:nth-child(2) { width: 8%; }
 .ftp-superdom th:nth-child(3),
-.ftp-superdom td:nth-child(3) { width: 25%; }
+.ftp-superdom td:nth-child(3) { width: 15%; }
 .ftp-superdom th:nth-child(4),
-.ftp-superdom td:nth-child(4) { width: 21%; }
+.ftp-superdom td:nth-child(4) { width: 23%; }
 .ftp-superdom th:nth-child(5),
-.ftp-superdom td:nth-child(5) { width: 11%; }
+.ftp-superdom td:nth-child(5) { width: 15%; }
 .ftp-superdom th:nth-child(6),
-.ftp-superdom td:nth-child(6) { width: 11%; }
+.ftp-superdom td:nth-child(6) { width: 8%; }
+.ftp-superdom th:nth-child(7),
+.ftp-superdom td:nth-child(7) { width: 9%; }
+.ftp-superdom th:nth-child(8),
+.ftp-superdom td:nth-child(8) { width: 9%; }
+.ftp-superdom th:nth-child(9),
+.ftp-superdom td:nth-child(9) { width: 7%; }
 
 .ftp-superdom td {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.ftp-superdom td:nth-child(1),
-.ftp-superdom td:nth-child(2) {
+.ftp-superdom td:nth-child(2),
+.ftp-superdom td:nth-child(3) {
   background: var(--ftp-buy-dim);
   cursor: pointer;
   transition: background-color var(--ftp-duration-fast) var(--ftp-ease-out);
 }
 
-.ftp-superdom td:nth-child(1):hover,
-.ftp-superdom td:nth-child(2):hover {
+.ftp-superdom td:nth-child(2):hover,
+.ftp-superdom td:nth-child(3):hover {
   background: rgba(0, 212, 170, 0.18);
 }
 
-.ftp-superdom td:nth-child(4),
-.ftp-superdom td:nth-child(5) {
+.ftp-superdom td:nth-child(5),
+.ftp-superdom td:nth-child(6) {
   background: var(--ftp-sell-dim);
   cursor: pointer;
   transition: background-color var(--ftp-duration-fast) var(--ftp-ease-out);
 }
 
-.ftp-superdom td:nth-child(4):hover,
-.ftp-superdom td:nth-child(5):hover {
+.ftp-superdom td:nth-child(5):hover,
+.ftp-superdom td:nth-child(6):hover {
   background: rgba(255, 71, 87, 0.18);
 }
 
-.ftp-superdom td:nth-child(3) {
+.ftp-superdom td:nth-child(4) {
   color: var(--ftp-text-primary);
-  font-weight: 600;
+  font-size: var(--ftp-font-size-base);
+  font-weight: 700;
   text-align: center;
   background: rgba(77, 141, 255, 0.06);
 }
 
-.ftp-superdom td:nth-child(6) {
+.ftp-superdom td:nth-child(1),
+.ftp-superdom td:nth-child(7),
+.ftp-superdom td:nth-child(8),
+.ftp-superdom td:nth-child(9) {
   color: var(--ftp-text-muted);
+}
+
+/* Colunas de execução do ladder (fusão PriceLadder) */
+
+.ftp-dom-exec {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.ftp-dom-exec.is-buy { color: var(--ftp-buy-primary); }
+.ftp-dom-exec.is-sell { color: var(--ftp-sell-primary); }
+
+/* Linha do preço atual: sublinhada para fácil visualização */
+
+.ftp-superdom tbody tr.is-last td {
+  box-shadow: inset 0 -2px 0 0 var(--ftp-special);
 }
 
 /* Cabeçalho do DOM: posição, P&L, corretora, zerar */

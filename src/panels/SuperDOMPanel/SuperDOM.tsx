@@ -1,9 +1,10 @@
 // panels/SuperDOMPanel/SuperDOM.tsx
-// DOM interativo: click = limit, Shift+click = agressora (doc SUPERDOM_TRADING_INTERACTIONS).
-// Handlers homologados: TradingController. Fila: QueueInspector read-only.
-// Apresentação assimétrica: preço em destaque central, book com heatmap e
-// linhas de referência do dia (Máx/Mín/VWAP/Abertura) marcadas nas linhas.
-import { useMemo } from 'react';
+// DOM interativo + Price Ladder FUNDIDOS:
+//   [Δ exec] [Ord.C] [Qtd.C] [PREÇO] [Qtd.V] [Ord.V] [Exec.C] [Exec.V] [R$]
+// Click = limit, Shift+click = agressora (TradingController; fila via QueueInspector).
+// Auto-follow: a linha do preço atual sobe/desce com o mercado e fica sublinhada.
+// (trava o auto-follow por alguns segundos após scroll manual)
+import { useEffect, useMemo, useRef } from 'react';
 import { useBookStore } from '../../store/bookStore';
 import { useMarketStore } from '../../store/marketStore';
 import { usePositionStore } from '../../store/positionStore';
@@ -70,7 +71,14 @@ export function SuperDOM() {
   const brokerId = useTraderOrderStore((s) => s.brokerId);
   const setBrokerId = useTraderOrderStore((s) => s.setBrokerId);
 
-  // Linhas de referência do dia (mesmas do gráfico 8P)
+  // Dados por preço (fundidos do Price Ladder): volume executado e delta
+  const execLevels = useMarketStore((s) => s.priceLevels);
+  const execByPrice = useMemo(
+    () => new Map(execLevels.map((l) => [l.price, l])),
+    [execLevels],
+  );
+
+  // Refs de referência do dia (mesmas do gráfico 8P)
   const dayHigh = useMarketStore((s) => s.dayHigh);
   const dayLow = useMarketStore((s) => s.dayLow);
   const dayVwap = useMarketStore((s) => s.dayVwap);
@@ -131,6 +139,33 @@ export function SuperDOM() {
     return m;
   }, [orders]);
 
+  // ── Auto-follow: mantém a linha do preço atual visível (com trava manual) ──
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const lockedUntil = useRef(0);
+  const programmatic = useRef(false);
+
+  const onScroll = (): void => {
+    if (!programmatic.current) lockedUntil.current = Date.now() + 6000;
+  };
+
+  useEffect(() => {
+    if (Date.now() < lockedUntil.current) return;
+    const wrap = wrapRef.current?.closest<HTMLElement>('.ftp-panel-body');
+    const row = wrapRef.current?.querySelector<HTMLElement>('tr.is-last');
+    if (!wrap || !row) return;
+    const wrapRect = wrap.getBoundingClientRect();
+    const rowRect = row.getBoundingClientRect();
+    const rowTop = rowRect.top - wrapRect.top + wrap.scrollTop;
+    const rowBottom = rowTop + rowRect.height;
+    const viewTop = wrap.scrollTop;
+    const viewBottom = viewTop + wrap.clientHeight;
+    if (rowTop < viewTop + 12 || rowBottom > viewBottom - 12) {
+      programmatic.current = true;
+      wrap.scrollTo({ top: rowTop - wrap.clientHeight / 2, behavior: 'smooth' });
+      setTimeout(() => { programmatic.current = false; }, 700);
+    }
+  }, [lastPrice]);
+
   if (prices.length === 0) {
     return (
       <PanelShell title="SuperDOM">
@@ -140,7 +175,7 @@ export function SuperDOM() {
   }
 
   return (
-    <PanelShell title="SuperDOM" className="ftp-superdom">
+    <PanelShell title="SuperDOM / Ladder" className="ftp-superdom">
       <div className="ftp-dom-head">
         <span className={`ftp-dom-pos${posSide ? (posSide === 'long' ? ' is-long' : ' is-short') : ''}`}>
           {posSide ? `${posSide === 'long' ? 'LONG' : 'SHORT'} ${posSize} @ ${avgPrice.toFixed(2)}` : 'FLAT'}
@@ -174,106 +209,117 @@ export function SuperDOM() {
         </div>
       </div>
       <QueueSection />
-      <table>
-        <thead>
-          <tr>
-            <th className="ftp-dom-col-trader">Ord.C</th>
-            <th className="ftp-dom-col-bid">Qtd.C</th>
-            <th className="ftp-dom-col-price">Preço</th>
-            <th className="ftp-dom-col-ask">Qtd.V</th>
-            <th className="ftp-dom-col-trader">Ord.V</th>
-            <th className="ftp-dom-col-rs">R$</th>
-          </tr>
-        </thead>
-        <tbody>
-          {prices.map((price) => {
-            const buys = buyOrdersByPrice.get(price) ?? [];
-            const sells = sellOrdersByPrice.get(price) ?? [];
-            const isBid = price === bestBid;
-            const isAsk = price === bestAsk;
-            const isLast = price === lastPrice;
-            const ref = refFor(price);
-            return (
-              <tr key={price} className={ref ? ref.cls : undefined}>
-                <td
-                  className="ftp-dom-trader"
-                  onClick={(e) => {
-                    if (e.shiftKey) buyMarket();
-                    else placeOrder('buy', price);
-                  }}
-                >
-                  {buys.map((o) => {
-                    const q = getOrderQueueState(o.id);
-                    return (
-                      <span key={o.id} title={q ? `#${q.queuePosition} | ${q.volumeAhead} ahead | ${Math.round(q.progress * 100)}% | rem ${q.remainingQuantity}` : 'Fila indisponível'}>
-                        {o.size}
-                        <button type="button" aria-label={`cancel ${o.id}`} onClick={(e) => { e.stopPropagation(); cancelOrder(o.id); }}>
-                          ✕
-                        </button>
-                      </span>
-                    );
-                  })}
-                </td>
-                <td
-                  className={`ftp-dom-cell${(bidByPrice.get(price) ?? 0) >= DEEP_MIN ? ' is-deep' : ''}`}
-                  onClick={(e) => {
-                    if (e.shiftKey) buyMarket();
-                    else placeOrder('buy', price);
-                  }}
-                >
-                  <span
-                    className="ftp-dom-depth is-bid"
-                    style={{ width: `${((bidByPrice.get(price) ?? 0) / maxBid) * 100}%` }}
-                    aria-hidden="true"
-                  />
-                  <span className="ftp-dom-num">{bidByPrice.get(price) || ''}</span>
-                </td>
-                <td className={`ftp-dom-price${isLast ? ' is-last' : ''}`} title={ref ? ref.title : undefined}>
-                  {ref && <span className={`ftp-dom-ref ${ref.cls}`}>{ref.tag}</span>}
-                  <span className="ftp-dom-priceVal">{price.toFixed(2)}</span>
-                  {isBid && <span className="ftp-dom-tag is-bid">B</span>}
-                  {isAsk && <span className="ftp-dom-tag is-ask">A</span>}
-                  {isLast && <span className="ftp-dom-tag is-last">L</span>}
-                </td>
-                <td
-                  className={`ftp-dom-cell${(askByPrice.get(price) ?? 0) >= DEEP_MIN ? ' is-deep' : ''}`}
-                  onClick={(e) => {
-                    if (e.shiftKey) sellMarket();
-                    else placeOrder('sell', price);
-                  }}
-                >
-                  <span
-                    className="ftp-dom-depth is-ask"
-                    style={{ width: `${((askByPrice.get(price) ?? 0) / maxAsk) * 100}%` }}
-                    aria-hidden="true"
-                  />
-                  <span className="ftp-dom-num">{askByPrice.get(price) || ''}</span>
-                </td>
-                <td
-                  className="ftp-dom-trader"
-                  onClick={(e) => {
-                    if (e.shiftKey) sellMarket();
-                    else placeOrder('sell', price);
-                  }}
-                >
-                  {sells.map((o) => {
-                    const q = getOrderQueueState(o.id);
-                    return (
-                      <span key={o.id} title={q ? `#${q.queuePosition} | ${q.volumeAhead} ahead | ${Math.round(q.progress * 100)}% | rem ${q.remainingQuantity}` : 'Fila indisponível'}>
-                        {o.size}
-                        <button type="button" aria-label={`cancel ${o.id}`} onClick={(e) => { e.stopPropagation(); cancelOrder(o.id); }}>
-                          ✕
-                        </button>
-                      </span>
-                    );
-                  })}
-                </td>
-                <td className="ftp-dom-rs">{posSide ? estimateAt(price, posSide, avgPrice, posSize).toFixed(0) : ''}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div ref={wrapRef} onScroll={onScroll}>
+        <table>
+          <thead>
+            <tr>
+              <th className="ftp-dom-col-exec" title="Delta executado no preço (compra − venda)">Δ exec</th>
+              <th className="ftp-dom-col-trader">Ord.C</th>
+              <th className="ftp-dom-col-bid">Qtd.C</th>
+              <th className="ftp-dom-col-price">Preço</th>
+              <th className="ftp-dom-col-ask">Qtd.V</th>
+              <th className="ftp-dom-col-trader">Ord.V</th>
+              <th className="ftp-dom-col-exec" title="Volume executado a compra neste preço">Exec.C</th>
+              <th className="ftp-dom-col-exec" title="Volume executado a venda neste preço">Exec.V</th>
+              <th className="ftp-dom-col-rs">R$</th>
+            </tr>
+          </thead>
+          <tbody>
+            {prices.map((price) => {
+              const buys = buyOrdersByPrice.get(price) ?? [];
+              const sells = sellOrdersByPrice.get(price) ?? [];
+              const isBid = price === bestBid;
+              const isAsk = price === bestAsk;
+              const isLast = price === lastPrice;
+              const ref = refFor(price);
+              const exec = execByPrice.get(price);
+              return (
+                <tr key={price} className={`${ref ? ref.cls : ''}${isLast ? ' is-last' : ''}`}>
+                  <td className={`ftp-dom-exec${exec && exec.delta > 0 ? ' is-buy' : exec && exec.delta < 0 ? ' is-sell' : ''}`}>
+                    {exec && exec.delta !== 0 ? (exec.delta > 0 ? '+' : '') + exec.delta : ''}
+                  </td>
+                  <td
+                    className="ftp-dom-trader"
+                    onClick={(e) => {
+                      if (e.shiftKey) buyMarket();
+                      else placeOrder('buy', price);
+                    }}
+                  >
+                    {buys.map((o) => {
+                      const q = getOrderQueueState(o.id);
+                      return (
+                        <span key={o.id} title={q ? `#${q.queuePosition} | ${q.volumeAhead} ahead | ${Math.round(q.progress * 100)}% | rem ${q.remainingQuantity}` : 'Fila indisponível'}>
+                          {o.size}
+                          <button type="button" aria-label={`cancel ${o.id}`} onClick={(e) => { e.stopPropagation(); cancelOrder(o.id); }}>
+                            ✕
+                          </button>
+                        </span>
+                      );
+                    })}
+                  </td>
+                  <td
+                    className={`ftp-dom-cell${(bidByPrice.get(price) ?? 0) >= DEEP_MIN ? ' is-deep' : ''}`}
+                    onClick={(e) => {
+                      if (e.shiftKey) buyMarket();
+                      else placeOrder('buy', price);
+                    }}
+                  >
+                    <span
+                      className="ftp-dom-depth is-bid"
+                      style={{ width: `${((bidByPrice.get(price) ?? 0) / maxBid) * 100}%` }}
+                      aria-hidden="true"
+                    />
+                    <span className="ftp-dom-num">{bidByPrice.get(price) || ''}</span>
+                  </td>
+                  <td className={`ftp-dom-price${isLast ? ' is-last' : ''}`} title={ref ? ref.title : undefined}>
+                    {ref && <span className={`ftp-dom-ref ${ref.cls}`}>{ref.tag}</span>}
+                    <span className="ftp-dom-priceVal">{price.toFixed(2)}</span>
+                    {isBid && <span className="ftp-dom-tag is-bid">B</span>}
+                    {isAsk && <span className="ftp-dom-tag is-ask">A</span>}
+                    {isLast && <span className="ftp-dom-tag is-last">L</span>}
+                  </td>
+                  <td
+                    className={`ftp-dom-cell${(askByPrice.get(price) ?? 0) >= DEEP_MIN ? ' is-deep' : ''}`}
+                    onClick={(e) => {
+                      if (e.shiftKey) sellMarket();
+                      else placeOrder('sell', price);
+                    }}
+                  >
+                    <span
+                      className="ftp-dom-depth is-ask"
+                      style={{ width: `${((askByPrice.get(price) ?? 0) / maxAsk) * 100}%` }}
+                      aria-hidden="true"
+                    />
+                    <span className="ftp-dom-num">{askByPrice.get(price) || ''}</span>
+                  </td>
+                  <td
+                    className="ftp-dom-trader"
+                    onClick={(e) => {
+                      if (e.shiftKey) sellMarket();
+                      else placeOrder('sell', price);
+                    }}
+                  >
+                    {sells.map((o) => {
+                      const q = getOrderQueueState(o.id);
+                      return (
+                        <span key={o.id} title={q ? `#${q.queuePosition} | ${q.volumeAhead} ahead | ${Math.round(q.progress * 100)}% | rem ${q.remainingQuantity}` : 'Fila indisponível'}>
+                          {o.size}
+                          <button type="button" aria-label={`cancel ${o.id}`} onClick={(e) => { e.stopPropagation(); cancelOrder(o.id); }}>
+                            ✕
+                          </button>
+                        </span>
+                      );
+                    })}
+                  </td>
+                  <td className="ftp-dom-exec is-buy">{exec && exec.bidVolume ? exec.bidVolume : ''}</td>
+                  <td className="ftp-dom-exec is-sell">{exec && exec.askVolume ? exec.askVolume : ''}</td>
+                  <td className="ftp-dom-rs">{posSide ? estimateAt(price, posSide, avgPrice, posSize).toFixed(0) : ''}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </PanelShell>
   );
 }

@@ -4,6 +4,31 @@ Histórico consolidado do projeto. Para detalhes do estado atual, ver `PROJECT_S
 
 ---
 
+## 2026-10-02 — Tape Reading 3×3: históricos | SUPERDOM | tape+VP+gráfico
+
+- Layout exato em 3 colunas: `[Corretoras · ≥25 · ≥250]` (estreita) · `[SUPERDOM fundido, sozinho]` · `[T&T · Volume Profile · Gráfico 8P]`
+- SuperDOM com assimetria refinada: Δ exec 6%, ordens 8%, book 15%, **preço 23% em destaque**, execuções 9%, R$ 7%
+- Persist do workspace em v17
+
+**Evidência:** `tsc` 0 erros · `vitest` 61/61 · `vite build` ok · validado ao vivo (Δ exec +96, Exec.C/V 586/1106, sublinhado na linha atual, refs Máx/VWAP/Abert no DOM).
+
+---
+
+## 2026-10-02 — Tape Reading 3 colunas; SuperDOM fundido com Ladder; auto-follow com sublinhado
+
+**Contexto:** Price Ladder separado do SuperDOM; linha do preço atual difícil de localizar; layout em 2 linhas desperdiçava a faixa de trabalho.
+
+**Ações:**
+- **PriceLadder fundido no SuperDOM** (`SuperDOM / Ladder`): novas colunas `Δ exec` (delta executado no preço), `Exec.C` e `Exec.V` (volume executado a compra/venda por preço, do `marketStore.priceLevels`) — 9 colunas: `[Δ exec] [Ord.C] [Qtd.C] [PREÇO] [Qtd.V] [Ord.V] [Exec.C] [Exec.V] [R$]`; painel `PriceLadder` removido do registry, tipos e barrels
+- **Layout Tape Reading em 3 colunas × 2 linhas**: `[≥25] [T&T + ≥250 + Corretoras] [SUPERDOM]` em cima; `[Volume Profile] [Gráfico 8P]` embaixo; Price Ladder removido dos outros workspaces (Scalping usa o DOM fundido; DOM Puro fica DOM + Tape)
+- **Auto-follow do preço**: SuperDOM e Volume Profile rolam automaticamente para manter a linha do preço atual visível (smooth scroll centralizado); scroll manual trava o follow por 6s; volta sozinho depois
+- **Linha atual sublinhada**: a linha do último preço leva `box-shadow: inset 0 -2px 0` amarelo + tag `L` (no SuperDOM) e marcador `◀` (no VP) — localização imediata
+- Persist do workspace em v16
+
+**Evidência:** `tsc` 0 erros · `vitest` 61/61 · `vite build` ok · validado ao vivo — Δ exec `+96/+2/+37` e Exec.C/V `586/1106` na linha 5073.50; sublinhado amarelo na linha atual; Máx/VWAP/Abert marcados no DOM; Corretoras ao vivo na coluna 1.
+
+---
+
 ## 2026-10-02 — Padrão VP aplicado nas demais tabelas
 
 - **CSS base das tabelas**: linhas de 24px, headers espaçados com divisor forte, zebra sutil nas tabelas lisas (exceto SuperDOM/T&T que têm cor própria por linha), hover consistente — aplica a todos os painéis tabulares de uma vez

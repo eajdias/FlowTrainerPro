@@ -105,7 +105,7 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
     }),
     {
       name: 'flowtrainerpro-workspace', // localStorage key
-      version: 15, // v15: VP alinhado ao ≥25 (assimetria) — força re-leitura
+      version: 17, // v17: Tape Reading 3×3 (históricos | DOM | tape+VP+gráfico) — força re-leitura
     },
   ),
 );

@@ -13,7 +13,6 @@ import { SuperDOM }            from '../panels/SuperDOMPanel/SuperDOM';
 import { VolumeProfile }       from '../panels/VolumeProfilePanel/VolumeProfile';
 import { AtemporalChart }      from '../panels/Chart8PPanel/AtemporalChart';
 import { OrderBookByBroker }   from '../panels/OrderBookByBrokerPanel/OrderBookByBroker';
-import { PriceLadder }         from '../panels/PriceLadderPanel/PriceLadder';
 import { TrainingPanel }       from '../panels/TrainingPanel/TrainingPanel';
 import { DebugPanel }          from '../panels/DebugPanel/DebugPanel';
 import { TrainingHUD }         from '../panels/TrainingHUD/TrainingHUD';
@@ -35,7 +34,6 @@ export const PANEL_REGISTRY: Record<PanelType, React.ComponentType<any>> = {
   VolumeProfilePanel:     VolumeProfile,
   Chart8PPanel:           AtemporalChart,
   OrderBookByBrokerPanel: OrderBookByBroker,
-  PriceLadderPanel:       PriceLadder,
   TrainingPanel:          TrainingPanel,
   DebugPanel:             DebugPanel,
   TrainingHUD:            TrainingHUD,

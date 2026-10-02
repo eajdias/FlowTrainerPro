@@ -13,7 +13,6 @@ export type PanelType =
   | 'VolumeProfilePanel'
   | 'Chart8PPanel'
   | 'OrderBookByBrokerPanel'
-  | 'PriceLadderPanel'
   | 'TrainingPanel'
   | 'DebugPanel'
   | 'TrainingHUD'

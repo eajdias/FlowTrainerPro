@@ -2,6 +2,7 @@
 // Volume Profile estilo SuperDOM: células com fundo proporcional (espelhadas —
 // agressão cresce da direita, absorção da esquerda), % por lado, total por nível,
 // TOP 5 zonas quentes com gradiente e POC/VAH/VAL. Preço atual marcado.
+import { useEffect, useRef } from 'react';
 import { useVolumeProfileStore } from '../../store/volumeProfileStore';
 import { useBookStore } from '../../store/bookStore';
 import { PanelShell } from '../PanelShell/PanelShell';
@@ -18,6 +19,33 @@ export function VolumeProfile() {
   const vah = useVolumeProfileStore((s) => s.vah);
   const val = useVolumeProfileStore((s) => s.val);
   const lastPrice = useBookStore((s) => s.lastPrice);
+
+  // ── Auto-follow: mantém a linha do preço atual visível (com trava manual) ──
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const lockedUntil = useRef(0);
+  const programmatic = useRef(false);
+
+  const onScroll = (): void => {
+    if (!programmatic.current) lockedUntil.current = Date.now() + 6000;
+  };
+
+  useEffect(() => {
+    if (Date.now() < lockedUntil.current) return;
+    const wrap = wrapRef.current?.closest<HTMLElement>('.ftp-panel-body');
+    const row = wrapRef.current?.querySelector<HTMLElement>('.ftp-vp2-row.is-current');
+    if (!wrap || !row) return;
+    const wrapRect = wrap.getBoundingClientRect();
+    const rowRect = row.getBoundingClientRect();
+    const rowTop = rowRect.top - wrapRect.top + wrap.scrollTop;
+    const rowBottom = rowTop + rowRect.height;
+    const viewTop = wrap.scrollTop;
+    const viewBottom = viewTop + wrap.clientHeight;
+    if (rowTop < viewTop + 12 || rowBottom > viewBottom - 12) {
+      programmatic.current = true;
+      wrap.scrollTo({ top: rowTop - wrap.clientHeight / 2, behavior: 'smooth' });
+      setTimeout(() => { programmatic.current = false; }, 700);
+    }
+  }, [lastPrice]);
 
   if (levels.length === 0) {
     return (
@@ -64,7 +92,7 @@ export function VolumeProfile() {
         <span className="ftp-vp2-col-total">Total</span>
       </div>
 
-      <div className="ftp-vp2" role="list" aria-label="Perfil de volume por preço">
+      <div className="ftp-vp2" role="list" aria-label="Perfil de volume por preço" ref={wrapRef} onScroll={onScroll}>
         {levels.map((l) => {
           const inVA = val > 0 && vah > 0 && l.price <= vah && l.price >= val;
           const isCurrent = lastPrice > 0 && Math.abs(l.price - lastPrice) < 0.26;

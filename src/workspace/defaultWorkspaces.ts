@@ -34,35 +34,40 @@ function deskPanel(type: PanelConfig['type'], opts: DeskOpts): PanelConfig {
   };
 }
 
-// ── Tape Reading — mesa principal ─────────────────────────────────────────────
+// ── Tape Reading — mesa principal (3 colunas × 3 blocos) ─────────────────────
 //
-//  ┌──────────┬───────────────┬────────────┬─────────────────────────┐
-//  │  ≥25     │  Times&Trades │  SuperDOM  │  Agressão por Preço     │
-//  │  Lotes   ├───────────────┤  (refs do  │  (compra×venda + heat)  │
-//  │          │  ≥250 Lotes   │   dia)     │                         │
-//  ├──────────┴───────┬───────┴────────────┴─────────────────────────┤
-//  │ Volume Profile   │  Gráfico 8P — largo (Máx/Mín/VWAP/Abert)     │
-//  └──────────────────┴─────────────────────────────────────────────┘
+//  ┌──────────────┬──────────────────┬──────────────────┐
+//  │ Hist.        │                  │  Times & Trades  │
+//  │  Corretoras  │                  ├──────────────────┤
+//  │──────────────┤    SUPERDOM      │  Volume Profile  │
+//  │ Histórico    │  (+ Ladder       ├──────────────────┤
+//  │  ≥25         │   fundido)       │   Gráfico 8P     │
+//  ├──────────────┤                  │                  │
+//  │ Histórico    │                  │                  │
+//  │  ≥250        │                  │                  │
+//  └──────────────┴──────────────────┴──────────────────┘
 
 export function createTapeReadingWorkspace(): WorkspaceConfig {
   return {
     id:          uuidv4(),
     name:        'Tape Reading',
-    description: 'Mesa principal: tape, DOM, agressão, gráfico e perfil',
+    description: 'Mesa principal: históricos, DOM fundido, tape e gráfico',
     createdAt:   now(),
     updatedAt:   now(),
-    rowWeights:  [1.4, 1.0],
+    rowWeights:  [1],
     panels: [
-      // Linha 0 — trabalho
-      deskPanel('MediumTradesPanel',      { col: 0, colWeight: 0.85 }),
-      deskPanel('TimesTradesPanel',       { col: 1, weight: 2.2, colWeight: 1.35 }),
-      deskPanel('LargeTradesPanel',       { col: 1, weight: 0.9 }),
-      deskPanel('SuperDOMPanel',          { col: 2, colWeight: 1.1 }),
-      deskPanel('BrokerHistoryPanel',     { col: 3, colWeight: 0.95 }),
+      // Coluna 0 — históricos (estreita)
+      deskPanel('BrokerHistoryPanel', { col: 0, weight: 1, colWeight: 0.72 }),
+      deskPanel('MediumTradesPanel',  { col: 0, weight: 1.5 }),
+      deskPanel('LargeTradesPanel',   { col: 0, weight: 0.9 }),
 
-      // Linha 1 — Volume Profile (largura alinhada ao ≥25) ao lado do gráfico largo
-      deskPanel('VolumeProfilePanel',     { col: 0, row: 1, colWeight: 0.85 }),
-      deskPanel('Chart8PPanel',           { col: 1, row: 1, colWeight: 3.4 }),
+      // Coluna 1 — operação (SUPERDOM fundido, sozinho)
+      deskPanel('SuperDOMPanel',      { col: 1, weight: 1, colWeight: 1.15 }),
+
+      // Coluna 2 — tape, perfil e gráfico
+      deskPanel('TimesTradesPanel',   { col: 2, weight: 1.5, colWeight: 1.1 }),
+      deskPanel('VolumeProfilePanel', { col: 2, weight: 1 }),
+      deskPanel('Chart8PPanel',       { col: 2, weight: 1.2 }),
     ],
   };
 }
@@ -73,15 +78,14 @@ export function createScalpingWorkspace(): WorkspaceConfig {
   return {
     id:          uuidv4(),
     name:        'Scalping',
-    description: 'Operação rápida: DOM, ladder, gráfico e tape',
+    description: 'Operação rápida: DOM fundido, gráfico e tape',
     createdAt:   now(),
     updatedAt:   now(),
     rowWeights:  [0.95, 1.05],
     panels: [
-      deskPanel('SuperDOMPanel',      { col: 0, colWeight: 1 }),
-      deskPanel('PriceLadderPanel',   { col: 1, colWeight: 1 }),
-      deskPanel('VolumeProfilePanel', { col: 2, weight: 1.6, colWeight: 1 }),
-      deskPanel('TimesTradesPanel',   { col: 2, weight: 1 }),
+      deskPanel('SuperDOMPanel',      { col: 0, colWeight: 1.2 }),
+      deskPanel('VolumeProfilePanel', { col: 1, weight: 1.6, colWeight: 1 }),
+      deskPanel('TimesTradesPanel',   { col: 1, weight: 1 }),
       deskPanel('Chart8PPanel',       { col: 0, row: 1 }),
     ],
   };
@@ -93,14 +97,13 @@ export function createDOMWorkspace(): WorkspaceConfig {
   return {
     id:          uuidv4(),
     name:        'DOM Puro',
-    description: 'Fila FIFO em foco: DOM, ladder e tape',
+    description: 'Fila FIFO em foco: DOM fundido e tape',
     createdAt:   now(),
     updatedAt:   now(),
     rowWeights:  [1],
     panels: [
-      deskPanel('SuperDOMPanel',    { col: 0, colWeight: 1.2 }),
-      deskPanel('PriceLadderPanel', { col: 1, colWeight: 1.2 }),
-      deskPanel('TimesTradesPanel', { col: 2, colWeight: 1.2 }),
+      deskPanel('SuperDOMPanel',    { col: 0, colWeight: 1.6 }),
+      deskPanel('TimesTradesPanel', { col: 1, colWeight: 1.2 }),
     ],
   };
 }
