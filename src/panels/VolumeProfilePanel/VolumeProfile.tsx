@@ -87,12 +87,18 @@ export function VolumeProfile() {
                 {isCurrent ? '◀ ' : ''}{l.price.toFixed(2)}
               </span>
               <div className="ftp-vp2-cell is-buy">
-                <div className="ftp-vp2-fill" style={{ width: `${Math.max(1, buyW)}%` }} aria-hidden="true" />
-                <span className="ftp-vp2-text">{fmt(l.buyVolume)} <i>{buyPct}%</i></span>
+                <span className="ftp-vp2-val">{fmt(l.buyVolume)}</span>
+                <div className="ftp-vp2-bar" aria-hidden="true">
+                  <div className="ftp-vp2-fill" style={{ width: `${Math.max(1, buyW)}%` }} />
+                </div>
+                <span className="ftp-vp2-pct">{buyPct}%</span>
               </div>
               <div className="ftp-vp2-cell is-sell">
-                <div className="ftp-vp2-fill" style={{ width: `${Math.max(1, sellW)}%` }} aria-hidden="true" />
-                <span className="ftp-vp2-text">{fmt(l.sellVolume)} <i>{sellPct}%</i></span>
+                <span className="ftp-vp2-val">{fmt(l.sellVolume)}</span>
+                <div className="ftp-vp2-bar" aria-hidden="true">
+                  <div className="ftp-vp2-fill" style={{ width: `${Math.max(1, sellW)}%` }} />
+                </div>
+                <span className="ftp-vp2-pct">{sellPct}%</span>
               </div>
               <span className="ftp-vp2-total">{fmt(l.totalVolume)}</span>
               {l.isPOC && <span className="ftp-vp-tag">POC</span>}

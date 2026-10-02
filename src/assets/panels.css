@@ -1593,59 +1593,103 @@
   color: var(--ftp-warning);
 }
 
-/* ═══ VOLUME PROFILE v2 — estilo SuperDOM (células com fundo proporcional) ═══ */
+/* ═══ VOLUME PROFILE v2 — tabela espaçada (divisores, zebra, linhas altas) ═══ */
+
+/* Painel: tabela de borda a borda; resumo com respiro próprio */
+
+.ftp-vp-panel .ftp-panel-body {
+  padding: 0 0 var(--ftp-space-2);
+  overflow: hidden auto;
+}
+
+.ftp-vp-summary {
+  display: flex;
+  gap: var(--ftp-space-5);
+  font-size: var(--ftp-font-size-xs);
+  padding: var(--ftp-space-4);
+  border-bottom: 1px solid var(--ftp-border);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ftp-vp-summary strong { color: var(--ftp-text-primary); }
+
+.ftp-vp-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 3px;
+}
+
+.ftp-vp-dot.is-poc { background: var(--ftp-special); }
+.ftp-vp-dot.is-vah { background: var(--ftp-buy-primary); }
+.ftp-vp-dot.is-val { background: var(--ftp-sell-primary); }
+
+.ftp-vp-delta {
+  margin-left: auto;
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-vp-delta.is-buy { color: var(--ftp-buy-primary); }
+.ftp-vp-delta.is-sell { color: var(--ftp-sell-primary); }
 
 .ftp-vp2-head {
   display: grid;
-  grid-template-columns: 62px 1fr 1fr 64px;
-  gap: var(--ftp-space-4);
+  grid-template-columns: 68px 1fr 1fr 70px;
   align-items: center;
-  padding-bottom: var(--ftp-space-2);
-  border-bottom: 1px solid var(--ftp-border-row);
-  margin-bottom: var(--ftp-space-1);
+  padding: var(--ftp-space-3) 0;
+  border-bottom: 1px solid var(--ftp-border);
+  margin-bottom: 0;
 }
 
 .ftp-vp2-head span {
   font-size: var(--ftp-font-size-xs);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--ftp-text-muted);
+  padding: 0 var(--ftp-space-5);
 }
 
-.ftp-vp2-head .ftp-vp2-col-price { text-align: right; }
-.ftp-vp2-head .ftp-vp2-col-buy { text-align: right; }
-.ftp-vp2-head .ftp-vp2-col-sell { text-align: left; }
-.ftp-vp2-head .ftp-vp2-col-total { text-align: right; }
+.ftp-vp2-head .ftp-vp2-col-price { text-align: left; padding-left: var(--ftp-space-4); }
+.ftp-vp2-head .ftp-vp2-col-buy { text-align: left; border-left: 1px solid var(--ftp-border-row); }
+.ftp-vp2-head .ftp-vp2-col-sell { text-align: left; border-left: 1px solid var(--ftp-border-row); }
+.ftp-vp2-head .ftp-vp2-col-total { text-align: right; border-left: 1px solid var(--ftp-border-row); }
 
 .ftp-vp2 {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 0;
 }
 
 .ftp-vp2-row {
   display: grid;
-  grid-template-columns: 62px 1fr 1fr 64px;
-  gap: var(--ftp-space-4);
+  grid-template-columns: 68px 1fr 1fr 70px;
   align-items: center;
-  padding: 2px var(--ftp-space-2);
-  border-radius: var(--ftp-radius-xs);
+  height: 27px;
+  padding: 0;
+  border-radius: 0;
+  border-bottom: 1px solid var(--ftp-border-row);
 }
 
+.ftp-vp2-row:nth-child(even) { background: rgba(255, 255, 255, 0.018); }
 .ftp-vp2-row:hover { background: var(--ftp-bg-hover); }
-.ftp-vp2-row.is-poc { background: rgba(245, 196, 0, 0.06); }
-.ftp-vp2-row.is-in-va { background: rgba(77, 141, 255, 0.045); }
-.ftp-vp2-row.is-poc.is-in-va { background: rgba(245, 196, 0, 0.08); }
-.ftp-vp2-row.is-current { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22); }
+.ftp-vp2-row.is-poc { background: rgba(245, 196, 0, 0.07); }
+.ftp-vp2-row.is-in-va { background: rgba(77, 141, 255, 0.05); }
+.ftp-vp2-row.is-poc.is-in-va { background: rgba(245, 196, 0, 0.09); }
+.ftp-vp2-row.is-current { box-shadow: inset 2px 0 0 0 rgba(255, 255, 255, 0.5); }
 
 /* TOP 5 zonas mais quentes — gradiente (1 = mais quente) */
 
-.ftp-vp2-row.is-hot-1 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.24), rgba(255, 152, 0, 0.04) 85%); }
-.ftp-vp2-row.is-hot-2 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.18), rgba(255, 152, 0, 0.03) 85%); }
-.ftp-vp2-row.is-hot-3 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.12), transparent 85%); }
-.ftp-vp2-row.is-hot-4 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.08), transparent 85%); }
-.ftp-vp2-row.is-hot-5 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.05), transparent 85%); }
+.ftp-vp2-row.is-hot-1 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.22), rgba(255, 152, 0, 0.03) 90%); }
+.ftp-vp2-row.is-hot-2 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.16), rgba(255, 152, 0, 0.02) 90%); }
+.ftp-vp2-row.is-hot-3 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.11), transparent 90%); }
+.ftp-vp2-row.is-hot-4 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.07), transparent 90%); }
+.ftp-vp2-row.is-hot-5 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.04), transparent 90%); }
 
 .ftp-vp2-row.is-hot-1:hover,
 .ftp-vp2-row.is-hot-2:hover,
@@ -1654,72 +1698,92 @@
 .ftp-vp2-row.is-hot-5:hover { background: var(--ftp-bg-hover); }
 
 .ftp-vp2-price {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-left: var(--ftp-space-4);
   font-family: var(--ftp-font-numeric);
   font-size: var(--ftp-font-size-sm);
   color: var(--ftp-text-secondary);
+  border-left: 3px solid transparent;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ftp-vp2-price.is-poc { color: var(--ftp-special); font-weight: 700; }
+
+/* Células: valor | barra esticada | % — aproveita toda a largura */
+
+.ftp-vp2-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--ftp-space-2);
+  height: 100%;
+  padding: 0 var(--ftp-space-3);
+  border-left: 1px solid var(--ftp-border-row);
+  min-width: 0;
+}
+
+.ftp-vp2-val {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 700;
+  min-width: 34px;
   text-align: right;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
-.ftp-vp2-price.is-poc { color: var(--ftp-special); font-weight: 600; }
+.ftp-vp2-cell.is-buy .ftp-vp2-val { color: var(--ftp-buy-primary); }
+.ftp-vp2-cell.is-sell .ftp-vp2-val { color: var(--ftp-sell-primary); }
 
-/* Células espelhadas: agressão preenche da direita; absorção da esquerda */
-
-.ftp-vp2-cell {
-  position: relative;
-  height: 22px;
-  border-radius: var(--ftp-radius-xs);
-  background: rgba(255, 255, 255, 0.03);
+.ftp-vp2-bar {
+  flex: 1 1 auto;
+  min-width: 20px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
   overflow: hidden;
 }
 
 .ftp-vp2-cell.is-buy .ftp-vp2-fill {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(to left, rgba(0, 212, 170, 0.55), rgba(0, 212, 170, 0.16));
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ftp-buy-primary);
+  opacity: 0.8;
+  margin-left: auto; /* espelhado: agressão cresce da direita */
+  transition: width var(--ftp-duration-normal) var(--ftp-ease-out);
 }
 
 .ftp-vp2-cell.is-sell .ftp-vp2-fill {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(to right, rgba(255, 71, 87, 0.55), rgba(255, 71, 87, 0.16));
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ftp-sell-primary);
+  opacity: 0.8;
+  transition: width var(--ftp-duration-normal) var(--ftp-ease-out);
 }
 
-.ftp-vp2-text {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.ftp-vp2-pct {
   font-family: var(--ftp-font-numeric);
-  font-size: var(--ftp-font-size-sm);
-  font-weight: 600;
-  color: var(--ftp-text-primary);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  font-size: var(--ftp-font-size-2xs);
+  color: var(--ftp-text-muted);
+  min-width: 26px;
+  text-align: right;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
-.ftp-vp2-text i {
-  font-style: normal;
-  font-weight: 500;
-  font-size: var(--ftp-font-size-xs);
-  opacity: 0.85;
-  margin-left: var(--ftp-space-1);
-}
-
 .ftp-vp2-total {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  padding-right: var(--ftp-space-5);
+  border-left: 1px solid var(--ftp-border-row);
   font-family: var(--ftp-font-numeric);
   font-size: var(--ftp-font-size-sm);
   font-weight: 600;
   color: var(--ftp-text-secondary);
-  text-align: right;
   font-variant-numeric: tabular-nums;
 }
 

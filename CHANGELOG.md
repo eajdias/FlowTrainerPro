@@ -4,6 +4,37 @@ Histórico consolidado do projeto. Para detalhes do estado atual, ver `PROJECT_S
 
 ---
 
+## 2026-10-02 — Volume Profile: layout final valor │ barra │ %
+
+- Célula redesenhada no padrão `1.5k ▬▬▬ 74%`: valor à esquerda, **barra esticada** no meio (flex, aproveita toda a largura restante) e porcentagem à direita
+- Track das barras mais visível (legibilidade dos %), fills com espelhamento (agressão cresce da direita, absorção da esquerda)
+- Dimensões otimizadas para a coluna: valor 34px / barra flex / % 26px com fontes proporcionais
+
+**Evidência:** `tsc` 0 erros · `vitest` 61/61 · `vite build` ok · validado ao vivo (barras proporcionais por linha, top-5 em gradiente, POC/VAH e preço atual marcados).
+
+---
+
+## 2026-10-02 — Volume Profile: redesign tabular espaçado
+
+- Tabela de borda a borda com **divisores verticais** entre todas as colunas (`Preço · Agressão · Absorção · Total`)
+- Linhas de **27px** com zebra alternada e bordas sutis — leitura confortável
+- Valor e porcentagem separados por divisor interno (`1.5k │ 65%`)
+- Fills sólidos de fundo por célula (agressão da direita, absorção da esquerda) — sem gradiente enganoso
+- Resumo com respiro (POC/VAH/VAL + delta), top-5 em gradiente laranja, marcador de preço atual (barra lateral)
+- CSS do resumo restaurado (havia sido perdido numa limpeza)
+
+**Evidência:** `tsc` 0 erros · `vitest` 61/61 · `vite build` ok · validado ao vivo.
+
+---
+
+## 2026-10-02 — VP: separação valor × porcentagem
+
+- Células de agressão/absorção: valor alinhado à esquerda, **divisor vertical** e porcentagem à direita (`1.5k │ 65%`) com padding generoso — leitura imediata de quantidade vs proporção
+
+**Evidência:** `tsc` 0 erros · `vitest` 61/61 · `vite build` ok · validado ao vivo.
+
+---
+
 ## 2026-10-02 — Assimetria do desk: VP alinhado ao ≥25 com leitura maior
 
 **Ações:**
