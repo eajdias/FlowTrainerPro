@@ -19,8 +19,6 @@ npx tsc --noEmit                # typecheck
 | **Status atual** | `PROJECT_STATUS.md` |
 | **Arquitetura** | `docs/Architecture.md` |
 | **Módulos e painéis** | `docs/Modules.md` |
-| **Backlog (o que falta)** | `docs/roadmap/BACKLOG.md` |
-| **Roadmap (fases)** | `docs/roadmap/ROADMAP.md` |
 | **Changelog** | `CHANGELOG.md` |
 | **Resumo gerencial** | `RESUMO_GERENCIAL.md` |
 | **Índice de docs** | `docs/README.md` |

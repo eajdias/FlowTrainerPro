@@ -30,5 +30,5 @@ Layout em **linhas × colunas proporcionais (flex)** que se adaptam ao espaço (
 | Workspace | Organização |
 |-----------|-------------|
 | **Tape Reading** (base) | Coluna 1: `Corretoras · Volume Profile · ≥25 · ≥250` (estreita) · Coluna 2: `SUPERDOM fundido` (sozinho) · Coluna 3: `T&T (alto) · Gráfico 8P` |
-| **Scalping** | `DOM fundido` · `Gráfico + VP` · `Tape` |
+| **Scalping** | Coluna 1: `SUPERDOM fundido + Gráfico 8P compacto` · Coluna 2: `Volume Profile + Times & Trades amplo` |
 | **DOM Puro** | `DOM fundido` + `Tape` em 2 colunas |

@@ -81,15 +81,18 @@ export function createScalpingWorkspace(): WorkspaceConfig {
   return {
     id:          uuidv4(),
     name:        'Scalping',
-    description: 'Operação rápida: DOM fundido, gráfico e tape',
+    description: 'Operação rápida: DOM + gráfico compacto e tape amplo',
     createdAt:   now(),
     updatedAt:   now(),
-    rowWeights:  [0.95, 1.05],
+    rowWeights:  [1],
     panels: [
-      deskPanel('SuperDOMPanel',      { col: 0, colWeight: 1.2 }),
-      deskPanel('VolumeProfilePanel', { col: 1, weight: 1.6, colWeight: 1 }),
-      deskPanel('TimesTradesPanel',   { col: 1, weight: 1 }),
-      deskPanel('Chart8PPanel',       { col: 0, row: 1 }),
+      // Coluna 1 — operação + gráfico compacto embaixo
+      deskPanel('SuperDOMPanel',      { col: 0, weight: 2.4, colWeight: 1.2 }),
+      deskPanel('Chart8PPanel',       { col: 0, weight: 0.8 }),
+
+      // Coluna 2 — perfil + tape amplo
+      deskPanel('VolumeProfilePanel', { col: 1, weight: 1, colWeight: 1 }),
+      deskPanel('TimesTradesPanel',   { col: 1, weight: 1.8 }),
     ],
   };
 }

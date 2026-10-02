@@ -4,6 +4,14 @@ Histórico consolidado do projeto. Para detalhes do estado atual, ver `PROJECT_S
 
 ---
 
+## 2026-10-02 — Scalping em 2 colunas: DOM+gráfico | VP+tape
+
+- Coluna 1: `SUPERDOM fundido` + `Gráfico 8P compacto` embaixo; Coluna 2: `Volume Profile` + `Times & Trades amplo`
+
+**Evidência:** `tsc` 0 erros · `vitest` 61/61 · `vite build` ok · validado ao vivo no perfil Scalping.
+
+---
+
 ## 2026-10-02 — Tape Reading final: históricos + VP na coluna 1; Exec com barras no DOM
 
 - Layout final: `[Corretoras · VP · ≥25 · ≥250]` (estreita) · `[SUPERDOM fundido]` · `[T&T alto · Gráfico 8P]`
