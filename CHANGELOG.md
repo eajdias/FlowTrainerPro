@@ -4,6 +4,16 @@ Histórico consolidado do projeto. Para detalhes do estado atual, ver `PROJECT_S
 
 ---
 
+## 2026-10-02 — Padrão VP aplicado nas demais tabelas
+
+- **CSS base das tabelas**: linhas de 24px, headers espaçados com divisor forte, zebra sutil nas tabelas lisas (exceto SuperDOM/T&T que têm cor própria por linha), hover consistente — aplica a todos os painéis tabulares de uma vez
+- **Histórico de Corretoras**: agora com **barras proporcionais compra/venda** (`BTG 6.2k ▬▬ 4.6k ▬ +1.5k`), net colorido, barras espelhadas (compra da direita, venda da esquerda), zebra e header de colunas
+- **Price Ladder**: heat proporcional nas células de bid/ask (padrão SuperDOM) + linha atual destacada + delta colorido
+
+**Evidência:** `tsc` 0 erros · `vitest` 61/61 · `vite build` ok · validado ao vivo (Corretoras com barras BTG/CLEAR/ITAU/AGORA/XP, ≥25 espaçado, PriceLadder com heat).
+
+---
+
 ## 2026-10-02 — Volume Profile: layout final valor │ barra │ %
 
 - Célula redesenhada no padrão `1.5k ▬▬▬ 74%`: valor à esquerda, **barra esticada** no meio (flex, aproveita toda a largura restante) e porcentagem à direita

@@ -42,7 +42,7 @@
   padding: var(--ftp-space-1) 0 var(--ftp-space-2);
 }
 
-/* ═══ TABELAS DENSAS ═══ */
+/* ═══ TABELAS DENSAS — padrão VP: linhas altas, zebra, divisores ═══ */
 
 .ftp-panel table {
   width: 100%;
@@ -53,24 +53,30 @@
 }
 
 .ftp-panel th {
-  font-size: var(--ftp-font-size-2xs);
+  font-size: var(--ftp-font-size-xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--ftp-text-muted);
   text-align: right;
-  padding: var(--ftp-space-1) var(--ftp-space-3);
-  border-bottom: 1px solid var(--ftp-border-row);
+  padding: var(--ftp-space-3) var(--ftp-space-4);
+  border-bottom: 1px solid var(--ftp-border);
   position: sticky;
   top: 0;
   background: var(--ftp-bg-panel);
 }
 
 .ftp-panel td {
-  padding: 1px var(--ftp-space-3);
+  height: 24px;
+  padding: 0 var(--ftp-space-4);
   text-align: right;
   border-bottom: 1px solid var(--ftp-border-row);
   white-space: nowrap;
+}
+
+/* Zebra sutil nas tabelas lisas (SuperDOM e T&T têm cor própria por linha) */
+.ftp-panel:not(.ftp-superdom):not(.ftp-tt) tbody tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.018);
 }
 
 .ftp-panel tbody tr:hover td {
@@ -1789,3 +1795,167 @@
 
 .ftp-net-buy { color: var(--ftp-buy-primary); }
 .ftp-net-sell { color: var(--ftp-sell-primary); }
+
+/* ═══ HISTÓRICO DE CORRETORAS — barras proporcionais (padrão VP) ═══ */
+
+.ftp-broker-hist .ftp-panel-body {
+  padding: 0 0 var(--ftp-space-2);
+  overflow: hidden auto;
+}
+
+.ftp-bh-head {
+  display: grid;
+  grid-template-columns: 72px 1fr 1fr 62px;
+  align-items: center;
+  padding: var(--ftp-space-3) 0;
+  border-bottom: 1px solid var(--ftp-border);
+}
+
+.ftp-bh-head .ftp-bh-col-name { padding-left: var(--ftp-space-4); text-align: left; }
+.ftp-bh-head .ftp-bh-col-bar { padding: 0 var(--ftp-space-4); text-align: left; border-left: 1px solid var(--ftp-border-row); }
+.ftp-bh-head .ftp-bh-col-net { padding-right: var(--ftp-space-5); text-align: right; border-left: 1px solid var(--ftp-border-row); }
+.ftp-bh-head .ftp-bh-col-vol,
+.ftp-bh-head .ftp-bh-col-num { padding: 0 var(--ftp-space-4); text-align: right; }
+
+.ftp-bh-head span {
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ftp-text-muted);
+}
+
+.ftp-bh {
+  display: flex;
+  flex-direction: column;
+}
+
+.ftp-bh-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 1fr 62px;
+  align-items: center;
+  height: 27px;
+  border-bottom: 1px solid var(--ftp-border-row);
+}
+
+.ftp-bh-row:nth-child(even) { background: rgba(255, 255, 255, 0.018); }
+.ftp-bh-row:hover { background: var(--ftp-bg-hover); }
+
+.ftp-bh-name {
+  padding-left: var(--ftp-space-4);
+  font-family: var(--ftp-font-ui);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ftp-bh-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--ftp-space-2);
+  height: 100%;
+  padding: 0 var(--ftp-space-4);
+  border-left: 1px solid var(--ftp-border-row);
+  min-width: 0;
+}
+
+.ftp-bh-val {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 700;
+  min-width: 34px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ftp-bh-cell.is-buy .ftp-bh-val { color: var(--ftp-buy-primary); }
+.ftp-bh-cell.is-sell .ftp-bh-val { color: var(--ftp-sell-primary); }
+
+.ftp-bh-bar {
+  flex: 1 1 auto;
+  min-width: 18px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  overflow: hidden;
+}
+
+.ftp-bh-cell.is-buy .ftp-bh-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ftp-buy-primary);
+  opacity: 0.8;
+  margin-left: auto;
+  transition: width var(--ftp-duration-normal) var(--ftp-ease-out);
+}
+
+.ftp-bh-cell.is-sell .ftp-bh-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ftp-sell-primary);
+  opacity: 0.8;
+  transition: width var(--ftp-duration-normal) var(--ftp-ease-out);
+}
+
+.ftp-bh-net {
+  padding-right: var(--ftp-space-5);
+  border-left: 1px solid var(--ftp-border-row);
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-sm);
+  font-weight: 700;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ftp-bh-net.is-buy { color: var(--ftp-buy-primary); }
+.ftp-bh-net.is-sell { color: var(--ftp-sell-primary); }
+
+/* Tabela simples (modo histórico) */
+
+.ftp-bh-row .ftp-bh-num {
+  padding: 0 var(--ftp-space-4);
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-bh-num.is-buy { color: var(--ftp-buy-primary); }
+.ftp-bh-num.is-sell { color: var(--ftp-sell-primary); }
+
+/* ═══ PRICE LADDER — heat por célula (padrão SuperDOM) ═══ */
+
+.ftp-ladder .ftp-panel-body {
+  padding: var(--ftp-space-2) var(--ftp-space-3);
+}
+
+.ftp-ladder td {
+  position: relative;
+  overflow: hidden;
+}
+
+.ftp-ladder .ftp-ladder-fill {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  right: 0;
+  border-radius: var(--ftp-radius-xs);
+  pointer-events: none;
+}
+
+.ftp-ladder .ftp-ladder-fill.is-bid { background: rgba(0, 212, 170, 0.22); }
+.ftp-ladder .ftp-ladder-fill.is-ask { background: rgba(255, 71, 87, 0.22); }
+
+.ftp-ladder .ftp-ladder-num {
+  position: relative;
+  z-index: 1;
+}
+
+.ftp-ladder .ftp-ladder-current {
+  background: rgba(245, 196, 0, 0.10) !important;
+  font-weight: 700;
+}
