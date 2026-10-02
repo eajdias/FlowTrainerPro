@@ -139,6 +139,18 @@ export function SuperDOM() {
     return m;
   }, [orders]);
 
+  // Máximos de volume executado (barras de calor nas colunas Exec.C/Exec.V)
+  const maxExecBuy = useMemo(
+    () => Math.max(1, ...prices.map((p) => execByPrice.get(p)?.bidVolume ?? 0)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [execLevels],
+  );
+  const maxExecSell = useMemo(
+    () => Math.max(1, ...prices.map((p) => execByPrice.get(p)?.askVolume ?? 0)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [execLevels],
+  );
+
   // ── Auto-follow: mantém a linha do preço atual visível (com trava manual) ──
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const lockedUntil = useRef(0);
@@ -311,8 +323,22 @@ export function SuperDOM() {
                       );
                     })}
                   </td>
-                  <td className="ftp-dom-exec is-buy">{exec && exec.bidVolume ? exec.bidVolume : ''}</td>
-                  <td className="ftp-dom-exec is-sell">{exec && exec.askVolume ? exec.askVolume : ''}</td>
+                  <td className="ftp-dom-exec-cell is-buy">
+                    <span
+                      className="ftp-dom-execfill"
+                      style={{ width: `${(((exec && exec.bidVolume) || 0) / maxExecBuy) * 100}%` }}
+                      aria-hidden="true"
+                    />
+                    <span className="ftp-dom-execnum">{exec && exec.bidVolume ? exec.bidVolume : ''}</span>
+                  </td>
+                  <td className="ftp-dom-exec-cell is-sell">
+                    <span
+                      className="ftp-dom-execfill"
+                      style={{ width: `${(((exec && exec.askVolume) || 0) / maxExecSell) * 100}%` }}
+                      aria-hidden="true"
+                    />
+                    <span className="ftp-dom-execnum">{exec && exec.askVolume ? exec.askVolume : ''}</span>
+                  </td>
                   <td className="ftp-dom-rs">{posSide ? estimateAt(price, posSide, avgPrice, posSize).toFixed(0) : ''}</td>
                 </tr>
               );

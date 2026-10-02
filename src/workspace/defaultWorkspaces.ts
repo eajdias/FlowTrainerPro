@@ -34,14 +34,17 @@ function deskPanel(type: PanelConfig['type'], opts: DeskOpts): PanelConfig {
   };
 }
 
-// ── Tape Reading — mesa principal (3 colunas × 3 blocos) ─────────────────────
+// ── Tape Reading — mesa principal (3 colunas) ─────────────────────────────────
 //
 //  ┌──────────────┬──────────────────┬──────────────────┐
 //  │ Hist.        │                  │  Times & Trades  │
-//  │  Corretoras  │                  ├──────────────────┤
-//  │──────────────┤    SUPERDOM      │  Volume Profile  │
-//  │ Histórico    │  (+ Ladder       ├──────────────────┤
-//  │  ≥25         │   fundido)       │   Gráfico 8P     │
+//  │  Corretoras  │                  │  (alto)          │
+//  │──────────────┤    SUPERDOM      ├──────────────────┤
+//  │ Volume       │  (+ Ladder       │   Gráfico 8P     │
+//  │  Profile     │   fundido)       │                  │
+//  ├──────────────┤                  │                  │
+//  │ Histórico    │                  │                  │
+//  │  ≥25         │                  │                  │
 //  ├──────────────┤                  │                  │
 //  │ Histórico    │                  │                  │
 //  │  ≥250        │                  │                  │
@@ -56,17 +59,17 @@ export function createTapeReadingWorkspace(): WorkspaceConfig {
     updatedAt:   now(),
     rowWeights:  [1],
     panels: [
-      // Coluna 0 — históricos (estreita)
-      deskPanel('BrokerHistoryPanel', { col: 0, weight: 1, colWeight: 0.72 }),
-      deskPanel('MediumTradesPanel',  { col: 0, weight: 1.5 }),
-      deskPanel('LargeTradesPanel',   { col: 0, weight: 0.9 }),
+      // Coluna 0 — históricos + perfil
+      deskPanel('BrokerHistoryPanel', { col: 0, weight: 1, colWeight: 0.8 }),
+      deskPanel('VolumeProfilePanel', { col: 0, weight: 1.4 }),
+      deskPanel('MediumTradesPanel',  { col: 0, weight: 1.1 }),
+      deskPanel('LargeTradesPanel',   { col: 0, weight: 0.7 }),
 
       // Coluna 1 — operação (SUPERDOM fundido, sozinho)
       deskPanel('SuperDOMPanel',      { col: 1, weight: 1, colWeight: 1.15 }),
 
-      // Coluna 2 — tape, perfil e gráfico
-      deskPanel('TimesTradesPanel',   { col: 2, weight: 1.5, colWeight: 1.1 }),
-      deskPanel('VolumeProfilePanel', { col: 2, weight: 1 }),
+      // Coluna 2 — tape alto + gráfico
+      deskPanel('TimesTradesPanel',   { col: 2, weight: 2.1, colWeight: 1.05 }),
       deskPanel('Chart8PPanel',       { col: 2, weight: 1.2 }),
     ],
   };

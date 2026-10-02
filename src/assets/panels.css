@@ -166,19 +166,19 @@
 .ftp-superdom th:nth-child(1),
 .ftp-superdom td:nth-child(1) { width: 6%; }
 .ftp-superdom th:nth-child(2),
-.ftp-superdom td:nth-child(2) { width: 8%; }
+.ftp-superdom td:nth-child(2) { width: 6%; }
 .ftp-superdom th:nth-child(3),
-.ftp-superdom td:nth-child(3) { width: 15%; }
+.ftp-superdom td:nth-child(3) { width: 16%; }
 .ftp-superdom th:nth-child(4),
 .ftp-superdom td:nth-child(4) { width: 23%; }
 .ftp-superdom th:nth-child(5),
-.ftp-superdom td:nth-child(5) { width: 15%; }
+.ftp-superdom td:nth-child(5) { width: 16%; }
 .ftp-superdom th:nth-child(6),
-.ftp-superdom td:nth-child(6) { width: 8%; }
+.ftp-superdom td:nth-child(6) { width: 6%; }
 .ftp-superdom th:nth-child(7),
-.ftp-superdom td:nth-child(7) { width: 9%; }
+.ftp-superdom td:nth-child(7) { width: 10%; }
 .ftp-superdom th:nth-child(8),
-.ftp-superdom td:nth-child(8) { width: 9%; }
+.ftp-superdom td:nth-child(8) { width: 10%; }
 .ftp-superdom th:nth-child(9),
 .ftp-superdom td:nth-child(9) { width: 7%; }
 
@@ -237,6 +237,37 @@
 
 .ftp-dom-exec.is-buy { color: var(--ftp-buy-primary); }
 .ftp-dom-exec.is-sell { color: var(--ftp-sell-primary); }
+
+/* Células Exec.C/Exec.V com barra de calor (níveis com mais negócios) */
+
+.ftp-dom-exec-cell {
+  position: relative;
+  overflow: hidden;
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.ftp-dom-exec-cell.is-buy { color: var(--ftp-buy-primary); }
+.ftp-dom-exec-cell.is-sell { color: var(--ftp-sell-primary); }
+
+.ftp-dom-execfill {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  right: 0;
+  border-radius: var(--ftp-radius-xs);
+  pointer-events: none;
+}
+
+.ftp-dom-exec-cell.is-buy .ftp-dom-execfill { background: rgba(0, 212, 170, 0.30); }
+.ftp-dom-exec-cell.is-sell .ftp-dom-execfill { background: rgba(255, 71, 87, 0.30); }
+
+.ftp-dom-execnum {
+  position: relative;
+  z-index: 1;
+}
 
 /* Linha do preço atual: sublinhada para fácil visualização */
 
@@ -1674,7 +1705,8 @@
 
 .ftp-vp2-head {
   display: grid;
-  grid-template-columns: 68px 1fr 1fr 70px;
+  grid-template-columns: 60px minmax(0, 1fr) minmax(0, 1fr) 62px;
+  width: 100%;
   align-items: center;
   padding: var(--ftp-space-3) 0;
   border-bottom: 1px solid var(--ftp-border);
@@ -1703,7 +1735,8 @@
 
 .ftp-vp2-row {
   display: grid;
-  grid-template-columns: 68px 1fr 1fr 70px;
+  grid-template-columns: 60px minmax(0, 1fr) minmax(0, 1fr) 62px;
+  width: 100%;
   align-items: center;
   height: 27px;
   padding: 0;
@@ -1834,7 +1867,8 @@
 
 .ftp-bh-head {
   display: grid;
-  grid-template-columns: 72px 1fr 1fr 62px;
+  grid-template-columns: 70px minmax(0, 1fr) minmax(0, 1fr) 60px;
+  width: 100%;
   align-items: center;
   padding: var(--ftp-space-3) 0;
   border-bottom: 1px solid var(--ftp-border);
@@ -1861,7 +1895,8 @@
 
 .ftp-bh-row {
   display: grid;
-  grid-template-columns: 72px 1fr 1fr 62px;
+  grid-template-columns: 70px minmax(0, 1fr) minmax(0, 1fr) 60px;
+  width: 100%;
   align-items: center;
   height: 27px;
   border-bottom: 1px solid var(--ftp-border-row);

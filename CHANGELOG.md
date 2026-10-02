@@ -4,6 +4,16 @@ Histórico consolidado do projeto. Para detalhes do estado atual, ver `PROJECT_S
 
 ---
 
+## 2026-10-02 — Tape Reading final: históricos + VP na coluna 1; Exec com barras no DOM
+
+- Layout final: `[Corretoras · VP · ≥25 · ≥250]` (estreita) · `[SUPERDOM fundido]` · `[T&T alto · Gráfico 8P]`
+- Colunas Exec.C/Exec.V do SuperDOM com **barras de calor** (níveis com mais negócios visíveis de relance); ORD.C/ORD.V estreitadas (6%), preço em 23%
+- VP e Corretoras com grids `minmax(0,1fr)` + `width:100%` — ocupam todo o espaço interno da janela
+
+**Evidência:** `tsc` 0 erros · `vitest` 61/61 · `vite build` ok · validado ao vivo.
+
+---
+
 ## 2026-10-02 — Tape Reading 3×3: históricos | SUPERDOM | tape+VP+gráfico
 
 - Layout exato em 3 colunas: `[Corretoras · ≥25 · ≥250]` (estreita) · `[SUPERDOM fundido, sozinho]` · `[T&T · Volume Profile · Gráfico 8P]`

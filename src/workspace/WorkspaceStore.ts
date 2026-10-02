@@ -105,7 +105,7 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
     }),
     {
       name: 'flowtrainerpro-workspace', // localStorage key
-      version: 17, // v17: Tape Reading 3×3 (históricos | DOM | tape+VP+gráfico) — força re-leitura
+      version: 18, // v18: Tape Reading col0 = Corretoras+VP+≥25+≥250; col2 = T&T alto + Chart — força re-leitura
     },
   ),
 );
