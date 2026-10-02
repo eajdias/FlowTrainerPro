@@ -1597,16 +1597,16 @@
 
 .ftp-vp2-head {
   display: grid;
-  grid-template-columns: 56px 1fr 1fr 58px;
-  gap: var(--ftp-space-3);
+  grid-template-columns: 62px 1fr 1fr 64px;
+  gap: var(--ftp-space-4);
   align-items: center;
-  padding-bottom: var(--ftp-space-1);
+  padding-bottom: var(--ftp-space-2);
   border-bottom: 1px solid var(--ftp-border-row);
-  margin-bottom: 2px;
+  margin-bottom: var(--ftp-space-1);
 }
 
 .ftp-vp2-head span {
-  font-size: var(--ftp-font-size-2xs);
+  font-size: var(--ftp-font-size-xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1621,15 +1621,15 @@
 .ftp-vp2 {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 3px;
 }
 
 .ftp-vp2-row {
   display: grid;
-  grid-template-columns: 56px 1fr 1fr 58px;
-  gap: var(--ftp-space-3);
+  grid-template-columns: 62px 1fr 1fr 64px;
+  gap: var(--ftp-space-4);
   align-items: center;
-  padding: 1px var(--ftp-space-1);
+  padding: 2px var(--ftp-space-2);
   border-radius: var(--ftp-radius-xs);
 }
 
@@ -1655,7 +1655,7 @@
 
 .ftp-vp2-price {
   font-family: var(--ftp-font-numeric);
-  font-size: var(--ftp-font-size-xs);
+  font-size: var(--ftp-font-size-sm);
   color: var(--ftp-text-secondary);
   text-align: right;
   font-variant-numeric: tabular-nums;
@@ -1668,7 +1668,7 @@
 
 .ftp-vp2-cell {
   position: relative;
-  height: 15px;
+  height: 22px;
   border-radius: var(--ftp-radius-xs);
   background: rgba(255, 255, 255, 0.03);
   overflow: hidden;
@@ -1698,7 +1698,7 @@
   justify-content: center;
   height: 100%;
   font-family: var(--ftp-font-numeric);
-  font-size: var(--ftp-font-size-xs);
+  font-size: var(--ftp-font-size-sm);
   font-weight: 600;
   color: var(--ftp-text-primary);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
@@ -1709,14 +1709,14 @@
 .ftp-vp2-text i {
   font-style: normal;
   font-weight: 500;
-  font-size: var(--ftp-font-size-2xs);
+  font-size: var(--ftp-font-size-xs);
   opacity: 0.85;
   margin-left: var(--ftp-space-1);
 }
 
 .ftp-vp2-total {
   font-family: var(--ftp-font-numeric);
-  font-size: var(--ftp-font-size-xs);
+  font-size: var(--ftp-font-size-sm);
   font-weight: 600;
   color: var(--ftp-text-secondary);
   text-align: right;

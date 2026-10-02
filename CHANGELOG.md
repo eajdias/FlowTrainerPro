@@ -4,6 +4,16 @@ Histórico consolidado do projeto. Para detalhes do estado atual, ver `PROJECT_S
 
 ---
 
+## 2026-10-02 — Assimetria do desk: VP alinhado ao ≥25 com leitura maior
+
+**Ações:**
+- Volume Profile redimensionado para a **mesma largura do Histórico ≥25** (colWeight alinhado), criando a assimetria da view: coluna fina à esquerda + gráfico largo à direita
+- Leitura do VP ampliada: células de 22px (era 15), fontes de 11px (era 10), espaçamento de 3px entre linhas e padding maior
+
+**Evidência:** `tsc` 0 erros · `vitest` 61/61 · `vite build` ok · validado ao vivo (VP fino alinhado ao ≥25, 3 candles com corpo+pavio, Δ +2.7k compra).
+
+---
+
 ## 2026-10-02 — Candle 8P restaurado + Volume Profile v2 (estilo SuperDOM)
 
 **Contexto:** Candles deformados (blocos gigantes sem pavio) e leitura ruim do Volume Profile.

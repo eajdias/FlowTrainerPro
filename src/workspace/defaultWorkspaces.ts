@@ -60,9 +60,9 @@ export function createTapeReadingWorkspace(): WorkspaceConfig {
       deskPanel('SuperDOMPanel',          { col: 2, colWeight: 1.1 }),
       deskPanel('BrokerHistoryPanel',     { col: 3, colWeight: 0.95 }),
 
-      // Linha 1 — Volume Profile fundido ao lado do gráfico largo
-      deskPanel('VolumeProfilePanel',     { col: 0, row: 1, colWeight: 0.88 }),
-      deskPanel('Chart8PPanel',           { col: 1, row: 1, colWeight: 1.12 }),
+      // Linha 1 — Volume Profile (largura alinhada ao ≥25) ao lado do gráfico largo
+      deskPanel('VolumeProfilePanel',     { col: 0, row: 1, colWeight: 0.85 }),
+      deskPanel('Chart8PPanel',           { col: 1, row: 1, colWeight: 3.4 }),
     ],
   };
 }

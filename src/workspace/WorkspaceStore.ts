@@ -105,7 +105,7 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
     }),
     {
       name: 'flowtrainerpro-workspace', // localStorage key
-      version: 14, // v14: Histórico de Corretoras no layout base — força re-leitura
+      version: 15, // v15: VP alinhado ao ≥25 (assimetria) — força re-leitura
     },
   ),
 );
