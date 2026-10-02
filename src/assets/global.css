@@ -1,4 +1,4 @@
-/* global.css — Flow Trainer Pro base styles */
+/* global.css — base styles + motion utilities */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -10,47 +10,69 @@ html, body, #root {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: var(--ftp-bg-canvas, #0B0E13);
-  color: var(--ftp-text-primary, #F4F7FB);
-  font-family: var(--ftp-font-ui, 'Segoe UI', system-ui, sans-serif);
-  font-size: 12px;
+  background: var(--ftp-bg-canvas);
+  color: var(--ftp-text-primary);
+  font-family: var(--ftp-font-ui);
+  font-size: var(--ftp-font-size-base);
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar — thin dark style */
+/* Números sempre em mono com alinhamento tabular */
+.ftp-num,
+[data-numeric] {
+  font-family: var(--ftp-font-numeric);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Scrollbar — thin dark style ── */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--ftp-bg-canvas, #0B0E13);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--ftp-border-strong, #354154);
+  background: var(--ftp-border-strong);
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--ftp-text-muted, #707C8D);
+  background: var(--ftp-text-muted);
 }
 
-/* Remove default button styles */
+/* ── Botões base ── */
 button {
   font-family: inherit;
   cursor: pointer;
 }
 
 button:focus-visible,
-[tabindex]:focus-visible {
+[tabindex]:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
   outline: none;
-  box-shadow: var(--ftp-shadow-focus, 0 0 0 2px rgba(77, 141, 255, 0.42));
+  box-shadow: var(--ftp-shadow-focus);
 }
 
-/* Prevent text selection on interactive UI */
-button, [role="toolbar"], [role="group"] {
+/* Prevenir seleção de texto em UI interativa */
+button, [role="toolbar"], [role="group"], [role="tablist"] {
   user-select: none;
+}
+
+/* ═══ MOTION UTILITIES ═══
+   Regra: apenas transform/opacity (compositor-friendly).
+   Durações via tokens; reduced-motion zera tudo. */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+  }
 }

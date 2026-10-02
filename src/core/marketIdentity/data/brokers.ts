@@ -1,5 +1,5 @@
 // core/marketIdentity/data/brokers.ts
-// Registro oficial de corretoras (fonte: docs/FLOW_BROKER_COLORS.md).
+// Registro oficial de corretoras.
 // Nunca alterar cores em codigo avulso — sempre via BrokerRegistry.
 
 export interface BrokerInfo {

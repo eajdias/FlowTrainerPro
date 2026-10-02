@@ -1,51 +1,207 @@
-/* Design System v0 — usa tokens do theme.css (fallback próprio). */
+/* designSystem.css — componentes base (tokens do theme.css) */
 #root,
 .ds-theme {
   height: 100%;
 }
+
 .ds-theme {
-  --ds-bg: var(--ftp-bg-panel, #0d1117);
-  --ds-fg: var(--ftp-text-primary, #e6e9ef);
-  --ds-neutral: var(--ftp-text-muted, #8b90a0);
-  --ds-info: var(--ftp-info, #4fc3f7);
-  --ds-special: var(--ftp-special, #f5c400);
-  --ds-warning: var(--ftp-warning, #ff9800);
-  --ds-buy: var(--ftp-buy-primary, #2ecc8a);
-  --ds-sell: var(--ftp-sell-primary, #e03a3a);
-  --ds-radius: var(--ftp-radius-sm, 6px);
-  --ds-font: var(--ftp-font-ui, Tahoma, sans-serif);
+  --ds-bg: var(--ftp-bg-panel);
+  --ds-fg: var(--ftp-text-primary);
+  --ds-neutral: var(--ftp-text-muted);
+  --ds-info: var(--ftp-info);
+  --ds-special: var(--ftp-special);
+  --ds-warning: var(--ftp-warning);
+  --ds-buy: var(--ftp-buy-primary);
+  --ds-sell: var(--ftp-sell-primary);
+  --ds-radius: var(--ftp-radius-sm);
+  --ds-font: var(--ftp-font-ui);
 }
+
+/* ═══ BADGE — cores com alpha, sem competir ═══ */
 
 .ds-badge {
-  display: inline-block;
-  padding: 1px 8px;
-  border-radius: var(--ds-radius);
-  font: bold 8pt var(--ds-font);
-  background: var(--ds-neutral);
-  color: #0b0e13;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ftp-space-2);
+  padding: 2px var(--ftp-space-4);
+  border-radius: var(--ftp-radius-xs);
+  border: 1px solid transparent;
+  font: 600 var(--ftp-font-size-2xs)/1.4 var(--ds-font);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: rgba(139, 144, 160, 0.14);
+  color: var(--ftp-text-secondary);
 }
 
-.ds-badge-info { background: var(--ds-info); }
-.ds-badge-special { background: var(--ds-special); }
-.ds-badge-warning { background: var(--ds-warning); }
-.ds-badge-buy { background: var(--ds-buy); }
-.ds-badge-sell { background: var(--ds-sell); }
+.ds-badge-neutral {
+  background: rgba(139, 144, 160, 0.14);
+  color: var(--ftp-text-secondary);
+}
+
+.ds-badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.ds-badge-info {
+  background: rgba(77, 141, 255, 0.14);
+  border-color: rgba(77, 141, 255, 0.25);
+  color: var(--ftp-info);
+}
+
+.ds-badge-special {
+  background: rgba(245, 196, 0, 0.12);
+  border-color: rgba(245, 196, 0, 0.22);
+  color: var(--ftp-special);
+}
+
+.ds-badge-warning {
+  background: rgba(255, 184, 0, 0.14);
+  border-color: rgba(255, 184, 0, 0.25);
+  color: var(--ftp-warning);
+}
+
+.ds-badge-buy {
+  background: var(--ftp-buy-dim);
+  border-color: rgba(0, 212, 170, 0.25);
+  color: var(--ftp-buy-primary);
+}
+
+.ds-badge-sell {
+  background: var(--ftp-sell-dim);
+  border-color: rgba(255, 71, 87, 0.25);
+  color: var(--ftp-sell-primary);
+}
+
+/* ═══ BUTTON ═══ */
 
 .ds-button {
-  font: bold 8pt var(--ds-font);
-  border-radius: var(--ds-radius);
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ftp-space-2);
+  height: 26px;
+  padding: 0 var(--ftp-space-5);
+  border-radius: var(--ftp-radius-sm);
+  font: 600 var(--ftp-font-size-sm)/1 var(--ds-font);
   cursor: pointer;
+  transition:
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    border-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ds-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
 }
 
 .ds-button-primary {
-  background: var(--ds-info);
-  color: #0b0e13;
-  border: none;
+  background: var(--ftp-info);
+  color: var(--ftp-bg-canvas);
+  border: 1px solid transparent;
+}
+
+.ds-button-primary:hover {
+  background: var(--ftp-info-hover);
+}
+
+.ds-button-primary:active {
+  background: var(--ftp-info-active);
 }
 
 .ds-button-ghost {
   background: transparent;
-  color: var(--ds-fg);
-  border: 1px solid var(--ds-neutral);
+  color: var(--ftp-text-secondary);
+  border: 1px solid var(--ftp-border);
+}
+
+.ds-button-ghost:hover {
+  background: var(--ftp-bg-hover);
+  border-color: var(--ftp-border-strong);
+  color: var(--ftp-text-primary);
+}
+
+.ds-button-ghost:active {
+  background: var(--ftp-bg-panel-elevated);
+}
+
+.ds-button-danger {
+  background: var(--ftp-sell-dim);
+  color: var(--ftp-sell-primary);
+  border: 1px solid rgba(255, 71, 87, 0.28);
+}
+
+.ds-button-danger:hover {
+  background: rgba(255, 71, 87, 0.18);
+  border-color: rgba(255, 71, 87, 0.4);
+}
+
+.ds-button-compact {
+  height: 22px;
+  padding: 0 var(--ftp-space-4);
+  font-size: var(--ftp-font-size-xs);
+}
+
+/* ═══ TOOLTIP ═══ */
+
+.ds-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.ds-tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--ftp-z-tooltip);
+  max-width: 260px;
+  padding: var(--ftp-space-2) var(--ftp-space-4);
+  border-radius: var(--ftp-radius-sm);
+  border: 1px solid var(--ftp-border-strong);
+  background: var(--ftp-bg-panel-elevated);
+  color: var(--ftp-text-secondary);
+  font: 500 var(--ftp-font-size-xs)/1.4 var(--ds-font);
+  white-space: normal;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--ftp-duration-fast) var(--ftp-ease-out);
+  box-shadow: var(--ftp-shadow-md);
+}
+
+.ds-tooltip:hover .ds-tooltip-bubble,
+.ds-tooltip:focus-within .ds-tooltip-bubble {
+  opacity: 1;
+}
+
+/* ═══ SKELETON ═══ */
+
+.ds-skeleton {
+  display: block;
+  border-radius: var(--ftp-radius-xs);
+  background: linear-gradient(
+    90deg,
+    var(--ftp-bg-panel-elevated) 0%,
+    var(--ftp-bg-hover) 50%,
+    var(--ftp-bg-panel-elevated) 100%
+  );
+  background-size: 200% 100%;
+  animation: ds-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes ds-skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-skeleton {
+    animation: none;
+  }
 }

@@ -14,11 +14,9 @@ export type PanelType =
   | 'Chart8PPanel'
   | 'OrderBookByBrokerPanel'
   | 'PriceLadderPanel'
-  | 'CandleClockPanel'
   | 'TrainingPanel'
   | 'DebugPanel'
   | 'TrainingHUD'
-  | 'ReplayToolbar'
   | 'LargeTradesPanel'
   | 'MediumTradesPanel'
   | 'ScenarioEditorPanel'
@@ -27,9 +25,7 @@ export type PanelType =
   | 'MissionInspectorPanel'
   | 'EvaluationInspectorPanel'
   | 'FeedbackInspectorPanel'
-  | 'ReplayInspectorPanel'
-  | 'ReplayPlayerPanel'
-  | 'DataPanel';
+  | 'ReplayInspectorPanel';
   // Future: 'HeatmapPanel' | 'AgressorPanel' | 'PlayerRankingPanel'
 
 export type PanelMode = 'docked' | 'floating';
@@ -56,6 +52,14 @@ export interface PanelConfig {
   zIndex:   number;          // used in floating mode
   /** Grid area name — used in docked/CSS-grid mode */
   gridArea?: string;
+  /** Desk mode: column index (0-based). When present, the panel renders in the fluid desk layout. */
+  col?: number;
+  /** Desk mode: row index (0-based, default 0). Rows são faixas horizontais do desk. */
+  row?: number;
+  /** Desk mode: flex-grow dentro da coluna/linha (default 1). */
+  weight?: number;
+  /** Desk mode: largura relativa da coluna inteira (tomada do primeiro painel da coluna). */
+  colWeight?: number;
 }
 
 // ── Workspace types ────────────────────────────────────────────────────────────
@@ -70,6 +74,8 @@ export interface WorkspaceConfig {
   panels:      PanelConfig[];
   /** Which panel receives keyboard focus by default */
   focusedPanelId?: string;
+  /** Desk mode: altura relativa (flex-grow) de cada linha. */
+  rowWeights?: number[];
 }
 
 // ── Workspace store state ──────────────────────────────────────────────────────

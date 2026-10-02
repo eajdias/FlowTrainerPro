@@ -1,5 +1,7 @@
 /* panels.css — chrome dos painéis, tabelas densas, workspace, rotas */
 
+/* ═══ PANEL SHELL ═══ */
+
 .ftp-panel {
   background: var(--ftp-bg-panel);
   border: 1px solid var(--ftp-border-subtle);
@@ -10,24 +12,24 @@
   min-width: 0;
   overflow: hidden;
   font-family: var(--ftp-font-ui);
-  font-size: 11px;
+  font-size: var(--ftp-font-size-sm);
   color: var(--ftp-text-secondary);
 }
 
 .ftp-panel-title {
-  font-size: 10px;
-  font-weight: 800;
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ftp-text-muted);
   background: var(--ftp-bg-panel-elevated);
-  border-bottom: 1px solid var(--ftp-border-subtle);
-  padding: 4px 8px;
+  border-bottom: 1px solid var(--ftp-border-row);
+  padding: var(--ftp-space-3) var(--ftp-space-4);
   flex-shrink: 0;
 }
 
 .ftp-panel-body {
-  padding: 4px 6px;
+  padding: var(--ftp-space-2) var(--ftp-space-4);
   overflow: auto;
   font-variant-numeric: tabular-nums;
 }
@@ -35,37 +37,39 @@
 .ftp-panel-body > div {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 10px;
+  gap: var(--ftp-space-2) var(--ftp-space-5);
   align-items: center;
-  padding: 2px 0 4px;
+  padding: var(--ftp-space-1) 0 var(--ftp-space-2);
 }
+
+/* ═══ TABELAS DENSAS ═══ */
 
 .ftp-panel table {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--ftp-font-numeric);
-  font-size: 11px;
+  font-size: var(--ftp-font-size-sm);
   font-variant-numeric: tabular-nums;
 }
 
 .ftp-panel th {
-  font-size: 9px;
-  font-weight: 700;
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--ftp-text-muted);
   text-align: right;
-  padding: 2px 5px;
-  border-bottom: 1px solid var(--ftp-border-subtle);
+  padding: var(--ftp-space-1) var(--ftp-space-3);
+  border-bottom: 1px solid var(--ftp-border-row);
   position: sticky;
   top: 0;
   background: var(--ftp-bg-panel);
 }
 
 .ftp-panel td {
-  padding: 1px 5px;
+  padding: 1px var(--ftp-space-3);
   text-align: right;
-  border-bottom: 1px solid rgba(38, 43, 51, 0.5);
+  border-bottom: 1px solid var(--ftp-border-row);
   white-space: nowrap;
 }
 
@@ -80,74 +84,90 @@
 }
 
 .ftp-panel li {
-  padding: 2px 4px;
-  border-bottom: 1px solid rgba(38, 43, 51, 0.5);
+  padding: var(--ftp-space-1) var(--ftp-space-2);
+  border-bottom: 1px solid var(--ftp-border-row);
   display: flex;
-  gap: 8px;
+  gap: var(--ftp-space-4);
   align-items: center;
   flex-wrap: wrap;
 }
 
 .ftp-panel p {
   color: var(--ftp-text-muted);
-  padding: 6px 4px;
+  padding: var(--ftp-space-3) var(--ftp-space-2);
 }
+
+/* ═══ CONTROLES EM PAINEL ═══ */
 
 .ftp-panel button {
   background: var(--ftp-bg-panel-elevated);
-  border: 1px solid var(--ftp-border-strong);
+  border: 1px solid var(--ftp-border);
   border-radius: var(--ftp-radius-sm);
   color: var(--ftp-text-primary);
   font-family: var(--ftp-font-ui);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 10px;
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  padding: 3px var(--ftp-space-5);
+  transition:
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    border-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    color var(--ftp-duration-fast) var(--ftp-ease-out);
 }
 
 .ftp-panel button:hover {
   background: var(--ftp-bg-hover);
-  border-color: var(--ftp-info);
+  border-color: var(--ftp-border-strong);
+}
+
+.ftp-panel button:active {
+  background: var(--ftp-bg-panel);
 }
 
 .ftp-panel select,
 .ftp-panel input[type="number"],
 .ftp-panel input[type="text"] {
-  background: #0d0f13;
-  border: 1px solid var(--ftp-border-strong);
+  background: var(--ftp-bg-input);
+  border: 1px solid var(--ftp-border);
   border-radius: var(--ftp-radius-sm);
   color: var(--ftp-text-primary);
   font-family: var(--ftp-font-numeric);
-  font-size: 11px;
-  padding: 2px 5px;
+  font-size: var(--ftp-font-size-sm);
+  padding: var(--ftp-space-1) var(--ftp-space-3);
+}
+
+.ftp-panel select:focus-visible,
+.ftp-panel input:focus-visible {
+  border-color: var(--ftp-border-accent);
 }
 
 .ftp-panel label {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--ftp-space-2);
   color: var(--ftp-text-muted);
-  font-size: 10px;
+  font-size: var(--ftp-font-size-xs);
 }
 
 .ftp-panel strong { color: var(--ftp-text-primary); }
 
-/* SuperDOM: grade fixa (robusta a zoom/fonte), compra (1-2), preço (3), venda (4-5) */
+/* ═══ SUPERDOM — grade assimétrica: trader compacto, book largo, preço destacado ═══ */
+
 .ftp-superdom table {
   table-layout: fixed;
 }
 
 .ftp-superdom th:nth-child(1),
-.ftp-superdom td:nth-child(1) { width: 18%; }
+.ftp-superdom td:nth-child(1) { width: 11%; }
 .ftp-superdom th:nth-child(2),
-.ftp-superdom td:nth-child(2) { width: 16%; }
+.ftp-superdom td:nth-child(2) { width: 21%; }
 .ftp-superdom th:nth-child(3),
-.ftp-superdom td:nth-child(3) { width: 22%; }
+.ftp-superdom td:nth-child(3) { width: 25%; }
 .ftp-superdom th:nth-child(4),
-.ftp-superdom td:nth-child(4) { width: 16%; }
+.ftp-superdom td:nth-child(4) { width: 21%; }
 .ftp-superdom th:nth-child(5),
-.ftp-superdom td:nth-child(5) { width: 18%; }
+.ftp-superdom td:nth-child(5) { width: 11%; }
 .ftp-superdom th:nth-child(6),
-.ftp-superdom td:nth-child(6) { width: 10%; }
+.ftp-superdom td:nth-child(6) { width: 11%; }
 
 .ftp-superdom td {
   overflow: hidden;
@@ -158,78 +178,166 @@
 .ftp-superdom td:nth-child(2) {
   background: var(--ftp-buy-dim);
   cursor: pointer;
+  transition: background-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-superdom td:nth-child(1):hover,
+.ftp-superdom td:nth-child(2):hover {
+  background: rgba(0, 212, 170, 0.18);
 }
 
 .ftp-superdom td:nth-child(4),
 .ftp-superdom td:nth-child(5) {
   background: var(--ftp-sell-dim);
   cursor: pointer;
+  transition: background-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-superdom td:nth-child(4):hover,
+.ftp-superdom td:nth-child(5):hover {
+  background: rgba(255, 71, 87, 0.18);
 }
 
 .ftp-superdom td:nth-child(3) {
   color: var(--ftp-text-primary);
-  font-weight: 800;
+  font-weight: 600;
   text-align: center;
-  background: rgba(77, 141, 255, 0.07);
+  background: rgba(77, 141, 255, 0.06);
 }
 
 .ftp-superdom td:nth-child(6) {
   color: var(--ftp-text-muted);
 }
 
-.ftp-panel button,
-.ftp-main section[aria-label] button,
-.ftp-workspace [role="tab"],
-.ftp-sourceButton,
-.ftp-actionButton {
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease,
-    transform 120ms ease;
+/* Cabeçalho do DOM: posição, P&L, corretora, zerar */
+
+.ftp-dom-head {
+  display: flex;
+  align-items: center;
+  gap: var(--ftp-space-4);
+  flex-wrap: wrap;
 }
 
-.ftp-panel button:active,
-.ftp-main section[aria-label] button:active {
-  transform: translateY(1px);
-}
-
-.ftp-workspace [role="tab"]:hover {
-  border-color: var(--ftp-border-strong);
-  color: var(--ftp-text-primary);
-}
-
-/* Tour de primeiros passos */
-.ftp-tour {
-  margin: 6px 12px;
-  padding: 8px 10px;
-  background: var(--ftp-bg-panel);
-  border: 1px solid var(--ftp-info);
-  border-radius: var(--ftp-radius-sm);
+.ftp-dom-pos {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 700;
+  padding: 2px var(--ftp-space-4);
+  border-radius: var(--ftp-radius-xs);
+  background: rgba(139, 144, 160, 0.14);
   color: var(--ftp-text-secondary);
-  font-size: 12px;
 }
 
-.ftp-tour ol {
-  margin: 6px 0 6px 18px;
+.ftp-dom-pos.is-long { background: var(--ftp-buy-dim); color: var(--ftp-buy-primary); }
+.ftp-dom-pos.is-short { background: var(--ftp-sell-dim); color: var(--ftp-sell-primary); }
+
+.ftp-dom-pnl {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-base);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Workspace */
+.ftp-dom-pnl.is-buy { color: var(--ftp-buy-primary); }
+.ftp-dom-pnl.is-sell { color: var(--ftp-sell-primary); }
+
+.ftp-dom-flatten {
+  background: var(--ftp-sell-dim) !important;
+  border-color: rgba(255, 71, 87, 0.3) !important;
+  color: var(--ftp-sell-primary) !important;
+}
+
+/* Linhas de referência do dia (mesmas do gráfico 8P) */
+
+.ftp-superdom tbody tr.is-high td { background: rgba(0, 212, 170, 0.10); }
+.ftp-superdom tbody tr.is-low td { background: rgba(255, 71, 87, 0.10); }
+.ftp-superdom tbody tr.is-vwap td { background: rgba(77, 141, 255, 0.09); }
+.ftp-superdom tbody tr.is-open td { background: rgba(245, 196, 0, 0.09); }
+
+.ftp-dom-ref {
+  display: inline-block;
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0 var(--ftp-space-1);
+  margin-right: var(--ftp-space-1);
+  border-radius: var(--ftp-radius-xs);
+  vertical-align: middle;
+}
+
+.ftp-dom-ref.is-high { background: var(--ftp-buy-dim); color: var(--ftp-buy-primary); }
+.ftp-dom-ref.is-low { background: var(--ftp-sell-dim); color: var(--ftp-sell-primary); }
+.ftp-dom-ref.is-vwap { background: rgba(77, 141, 255, 0.16); color: var(--ftp-info); }
+.ftp-dom-ref.is-open { background: rgba(245, 196, 0, 0.16); color: var(--ftp-special); }
+
+/* Barra de liquidez do book (estilo Jigsaw Depth & Sales) */
+
+.ftp-dom-liquidity {
+  display: flex;
+  align-items: center;
+  gap: var(--ftp-space-4);
+  flex-wrap: wrap;
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+}
+
+.ftp-dom-liquidity strong {
+  font-family: var(--ftp-font-numeric);
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-dom-liquidity .is-buy { color: var(--ftp-buy-primary); }
+.ftp-dom-liquidity .is-sell { color: var(--ftp-sell-primary); }
+
+.ftp-dom-imb {
+  flex: 1 1 80px;
+  min-width: 60px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--ftp-sell-dim);
+  overflow: hidden;
+}
+
+.ftp-dom-imb-bid {
+  height: 100%;
+  background: var(--ftp-buy-primary);
+  border-radius: 999px;
+  transition: width var(--ftp-duration-normal) var(--ftp-ease-out);
+}
+
+/* Profundidade relevante (lote alto) destacada na célula */
+
+.ftp-dom-cell.is-deep .ftp-dom-num {
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
+}
+
+.ftp-superdom tbody tr td:nth-child(2).is-deep { box-shadow: inset 0 0 0 1px rgba(0, 212, 170, 0.45); }
+.ftp-superdom tbody tr td:nth-child(4).is-deep { box-shadow: inset 0 0 0 1px rgba(255, 71, 87, 0.45); }
+
+.ftp-dom-price {
+  position: relative;
+  font-size: var(--ftp-font-size-sm);
+}
+
+/* ═══ WORKSPACE — desk fluido + modos legados ═══ */
+
 .ftp-workspace {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 6px;
+  gap: var(--ftp-space-3);
+  padding: var(--ftp-space-3);
   flex: 1 1 auto;
-  min-height: 320px;
+  min-height: 0;
   overflow-y: auto;
 }
 
 .ftp-workspace [role="tablist"] {
   display: flex;
-  gap: 4px;
+  gap: var(--ftp-space-2);
   flex-shrink: 0;
+  justify-content: flex-end;
 }
 
 .ftp-workspace [role="tab"] {
@@ -237,14 +345,61 @@
   border: 1px solid var(--ftp-border-subtle);
   border-radius: var(--ftp-radius-sm);
   color: var(--ftp-text-muted);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 12px;
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  padding: 3px var(--ftp-space-5);
+  transition:
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    border-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-workspace [role="tab"]:hover {
+  border-color: var(--ftp-border-strong);
+  color: var(--ftp-text-primary);
 }
 
 .ftp-workspace [role="tab"][aria-selected="true"] {
   color: var(--ftp-text-primary);
-  border-color: var(--ftp-info);
+  border-color: var(--ftp-border-accent);
+  background: rgba(77, 141, 255, 0.08);
+}
+
+/* ── Desk: linhas × colunas fluidas (adaptam-se à sidebar) ── */
+
+.ftp-desk {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-3);
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.ftp-desk-row {
+  display: flex;
+  gap: var(--ftp-space-3);
+  flex-basis: 0;
+  min-height: 0;
+}
+
+.ftp-desk-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-3);
+  min-width: 0;
+  flex-basis: 0;
+}
+
+.ftp-desk-cell {
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+  flex-basis: 0;
+}
+
+.ftp-desk-cell > section {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .ftp-dockgrid {
@@ -252,7 +407,7 @@
   grid-template-columns: repeat(12, 1fr);
   grid-auto-rows: 300px;
   grid-auto-flow: dense;
-  gap: 6px;
+  gap: var(--ftp-space-3);
   flex-shrink: 0;
 }
 
@@ -269,7 +424,7 @@
 
 .ftp-float {
   position: absolute;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--ftp-shadow-float);
   z-index: 10;
 }
 
@@ -277,7 +432,8 @@
   height: 100%;
 }
 
-/* Rotas (dashboard/academy/training missions/analysis) */
+/* ═══ ROTAS (dashboard/academy/training/analysis) ═══ */
+
 .ftp-main > section[aria-label] {
   height: 100%;
   min-height: 0;
@@ -291,43 +447,1281 @@
   overflow-y: auto;
   flex-shrink: 0;
 }
+
 .ftp-main section[aria-label] > h2 {
-  font-size: 13px;
+  font-size: var(--ftp-font-size-md);
+  font-weight: 600;
   color: var(--ftp-text-primary);
-  padding: 8px 12px 2px;
+  padding: var(--ftp-space-4) var(--ftp-space-5) var(--ftp-space-1);
 }
 
 .ftp-main section[aria-label] ul {
   list-style: none;
-  padding: 4px 12px;
+  padding: var(--ftp-space-2) var(--ftp-space-5);
 }
 
 .ftp-main section[aria-label] li {
-  padding: 3px 0;
-  border-bottom: 1px solid rgba(38, 43, 51, 0.5);
+  padding: var(--ftp-space-1) 0;
+  border-bottom: 1px solid var(--ftp-border-row);
   color: var(--ftp-text-secondary);
-  font-size: 12px;
+  font-size: var(--ftp-font-size-base);
   display: flex;
-  gap: 10px;
+  gap: var(--ftp-space-5);
   align-items: center;
   flex-wrap: wrap;
 }
 
 .ftp-main section[aria-label] button {
   background: var(--ftp-bg-panel-elevated);
-  border: 1px solid var(--ftp-border-strong);
+  border: 1px solid var(--ftp-border);
   border-radius: var(--ftp-radius-sm);
   color: var(--ftp-text-primary);
-  font-size: 11px;
-  padding: 3px 10px;
+  font-size: var(--ftp-font-size-sm);
+  font-weight: 600;
+  padding: 3px var(--ftp-space-5);
+  transition:
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    border-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-main section[aria-label] button:hover {
+  background: var(--ftp-bg-hover);
+  border-color: var(--ftp-border-strong);
+}
+
+.ftp-main section[aria-label] button:active {
+  transform: translateY(1px);
 }
 
 .ftp-main section[aria-label] article {
-  margin: 6px 12px;
-  padding: 8px 10px;
+  margin: var(--ftp-space-3) var(--ftp-space-5);
+  padding: var(--ftp-space-4) var(--ftp-space-5);
   background: var(--ftp-bg-panel);
   border: 1px solid var(--ftp-border-subtle);
   border-radius: var(--ftp-radius-sm);
   color: var(--ftp-text-secondary);
-  font-size: 12px;
+  font-size: var(--ftp-font-size-base);
 }
+
+/* ═══ CHART 8P — candles reais + linhas de referência do dia ═══ */
+
+.ftp-chart8p-info {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ftp-space-5);
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+  padding: 0 var(--ftp-space-2) var(--ftp-space-2);
+  border-bottom: 1px solid var(--ftp-border-row);
+  margin-bottom: var(--ftp-space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-chart8p-vol {
+  color: var(--ftp-text-secondary);
+}
+
+.ftp-chart8p-refs {
+  display: inline-flex;
+  gap: var(--ftp-space-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-chart8p-refs em {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.ftp-chart8p-refs .is-sell { color: var(--ftp-sell-primary); }
+.ftp-chart8p-refs .is-buy { color: var(--ftp-buy-primary); }
+.ftp-chart8p-refs .is-info { color: var(--ftp-info); }
+.ftp-chart8p-refs .is-special { color: var(--ftp-special); }
+
+/* Painel do gráfico: body estica e o canvas preenche o espaço disponível */
+
+.ftp-chart-panel .ftp-panel-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--ftp-space-1) var(--ftp-space-3) var(--ftp-space-2);
+}
+
+.ftp-chart8p {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 3px;
+  padding: 0 0 16px;
+  flex: 1 1 auto;
+  min-height: 0;
+  box-sizing: border-box;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 37px,
+    rgba(255, 255, 255, 0.03) 37px,
+    rgba(255, 255, 255, 0.03) 38px
+  );
+  overflow: hidden;
+}
+
+.ftp-chart-hline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1px dashed currentColor;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ftp-chart-hline span {
+  position: absolute;
+  left: var(--ftp-space-2);
+  top: -8px;
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 600;
+  color: inherit;
+  background: var(--ftp-bg-panel);
+  padding: 1px var(--ftp-space-2);
+  border-radius: var(--ftp-radius-xs);
+  border: 1px solid currentColor;
+  opacity: 0.95;
+}
+
+.ftp-chart-hline.is-sell { color: var(--ftp-sell-primary); }
+.ftp-chart-hline.is-buy { color: var(--ftp-buy-primary); }
+.ftp-chart-hline.is-info { color: var(--ftp-info); }
+.ftp-chart-hline.is-special { color: var(--ftp-special); }
+
+.ftp-candle {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ftp-candle-wick {
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  opacity: 0.8;
+}
+
+.ftp-candle-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-radius: 1px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.28);
+}
+
+.ftp-candle.is-forming .ftp-candle-body {
+  border: 1px dashed rgba(255, 255, 255, 0.45);
+}
+
+.ftp-candle.is-absorb .ftp-candle-body {
+  outline: 1px solid var(--ftp-special);
+}
+
+/* Barra de agressão do candle (lane inferior): compra em cima, venda embaixo,
+   altura total proporcional ao volume — leitura imediata de quem dominou. */
+
+.ftp-candle-agg {
+  position: absolute;
+  bottom: -15px;
+  left: 1px;
+  right: 1px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--ftp-radius-xs);
+  overflow: hidden;
+  outline: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.ftp-candle-agg-buy {
+  background: var(--ftp-buy-primary);
+}
+
+.ftp-candle-agg-sell {
+  background: var(--ftp-sell-primary);
+}
+
+/* Tabela compacta da sidebar (operações da sessão) */
+
+.ftp-side-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-side-table th {
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ftp-text-muted);
+  text-align: right;
+  padding: 2px var(--ftp-space-2);
+  border-bottom: 1px solid var(--ftp-border-row);
+}
+
+.ftp-side-table td {
+  text-align: right;
+  padding: 2px var(--ftp-space-2);
+  border-bottom: 1px solid var(--ftp-border-row);
+  color: var(--ftp-text-secondary);
+}
+
+.ftp-side-table tr.is-buy td:last-child { color: var(--ftp-buy-primary); }
+.ftp-side-table tr.is-sell td:last-child { color: var(--ftp-sell-primary); }
+
+.ftp-vp-price {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-secondary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-vp-price.is-poc { color: var(--ftp-special); font-weight: 600; }
+
+.ftp-vp-track {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--ftp-radius-xs);
+  overflow: hidden;
+}
+
+.ftp-vp-bar {
+  height: 100%;
+  border-radius: var(--ftp-radius-xs);
+  transition: width var(--ftp-duration-normal) var(--ftp-ease-out);
+}
+
+.ftp-vp-bar.is-buy {
+  background: linear-gradient(to right, rgba(0, 212, 170, 0.9), rgba(0, 212, 170, 0.4));
+}
+
+.ftp-vp-bar.is-sell {
+  background: linear-gradient(to right, rgba(255, 71, 87, 0.9), rgba(255, 71, 87, 0.4));
+}
+
+.ftp-vp-num {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ftp-vp-num i {
+  font-style: normal;
+  font-size: var(--ftp-font-size-2xs);
+  opacity: 0.75;
+  margin-left: var(--ftp-space-1);
+}
+
+.ftp-vp-num.is-buy { color: var(--ftp-buy-primary); }
+.ftp-vp-num.is-sell { color: var(--ftp-sell-primary); }
+.ftp-vp-num.is-total { color: var(--ftp-text-secondary); font-weight: 600; }
+
+.ftp-vp-tag {
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0 var(--ftp-space-2);
+  border-radius: var(--ftp-radius-xs);
+  background: rgba(245, 196, 0, 0.15);
+  color: var(--ftp-special);
+}
+
+.ftp-vp-tag.is-vah { background: var(--ftp-buy-dim); color: var(--ftp-buy-primary); }
+.ftp-vp-tag.is-val { background: var(--ftp-sell-dim); color: var(--ftp-sell-primary); }
+
+/* ═══ SUPERDOM — heatmap de profundidade ═══ */
+
+.ftp-dom-cell {
+  position: relative;
+  overflow: hidden;
+}
+
+.ftp-dom-depth {
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  right: 0;
+  border-radius: var(--ftp-radius-xs);
+  pointer-events: none;
+  transition: width var(--ftp-duration-normal) var(--ftp-ease-out);
+}
+
+.ftp-dom-depth.is-bid { background: rgba(0, 212, 170, 0.20); }
+.ftp-dom-depth.is-ask { background: rgba(255, 71, 87, 0.20); }
+
+.ftp-dom-num {
+  position: relative;
+  z-index: 1;
+}
+
+.ftp-dom-price { position: relative; }
+
+.ftp-dom-price.is-last { background: rgba(245, 196, 0, 0.10); }
+
+.ftp-dom-priceVal {
+  font-family: var(--ftp-font-numeric);
+  font-weight: 600;
+}
+
+.ftp-dom-tag {
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 700;
+  padding: 0 var(--ftp-space-1);
+  margin-left: var(--ftp-space-1);
+  border-radius: var(--ftp-radius-xs);
+  vertical-align: middle;
+}
+
+.ftp-dom-tag.is-bid { background: var(--ftp-buy-dim); color: var(--ftp-buy-primary); }
+.ftp-dom-tag.is-ask { background: var(--ftp-sell-dim); color: var(--ftp-sell-primary); }
+.ftp-dom-tag.is-last { background: rgba(245, 196, 0, 0.18); color: var(--ftp-special); }
+
+/* ═══ DASHBOARD — KPI cards (usados na sidebar Mesa) ═══ */
+
+.ftp-session-chip {
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px var(--ftp-space-4);
+  border-radius: var(--ftp-radius-xs);
+  background: rgba(139, 144, 160, 0.14);
+  color: var(--ftp-text-muted);
+}
+.ftp-session-chip.is-running { background: var(--ftp-buy-dim); color: var(--ftp-buy-primary); }
+.ftp-session-chip.is-finished { background: rgba(77, 141, 255, 0.14); color: var(--ftp-info); }
+
+.ftp-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-3);
+  padding: var(--ftp-space-5) var(--ftp-space-5);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-md);
+  transition: border-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-kpi:hover { border-color: var(--ftp-border); }
+
+.ftp-kpi-label {
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ftp-text-muted);
+}
+
+.ftp-kpi-value {
+  font-family: var(--ftp-font-numeric);
+  font-size: 24px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ftp-text-primary);
+  line-height: 1;
+}
+
+.ftp-kpi.is-buy { border-left: 2px solid var(--ftp-buy-primary); }
+.ftp-kpi.is-buy .ftp-kpi-value { color: var(--ftp-buy-primary); }
+.ftp-kpi.is-sell { border-left: 2px solid var(--ftp-sell-primary); }
+.ftp-kpi.is-sell .ftp-kpi-value { color: var(--ftp-sell-primary); }
+.ftp-kpi.is-info { border-left: 2px solid var(--ftp-info); }
+.ftp-kpi.is-info .ftp-kpi-value { color: var(--ftp-info); }
+
+/* ── Fluxo + correlação (sidebar Mesa) ── */
+
+.ftp-dash-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-4);
+  padding: var(--ftp-space-4);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-md);
+}
+
+.ftp-flow-pressure {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ftp-space-4);
+}
+
+.ftp-flow-pressure strong {
+  font-family: var(--ftp-font-numeric);
+  font-size: 30px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.ftp-flow-pressure.is-buy strong { color: var(--ftp-buy-primary); }
+.ftp-flow-pressure.is-sell strong { color: var(--ftp-sell-primary); }
+.ftp-flow-pressure.is-neutral strong { color: var(--ftp-text-primary); }
+
+.ftp-flow-pressure span {
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+}
+
+.ftp-dash-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-2);
+}
+
+.ftp-dash-list li {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--ftp-font-size-sm);
+  color: var(--ftp-text-secondary);
+  border: none;
+  padding: 0;
+}
+
+.ftp-dash-list strong {
+  font-family: var(--ftp-font-numeric);
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-dash-ranks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-2);
+}
+
+.ftp-dash-ranks li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--ftp-space-4);
+  border: none;
+  padding: 0;
+}
+
+.ftp-dash-ranks span {
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+}
+
+.ftp-dash-ranks strong {
+  font-size: var(--ftp-font-size-base);
+  font-weight: 600;
+  color: var(--ftp-text-primary);
+}
+
+.ftp-dash-ranks li.is-buy strong { color: var(--ftp-buy-primary); }
+.ftp-dash-ranks li.is-sell strong { color: var(--ftp-sell-primary); }
+
+/* ═══ TIMES & TRADES — tint por lado ═══ */
+
+.ftp-tt tbody tr.is-buy td { background: rgba(0, 212, 170, 0.035); }
+.ftp-tt tbody tr.is-sell td { background: rgba(255, 71, 87, 0.035); }
+.ftp-tt tbody tr:hover td { background: var(--ftp-bg-hover); }
+.ftp-tt .ftp-tt-size { font-weight: 600; color: var(--ftp-text-primary); }
+
+/* ═══ HEADER — preço em destaque ═══ */
+
+.ftp-stat-price {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ftp-stat-price.is-up { color: var(--ftp-buy-primary); }
+.ftp-stat-price.is-down { color: var(--ftp-sell-primary); }
+
+/* ═══ TRAINING — header, stepper, cards de missão ═══ */
+
+.ftp-main .ftp-training-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ftp-space-6);
+  padding: var(--ftp-space-4) var(--ftp-space-5) var(--ftp-space-2);
+  flex-wrap: wrap;
+}
+
+.ftp-training-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ftp-training-title h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ftp-text-primary);
+}
+
+.ftp-training-title span {
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+}
+
+.ftp-main ol.ftp-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.ftp-main ol.ftp-steps li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ftp-space-2);
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.ftp-main ol.ftp-steps li:not(:last-child)::after {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--ftp-border);
+  margin: 0 var(--ftp-space-3);
+}
+
+.ftp-step-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 var(--ftp-font-size-2xs)/1 var(--ftp-font-numeric);
+  background: var(--ftp-bg-panel-elevated);
+  border: 1px solid var(--ftp-border);
+  color: var(--ftp-text-muted);
+  transition:
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    color var(--ftp-duration-fast) var(--ftp-ease-out),
+    border-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-main ol.ftp-steps li.is-active .ftp-step-dot {
+  background: var(--ftp-info);
+  border-color: transparent;
+  color: var(--ftp-bg-canvas);
+}
+
+.ftp-main ol.ftp-steps li.is-active .ftp-step-label {
+  color: var(--ftp-text-primary);
+  font-weight: 600;
+}
+
+.ftp-main ol.ftp-steps li.is-done .ftp-step-dot {
+  background: var(--ftp-buy-dim);
+  border-color: rgba(0, 212, 170, 0.3);
+  color: var(--ftp-buy-primary);
+}
+
+/* ── Tour compacto ── */
+
+.ftp-tour {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ftp-space-5);
+  margin: var(--ftp-space-1) var(--ftp-space-5) var(--ftp-space-4);
+  padding: var(--ftp-space-4) var(--ftp-space-5);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-accent);
+  border-radius: var(--ftp-radius-md);
+  color: var(--ftp-text-secondary);
+  font-size: var(--ftp-font-size-base);
+}
+
+.ftp-tour-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ftp-tour-body strong {
+  color: var(--ftp-text-primary);
+  font-size: var(--ftp-font-size-sm);
+}
+
+.ftp-tour-body span {
+  color: var(--ftp-text-muted);
+  font-size: var(--ftp-font-size-xs);
+}
+
+/* ── Cards de missão ── */
+
+.ftp-mission-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-2);
+  padding: 0;
+}
+
+.ftp-mission-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ftp-space-3);
+  padding: var(--ftp-space-4) var(--ftp-space-5);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-md);
+  color: var(--ftp-text-primary);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    transform var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-mission-card:hover {
+  border-color: var(--ftp-border-accent);
+  background: var(--ftp-bg-panel-elevated);
+}
+
+.ftp-mission-card:active {
+  transform: translateY(1px);
+}
+
+.ftp-mission-card strong {
+  font-size: var(--ftp-font-size-base);
+  font-weight: 600;
+  color: var(--ftp-text-primary);
+}
+
+.ftp-mission-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ftp-space-3);
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+}
+
+.ftp-diff {
+  font-style: normal;
+  font-weight: 700;
+  font-size: var(--ftp-font-size-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 1px var(--ftp-space-3);
+  border-radius: var(--ftp-radius-xs);
+  background: rgba(139, 144, 160, 0.14);
+  color: var(--ftp-text-secondary);
+}
+
+.ftp-diff.is-beginner { background: var(--ftp-buy-dim); color: var(--ftp-buy-primary); }
+.ftp-diff.is-intermediate { background: rgba(255, 184, 0, 0.12); color: var(--ftp-warning); }
+.ftp-diff.is-advanced { background: var(--ftp-sell-dim); color: var(--ftp-sell-primary); }
+
+/* ═══ DATA & REPLAY — estação unificada (transporte + fonte + sessão) ═══ */
+
+.ftp-station .ftp-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+}
+
+.ftp-station .ftp-panel-body > div.ftp-station-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ftp-space-4);
+  flex-wrap: wrap;
+  padding: var(--ftp-space-3) var(--ftp-space-5);
+  border-bottom: 1px solid var(--ftp-border-row);
+  gap: var(--ftp-space-3) var(--ftp-space-5);
+}
+
+.ftp-station .ftp-panel-body > div.ftp-station-row:last-child {
+  border-bottom: none;
+}
+
+.ftp-station-label {
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ftp-text-muted);
+  min-width: 62px;
+}
+
+.ftp-station-primary {
+  background: var(--ftp-info) !important;
+  color: var(--ftp-bg-canvas) !important;
+  border-color: transparent !important;
+}
+
+.ftp-station-primary:hover {
+  background: var(--ftp-info-hover) !important;
+}
+
+.ftp-station-status {
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px var(--ftp-space-4);
+  border-radius: var(--ftp-radius-xs);
+  background: rgba(139, 144, 160, 0.14);
+  color: var(--ftp-text-muted);
+  margin-left: auto;
+}
+
+.ftp-station-status.is-running { background: var(--ftp-buy-dim); color: var(--ftp-buy-primary); }
+.ftp-station-status.is-finished { background: rgba(77, 141, 255, 0.14); color: var(--ftp-info); }
+
+.ftp-station-sources {
+  display: flex;
+  gap: var(--ftp-space-3);
+}
+
+.ftp-station-source {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ftp-space-2);
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+  padding: 3px var(--ftp-space-4);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    color var(--ftp-duration-fast) var(--ftp-ease-out),
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-station-source.is-active {
+  border-color: var(--ftp-border-accent);
+  color: var(--ftp-text-primary);
+  background: rgba(77, 141, 255, 0.08);
+}
+
+.ftp-station-source input {
+  accent-color: var(--ftp-info);
+}
+
+.ftp-station-meta {
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+}
+
+.ftp-station-notice {
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-warning);
+}
+
+.ftp-station-session .ftp-station-stat {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-base);
+  font-weight: 600;
+  color: var(--ftp-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-station-stat i {
+  font-style: normal;
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ftp-text-muted);
+  font-family: var(--ftp-font-ui);
+}
+
+.ftp-station-check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ftp-space-2);
+  font-size: var(--ftp-font-size-xs);
+}
+
+.ftp-station-check input {
+  accent-color: var(--ftp-info);
+}
+
+/* ═══ TRAINING — layout com sidebar colapsável ═══ */
+
+.ftp-main > section.ftp-training {
+  flex-direction: row;
+}
+
+.ftp-training-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--ftp-bg-app);
+  border-right: 1px solid var(--ftp-border-subtle);
+  flex-shrink: 0;
+}
+
+.ftp-training.is-collapsed .ftp-training-sidebar {
+  width: 0 !important;
+  border-right: none;
+  overflow: hidden;
+}
+
+.ftp-sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ftp-space-4);
+  padding: var(--ftp-space-4) var(--ftp-space-5) var(--ftp-space-2);
+}
+
+.ftp-sidebar-head .ftp-training-title strong {
+  font-size: var(--ftp-font-size-md);
+  font-weight: 600;
+  color: var(--ftp-text-primary);
+  display: block;
+}
+
+.ftp-sidebar-head .ftp-training-title span {
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+}
+
+.ftp-sidebar-collapse,
+.ftp-sidebar-expand {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-muted);
+  font-size: 11px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-sidebar-collapse:hover,
+.ftp-sidebar-expand:hover {
+  background: var(--ftp-bg-hover);
+  color: var(--ftp-text-primary);
+}
+
+.ftp-sidebar-resizer {
+  width: 3px;
+  flex-shrink: 0;
+  cursor: col-resize;
+  background: transparent;
+  transition: background-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-sidebar-resizer:hover {
+  background: var(--ftp-border-accent);
+}
+
+.ftp-training-content {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ftp-sidebar-expand {
+  position: absolute;
+  top: var(--ftp-space-3);
+  left: var(--ftp-space-3);
+  z-index: 20;
+}
+
+/* ═══ SIDEBAR — tabs internas (Missões | Mesa | Estudo) ═══ */
+
+.ftp-side-tabs {
+  display: flex;
+  gap: 2px;
+  margin: 0 var(--ftp-space-5) var(--ftp-space-3);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-md);
+  padding: 2px;
+  flex-shrink: 0;
+}
+
+.ftp-side-tabs button {
+  flex: 1;
+  padding: var(--ftp-space-2) var(--ftp-space-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-muted);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-side-tabs button:hover {
+  color: var(--ftp-text-primary);
+}
+
+.ftp-side-tabs button.is-active {
+  background: rgba(77, 141, 255, 0.14);
+  color: var(--ftp-text-primary);
+}
+
+.ftp-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-4);
+  padding: 0 var(--ftp-space-5) var(--ftp-space-5);
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.ftp-side-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--ftp-space-3);
+}
+
+.ftp-side-kpis .ftp-kpi {
+  padding: var(--ftp-space-4);
+  gap: var(--ftp-space-2);
+}
+
+.ftp-side-kpis .ftp-kpi-value {
+  font-size: 17px;
+}
+
+.ftp-side-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-2);
+}
+
+.ftp-side-meta {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ftp-side-empty {
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+  line-height: 1.4;
+}
+
+.ftp-briefing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-3);
+  padding: var(--ftp-space-4);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-md);
+  font-size: var(--ftp-font-size-base);
+  color: var(--ftp-text-secondary);
+}
+
+.ftp-briefing h3 {
+  font-size: var(--ftp-font-size-md);
+  color: var(--ftp-text-primary);
+}
+
+.ftp-briefing ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-1);
+  padding-left: var(--ftp-space-5);
+}
+
+.ftp-obj-hint {
+  display: block;
+  font-size: var(--ftp-font-size-2xs);
+  color: var(--ftp-text-muted);
+}
+
+.ftp-dash-list .is-completed { color: var(--ftp-buy-primary); }
+.ftp-dash-list .is-failed { color: var(--ftp-sell-primary); }
+
+/* ── Estudo: materiais + aulas ── */
+
+.ftp-study-doc {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-2);
+  padding: var(--ftp-space-3);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-md);
+}
+
+.ftp-study-doc h4 {
+  font-size: var(--ftp-font-size-sm);
+  color: var(--ftp-text-primary);
+}
+
+.ftp-study-doc h4 span {
+  color: var(--ftp-text-muted);
+  font-weight: 500;
+  font-size: var(--ftp-font-size-xs);
+}
+
+.ftp-study-doc ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ftp-study-doc li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ftp-space-4);
+  font-size: var(--ftp-font-size-xs);
+  border: none;
+  padding: 1px 0;
+}
+
+.ftp-study-meta {
+  color: var(--ftp-text-muted);
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-2xs);
+}
+
+.ftp-lessons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-2);
+}
+
+.ftp-lessons li {
+  border: none;
+  padding: 0;
+  display: block;
+}
+
+.ftp-lesson-head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ftp-space-3);
+  padding: var(--ftp-space-3) var(--ftp-space-4);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-primary);
+  font-size: var(--ftp-font-size-sm);
+  cursor: pointer;
+  text-align: left;
+}
+
+.ftp-lesson-head:hover {
+  border-color: var(--ftp-border-strong);
+}
+
+.ftp-lesson-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ftp-space-2);
+  padding: var(--ftp-space-3) var(--ftp-space-4);
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-secondary);
+  line-height: 1.5;
+}
+
+.ftp-lesson-goal {
+  color: var(--ftp-text-primary);
+}
+
+.ftp-lesson-tip {
+  color: var(--ftp-text-muted);
+}
+
+/* ── Fast-forward na estação ── */
+
+.ftp-station-jumps {
+  display: inline-flex;
+  gap: var(--ftp-space-2);
+}
+
+.ftp-station-jump {
+  font-family: var(--ftp-font-numeric) !important;
+  font-size: var(--ftp-font-size-xs) !important;
+}
+
+.ftp-station-jump:hover:not(:disabled) {
+  border-color: var(--ftp-border-accent);
+  color: var(--ftp-text-primary);
+}
+
+.ftp-station-jump:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.ftp-station-jump.is-busy {
+  border-color: var(--ftp-warning);
+  color: var(--ftp-warning);
+}
+
+/* ═══ VOLUME PROFILE v2 — estilo SuperDOM (células com fundo proporcional) ═══ */
+
+.ftp-vp2-head {
+  display: grid;
+  grid-template-columns: 56px 1fr 1fr 58px;
+  gap: var(--ftp-space-3);
+  align-items: center;
+  padding-bottom: var(--ftp-space-1);
+  border-bottom: 1px solid var(--ftp-border-row);
+  margin-bottom: 2px;
+}
+
+.ftp-vp2-head span {
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ftp-text-muted);
+}
+
+.ftp-vp2-head .ftp-vp2-col-price { text-align: right; }
+.ftp-vp2-head .ftp-vp2-col-buy { text-align: right; }
+.ftp-vp2-head .ftp-vp2-col-sell { text-align: left; }
+.ftp-vp2-head .ftp-vp2-col-total { text-align: right; }
+
+.ftp-vp2 {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ftp-vp2-row {
+  display: grid;
+  grid-template-columns: 56px 1fr 1fr 58px;
+  gap: var(--ftp-space-3);
+  align-items: center;
+  padding: 1px var(--ftp-space-1);
+  border-radius: var(--ftp-radius-xs);
+}
+
+.ftp-vp2-row:hover { background: var(--ftp-bg-hover); }
+.ftp-vp2-row.is-poc { background: rgba(245, 196, 0, 0.06); }
+.ftp-vp2-row.is-in-va { background: rgba(77, 141, 255, 0.045); }
+.ftp-vp2-row.is-poc.is-in-va { background: rgba(245, 196, 0, 0.08); }
+.ftp-vp2-row.is-current { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22); }
+
+/* TOP 5 zonas mais quentes — gradiente (1 = mais quente) */
+
+.ftp-vp2-row.is-hot-1 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.24), rgba(255, 152, 0, 0.04) 85%); }
+.ftp-vp2-row.is-hot-2 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.18), rgba(255, 152, 0, 0.03) 85%); }
+.ftp-vp2-row.is-hot-3 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.12), transparent 85%); }
+.ftp-vp2-row.is-hot-4 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.08), transparent 85%); }
+.ftp-vp2-row.is-hot-5 { background: linear-gradient(90deg, rgba(255, 152, 0, 0.05), transparent 85%); }
+
+.ftp-vp2-row.is-hot-1:hover,
+.ftp-vp2-row.is-hot-2:hover,
+.ftp-vp2-row.is-hot-3:hover,
+.ftp-vp2-row.is-hot-4:hover,
+.ftp-vp2-row.is-hot-5:hover { background: var(--ftp-bg-hover); }
+
+.ftp-vp2-price {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-secondary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ftp-vp2-price.is-poc { color: var(--ftp-special); font-weight: 600; }
+
+/* Células espelhadas: agressão preenche da direita; absorção da esquerda */
+
+.ftp-vp2-cell {
+  position: relative;
+  height: 15px;
+  border-radius: var(--ftp-radius-xs);
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+
+.ftp-vp2-cell.is-buy .ftp-vp2-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 212, 170, 0.55), rgba(0, 212, 170, 0.16));
+}
+
+.ftp-vp2-cell.is-sell .ftp-vp2-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to right, rgba(255, 71, 87, 0.55), rgba(255, 71, 87, 0.16));
+}
+
+.ftp-vp2-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  color: var(--ftp-text-primary);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ftp-vp2-text i {
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--ftp-font-size-2xs);
+  opacity: 0.85;
+  margin-left: var(--ftp-space-1);
+}
+
+.ftp-vp2-total {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  color: var(--ftp-text-secondary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ftp-net-buy { color: var(--ftp-buy-primary); }
+.ftp-net-sell { color: var(--ftp-sell-primary); }

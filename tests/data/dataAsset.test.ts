@@ -3,23 +3,16 @@ import { useDataAssetStore } from '../../src/store/dataAssetStore';
 
 describe('dataAssetStore', () => {
   beforeEach(() => {
-    useDataAssetStore.setState({ asset: 'SYNTHETIC', csvName: null });
+    useDataAssetStore.setState({ asset: 'SYNTHETIC' });
   });
 
-  it('troca ativo e registra CSV', () => {
+  it('troca o ativo de estudo entre as fontes suportadas', () => {
     const s = useDataAssetStore.getState();
     s.setAsset('WDO');
     expect(useDataAssetStore.getState().asset).toBe('WDO');
-    s.setCsv('trades.csv');
-    expect(useDataAssetStore.getState().asset).toBe('CSV');
-    expect(useDataAssetStore.getState().csvName).toBe('trades.csv');
-  });
-
-  it('limpar CSV volta ao sintético', () => {
-    const s = useDataAssetStore.getState();
-    s.setCsv('trades.csv');
-    s.clearCsv();
-    expect(useDataAssetStore.getState().csvName).toBeNull();
+    s.setAsset('PETR4');
+    expect(useDataAssetStore.getState().asset).toBe('PETR4');
+    s.setAsset('SYNTHETIC');
     expect(useDataAssetStore.getState().asset).toBe('SYNTHETIC');
   });
 });

@@ -1,6 +1,6 @@
 // trader/TradingController.ts
 // PONTO DE ENTRADA ÚNICO para todas as ações do trader.
-// Toda interface (SuperDOM, ReplayToolbar, Hotkeys, futuros) chama APENAS aqui.
+// Toda interface (SuperDOM, DataReplayPanel, Hotkeys, futuros) chama APENAS aqui.
 // O TradingController traduz intenções do usuário em operações no TraderOrderStore.
 // NUNCA acessa o kernel, MatchingEngine ou OrderBook diretamente.
 

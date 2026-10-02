@@ -31,4 +31,4 @@ npm run materials -- --symbol PETR4
 npm run validate:trade-csv -- data/imports/arquivo.csv   # CSV tick (caminho secundário)
 ```
 
-Specs: `spec-agent/2026-10-01-history-{1-acquisition,2-validation,3-storage,4-consumption}.md`.
+Pipeline de dados históricos: ver `../CHANGELOG.md` e `../docs/architecture/HISTORICAL_MARKET_DATA_PIPELINE.md`.

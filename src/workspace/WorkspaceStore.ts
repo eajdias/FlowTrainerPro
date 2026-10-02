@@ -105,7 +105,7 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
     }),
     {
       name: 'flowtrainerpro-workspace', // localStorage key
-      version: 6,
+      version: 14, // v14: Histórico de Corretoras no layout base — força re-leitura
     },
   ),
 );

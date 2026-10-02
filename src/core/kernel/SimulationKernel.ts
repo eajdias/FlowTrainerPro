@@ -100,6 +100,14 @@ class Kernel {
     });
   }
 
+  /** Avanca varios ticks instantaneamente (fast-forward do replay). */
+  advance(ticks: number): void {
+    const total = Math.max(1, Math.floor(ticks));
+    for (let i = 0; i < total; i++) {
+      this.step();
+    }
+  }
+
   getTick(): number {
     return this.tick;
   }

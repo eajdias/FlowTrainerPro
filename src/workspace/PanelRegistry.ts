@@ -14,11 +14,9 @@ import { VolumeProfile }       from '../panels/VolumeProfilePanel/VolumeProfile'
 import { AtemporalChart }      from '../panels/Chart8PPanel/AtemporalChart';
 import { OrderBookByBroker }   from '../panels/OrderBookByBrokerPanel/OrderBookByBroker';
 import { PriceLadder }         from '../panels/PriceLadderPanel/PriceLadder';
-import { CandleClock }         from '../panels/CandleClockPanel/CandleClock';
 import { TrainingPanel }       from '../panels/TrainingPanel/TrainingPanel';
 import { DebugPanel }          from '../panels/DebugPanel/DebugPanel';
 import { TrainingHUD }         from '../panels/TrainingHUD/TrainingHUD';
-import { ReplayToolbar }       from '../panels/ReplayToolbar/ReplayToolbar';
 import { LargeTrades }         from '../panels/LargeTradesPanel/LargeTrades';
 import { MediumTrades }        from '../panels/LargeTradesPanel/MediumTrades';
 import { ScenarioEditor }     from '../panels/ScenarioEditorPanel/ScenarioEditor';
@@ -28,8 +26,6 @@ import { MissionInspector } from '../panels/MissionInspectorPanel/MissionInspect
 import { EvaluationInspector } from '../panels/EvaluationInspectorPanel/EvaluationInspector';
 import { FeedbackInspector } from '../panels/FeedbackInspectorPanel/FeedbackInspector';
 import { ReplayInspector } from '../panels/ReplayInspectorPanel/ReplayInspector';
-import { ReplayPlayer } from '../panels/ReplayPlayerPanel/ReplayPlayer';
-import { DataPanel } from '../panels/DataPanel/DataPanel';
 
 export const PANEL_REGISTRY: Record<PanelType, React.ComponentType<any>> = {
   BookPanel:              PriceBook,
@@ -40,11 +36,9 @@ export const PANEL_REGISTRY: Record<PanelType, React.ComponentType<any>> = {
   Chart8PPanel:           AtemporalChart,
   OrderBookByBrokerPanel: OrderBookByBroker,
   PriceLadderPanel:       PriceLadder,
-  CandleClockPanel:       CandleClock,
   TrainingPanel:          TrainingPanel,
   DebugPanel:             DebugPanel,
   TrainingHUD:            TrainingHUD,
-  ReplayToolbar:          ReplayToolbar,
   LargeTradesPanel:       LargeTrades,
   MediumTradesPanel:      MediumTrades,
   ScenarioEditorPanel:    ScenarioEditor,
@@ -54,8 +48,6 @@ export const PANEL_REGISTRY: Record<PanelType, React.ComponentType<any>> = {
   EvaluationInspectorPanel: EvaluationInspector,
   FeedbackInspectorPanel: FeedbackInspector,
   ReplayInspectorPanel:  ReplayInspector,
-  ReplayPlayerPanel:     ReplayPlayer,
-  DataPanel:             DataPanel,
 };
 
 /** Resolve a panel component by type. Returns null if not found (safe). */

@@ -1,43 +1,35 @@
 # Modules
 
-Fonte única do status dos módulos e painéis. Não repetir esta tabela em `PROJECT_STATUS.md` ou `README.md`.
+## View única — Main
 
-## Módulos
+O app tem **uma única view**: `Main` (mesa de treino de Order Flow). Não há navegação entre abas — tudo acontece com o desk de painéis sempre visível.
 
-| Módulo | Status | Onde |
-|--------|--------|------|
-| `training` | ✅ Ativo | `src/training/` + `src/store/training*.ts` + rotas training/academy |
-| `dashboard` | ✅ Ativo (rota com dados reais) | `AppRouter` + stores de sessão/posição |
-| `academy` | ✅ Ativo (rota com dados reais) | `AppRouter` + `MissionLibrary` (regras, dicas) |
-| `analysis` | ✅ Ativo (rota com dados reais) | `AppRouter` + FlowAnalysis + rankings brokerFlow |
+## Sidebar (colapsável e ajustável)
 
-Navegação entre eles: estado local em `src/core/AppRouter.tsx` (`src/router/` é stub não usado).
+| Tab | Conteúdo |
+|-----|----------|
+| **Missões** | Stepper (Missão → Briefing → Operar → Resultado), tour, cards de missão, briefing, objetivos ao vivo, feedback do coach e resultado |
+| **Mesa** | KPIs da sessão (preço, VWAP, delta, volume, execuções, P&L, win/loss), leitura de fluxo (pressão, absorções, walls) e correlação de corretoras |
+| **Estudo** | Sessões históricas (WDO/PETR4) + aulas das missões |
 
-## Training (arquivos existentes)
+## Header (cockpit)
 
-| Arquivo | Papel |
-|---------|-------|
-| `src/training/TrainingMissionEngine.ts` | Motor de missões |
-| `src/training/MissionLibrary.ts` | Biblioteca de missões |
-| `src/training/MissionStore.ts` | Estado das missões |
-| `src/training/types.ts` | Tipos |
-| `src/store/trainingStore.ts` / `trainingSessionStore.ts` / `scenarios.ts` | Estado Zustand |
+- Transporte: play/pause, finalizar, reset, fast-forward (+30s/+1min/+5min) e velocidade
+- Fonte (popover): ativo de estudo, data da sessão, perfil de mercado, TRAINING FIFO e download de dados
+- Preço em destaque com delta acumulado
+- Sessão, hora e status
 
-## Painéis
+## Painéis do desk (registrados)
 
-`src/workspace/PanelRegistry.ts` registra 24 tipos — todos implementados em `src/panels/*/` (2026-10-01). Núcleo UX 3 funcional: SuperDOM (click/Shift+click homologados), Times & Trades, Book, Volume Profile, Chart8P (candles range-8 + agressão), ReplayToolbar (sessão+kernel+bridge).
+SuperDOM, Times & Trades, Gráfico 8P, Volume Profile, Book por Corretora, Histórico de Corretoras, Large Trades (≥250), Medium Trades, Training HUD, Histórico de Operações, PriceLadder, Book, Trade History, ScenarioEditor, 5 inspectors, ReplayInspector, Debug.
 
-| Painel (tipo registrado) | Uso |
-|--------|------|
-| SuperDOMPanel | Ordens + Shift agressora (interações: `product/SUPERDOM_TRADING_INTERACTIONS.md`) |
-| TimesTradesPanel | HORA/QTD/PREÇO/COMPRADOR/VENDEDORA |
-| BrokerHistoryPanel / OrderBookByBrokerPanel | Corretoras e book por corretora |
-| VolumeProfilePanel | POC/VAH/VAL |
-| Chart8PPanel | Candles range-8 reais (fecha com high-low ≥ 4.00) + saldo de agressão |
-| Large/MediumTradesPanel | Agressões ≥250 / ≥25 |
-| BookPanel / PriceLadderPanel / CandleClockPanel | Livro e relógio |
-| TradeHistoryPanel | P&L e trades do trader |
-| ScenarioEditorPanel | Cenários sintéticos |
-| Scenario/Mission/Evaluation/Feedback/Replay Inspector | Painéis técnicos |
-| ReplayPlayerPanel / ReplayToolbar | Reprodução |
-| TrainingHUD / TrainingPanel / DebugPanel | Sessão e debug |
+## Workspaces (desk fluido)
+
+Layout em **colunas proporcionais (flex)** que se adaptam ao espaço (sidebar expandida/colapsada):
+
+| Workspace | Organização |
+|-----------|-------------|
+| **Default** | SuperDOM · Tape (T&T + ≥250) · Gráfico 8P + Book Corretora · Volume Profile + Corretoras · HUD + Operações |
+| **Tape Reading** | Tape dominante (Medium + Large + T&T) · Gráfico + VP · SuperDOM |
+| **Scalping** | SuperDOM + PriceLadder · Gráfico · VP + T&T |
+| **DOM Puro** | SuperDOM + PriceLadder + T&T |

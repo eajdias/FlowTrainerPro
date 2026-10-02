@@ -21,7 +21,7 @@ export function TimesAndTrades() {
   );
 
   return (
-    <PanelShell title="Times & Trades">
+    <PanelShell title="Times & Trades" className="ftp-tt">
       <div>
         <label>
           Lado
@@ -70,9 +70,9 @@ export function TimesAndTrades() {
         </thead>
         <tbody>
           {visible.map((t) => (
-            <tr key={t.tradeId}>
+            <tr key={t.tradeId} className={t.aggressorSide === 'BUY' ? 'is-buy' : 'is-sell'}>
               <td>{clock(t.timestamp)}</td>
-              <td>{t.size}</td>
+              <td className="ftp-tt-size">{t.size}</td>
               <td>{t.price.toFixed(2)}</td>
               <td style={{ color: t.aggressorBrokerColor }}>{t.aggressorBrokerName}</td>
               <td style={{ color: t.passiveBrokerColor }}>{t.passiveBrokerName}</td>

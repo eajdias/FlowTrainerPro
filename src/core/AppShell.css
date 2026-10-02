@@ -1,154 +1,380 @@
+/* AppShell.css — cockpit: top bar com controles de sessão + status bar */
+
 .ftp-shell {
   width: 100%;
   height: 100%;
   min-width: 0;
   min-height: 0;
   display: grid;
-  grid-template-rows: 48px minmax(0, 1fr) 26px;
+  grid-template-rows: 46px minmax(0, 1fr) 22px;
   background: var(--ftp-bg-canvas);
   color: var(--ftp-text-secondary);
   font-family: var(--ftp-font-ui);
 }
 
+/* ═══ TOP BAR ═══ */
+
 .ftp-topbar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 10px;
-  background: rgba(15, 19, 26, 0.96);
+  gap: var(--ftp-space-4);
+  padding: 0 var(--ftp-space-4);
+  background: linear-gradient(180deg, #12151c 0%, var(--ftp-bg-app) 100%);
   border-bottom: 1px solid var(--ftp-border-subtle);
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .ftp-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 176px;
+  gap: var(--ftp-space-3);
   flex-shrink: 0;
 }
 
 .ftp-brandMark {
   width: 26px;
   height: 26px;
-  border-radius: var(--ftp-radius-md);
+  border-radius: var(--ftp-radius-sm);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--ftp-text-primary);
-  background: linear-gradient(135deg, rgba(77, 141, 255, 0.95), rgba(109, 93, 251, 0.8));
-  font: 800 11px/1 var(--ftp-font-ui);
-  box-shadow: 0 0 24px rgba(77, 141, 255, 0.18);
+  color: var(--ftp-bg-canvas);
+  background: linear-gradient(135deg, var(--ftp-info) 0%, #7a6bff 100%);
+  font: 700 10px/1 var(--ftp-font-numeric);
+  letter-spacing: 0.02em;
 }
 
 .ftp-brand strong {
   display: block;
   color: var(--ftp-text-primary);
-  font-size: 12px;
-  line-height: 1.05;
+  font-size: var(--ftp-font-size-base);
+  font-weight: 600;
+  line-height: 1.1;
 }
 
 .ftp-brand span:last-child {
   display: block;
   color: var(--ftp-text-muted);
-  font-size: 10px;
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 500;
   line-height: 1.2;
 }
 
-.ftp-marketContext {
+/* ── Controles de sessão (transporte + fonte) ── */
+
+.ftp-session {
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex: 1 1 auto;
+  gap: var(--ftp-space-3);
+  flex-shrink: 0;
 }
 
-.ftp-instrument {
-  min-width: 112px;
-  display: grid;
+.ftp-session-group {
+  display: inline-flex;
+  align-items: center;
   gap: 2px;
-  padding: 3px 8px;
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-md);
+  padding: 2px;
+}
+
+.ftp-session-play,
+.ftp-session-btn {
+  width: 28px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    background-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-session-play:hover,
+.ftp-session-btn:hover:not(:disabled) {
+  background: var(--ftp-bg-hover);
+  color: var(--ftp-text-primary);
+}
+
+.ftp-session-play {
+  background: var(--ftp-buy-dim);
+  color: var(--ftp-buy-primary);
+}
+
+.ftp-session-play:hover {
+  background: rgba(0, 212, 170, 0.2);
+}
+
+.ftp-session-play.is-running {
+  background: rgba(255, 184, 0, 0.14);
+  color: var(--ftp-warning);
+}
+
+.ftp-session-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.ftp-session-speed {
+  height: 26px;
+  background: transparent;
+  border: none;
+  color: var(--ftp-text-primary);
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 var(--ftp-space-2);
+}
+
+.ftp-session-speed option {
+  background: var(--ftp-bg-panel);
+}
+
+/* Fonte */
+
+.ftp-session-source {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ftp-space-2);
+  height: 30px;
+  padding: 0 var(--ftp-space-4);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border-subtle);
+  border-radius: var(--ftp-radius-md);
+  color: var(--ftp-text-secondary);
+  font-size: var(--ftp-font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-session-source:hover {
+  border-color: var(--ftp-border-strong);
+  color: var(--ftp-text-primary);
+}
+
+.ftp-source-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ftp-source-dot[data-asset="SYNTHETIC"] { background: var(--ftp-info); }
+.ftp-source-dot[data-asset="WDO"] { background: var(--ftp-special); }
+.ftp-source-dot[data-asset="PETR4"] { background: var(--ftp-buy-primary); }
+
+.ftp-caret {
+  color: var(--ftp-text-muted);
+  font-size: var(--ftp-font-size-2xs);
+}
+
+/* ── Popovers ── */
+
+.ftp-pop-wrap {
+  position: relative;
+}
+
+.ftp-pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: var(--ftp-z-dropdown);
+  min-width: 180px;
+  padding: var(--ftp-space-2);
+  background: var(--ftp-bg-panel-elevated);
+  border: 1px solid var(--ftp-border);
+  border-radius: var(--ftp-radius-md);
+  box-shadow: var(--ftp-shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ftp-pop > button {
+  text-align: left;
+  padding: var(--ftp-space-3) var(--ftp-space-4);
+  background: transparent;
+  border: none;
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-secondary);
+  font-size: var(--ftp-font-size-sm);
+  cursor: pointer;
+  transition: background-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-pop > button:hover {
+  background: var(--ftp-bg-hover);
+  color: var(--ftp-text-primary);
+}
+
+.ftp-pop-source {
+  min-width: 280px;
+  gap: var(--ftp-space-4);
+  padding: var(--ftp-space-5);
+}
+
+.ftp-pop-label {
+  font-size: var(--ftp-font-size-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ftp-text-muted);
+}
+
+.ftp-pop-assets {
+  display: flex;
+  gap: var(--ftp-space-2);
+  flex-wrap: wrap;
+}
+
+.ftp-pop-asset {
+  padding: var(--ftp-space-2) var(--ftp-space-4);
+  background: var(--ftp-bg-panel);
   border: 1px solid var(--ftp-border-subtle);
   border-radius: var(--ftp-radius-sm);
-  background: rgba(26, 32, 43, 0.72);
+  color: var(--ftp-text-secondary);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--ftp-duration-fast) var(--ftp-ease-out),
+    color var(--ftp-duration-fast) var(--ftp-ease-out);
 }
 
-.ftp-kicker,
-.ftp-instrument span:last-child {
-  color: var(--ftp-text-muted);
-  font: 800 8px/1 var(--ftp-font-ui);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
+.ftp-pop-asset:hover { color: var(--ftp-text-primary); }
+.ftp-pop-asset.is-active { border-color: var(--ftp-border-accent); color: var(--ftp-text-primary); background: rgba(77, 141, 255, 0.10); }
+.ftp-pop-asset.is-wdo.is-active { border-color: rgba(245, 196, 0, 0.5); background: rgba(245, 196, 0, 0.08); }
+.ftp-pop-asset.is-petr4.is-active { border-color: rgba(0, 212, 170, 0.5); background: rgba(0, 212, 170, 0.08); }
 
-.ftp-instrument strong {
+.ftp-pop-date {
+  background: var(--ftp-bg-input);
+  border: 1px solid var(--ftp-border);
   color: var(--ftp-text-primary);
-  font: 800 11px/1 var(--ftp-font-numeric);
-  font-variant-numeric: tabular-nums;
+  padding: var(--ftp-space-2) var(--ftp-space-4);
+  border-radius: var(--ftp-radius-sm);
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-sm);
 }
 
-.ftp-sourceModes {
+.ftp-pop-meta,
+.ftp-pop-empty {
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-text-muted);
+}
+
+.ftp-pop-row {
   display: flex;
   align-items: center;
-  gap: 4px;
-  min-width: 0;
+  gap: var(--ftp-space-5);
+  flex-wrap: wrap;
 }
 
-.ftp-sourceButton,
-.ftp-actionButton {
-  height: 26px;
-  border: 1px solid var(--ftp-border-subtle);
-  border-radius: var(--ftp-radius-sm);
-  background: var(--ftp-bg-panel-elevated);
+.ftp-pop-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ftp-space-2);
+  font-size: var(--ftp-font-size-xs);
   color: var(--ftp-text-muted);
-  font: 800 9px/1 var(--ftp-font-ui);
-  letter-spacing: 0.04em;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  white-space: nowrap;
 }
 
-.ftp-sourceButton {
-  padding: 0 8px;
-}
-
-.ftp-sourceButton.is-active {
-  border-color: rgba(77, 141, 255, 0.65);
+.ftp-pop-row select {
+  background: var(--ftp-bg-input);
+  border: 1px solid var(--ftp-border);
   color: var(--ftp-text-primary);
-  background: rgba(77, 141, 255, 0.12);
+  border-radius: var(--ftp-radius-sm);
+  padding: 2px var(--ftp-space-3);
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
 }
 
-.ftp-sourceButton:disabled {
-  cursor: default;
-  opacity: 0.58;
-}
+.ftp-pop-check input { accent-color: var(--ftp-info); }
 
-.ftp-sourceIcon {
-  display: inline-flex;
+.ftp-pop-foot {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  min-width: 18px;
-  height: 16px;
-  border-radius: var(--ftp-radius-xs);
-  border: 1px solid var(--ftp-border-subtle);
-  color: var(--ftp-info);
-  font: 800 8px/1 var(--ftp-font-numeric);
+  gap: var(--ftp-space-4);
+  flex-wrap: wrap;
 }
+
+.ftp-pop-download {
+  padding: var(--ftp-space-3) var(--ftp-space-5);
+  background: var(--ftp-bg-panel);
+  border: 1px solid var(--ftp-border);
+  border-radius: var(--ftp-radius-sm);
+  color: var(--ftp-text-primary);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--ftp-duration-fast) var(--ftp-ease-out);
+}
+
+.ftp-pop-download:hover:not(:disabled) { border-color: var(--ftp-border-accent); }
+.ftp-pop-download:disabled { opacity: 0.6; cursor: default; }
+
+.ftp-pop-notice {
+  font-size: var(--ftp-font-size-xs);
+  color: var(--ftp-warning);
+}
+
+/* ── Preço em destaque ── */
+
+.ftp-priceBlock {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--ftp-space-3);
+  flex-shrink: 0;
+}
+
+.ftp-price {
+  font-family: var(--ftp-font-numeric);
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ftp-text-primary);
+  line-height: 1;
+  transition: color var(--ftp-duration-normal) var(--ftp-ease-out);
+}
+
+.ftp-price.is-up { color: var(--ftp-buy-primary); }
+.ftp-price.is-down { color: var(--ftp-sell-primary); }
+
+.ftp-delta {
+  font-family: var(--ftp-font-numeric);
+  font-size: var(--ftp-font-size-xs);
+  font-weight: 600;
+  color: var(--ftp-text-muted);
+}
+
+.ftp-delta.is-up { color: var(--ftp-buy-primary); }
+.ftp-delta.is-down { color: var(--ftp-sell-primary); }
+
+/* ── Nav ── */
 
 .ftp-nav {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--ftp-space-2);
   flex-shrink: 0;
+  margin-left: auto;
 }
+
+/* ── Market state ── */
 
 .ftp-marketState {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--ftp-space-4);
   min-width: 0;
   flex-shrink: 0;
 }
@@ -156,35 +382,20 @@
 .ftp-stat {
   display: inline-flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   color: var(--ftp-text-primary);
-  font: 700 11px/1 var(--ftp-font-numeric);
+  font: 600 var(--ftp-font-size-sm)/1 var(--ftp-font-numeric);
   font-variant-numeric: tabular-nums;
 }
 
 .ftp-stat span {
   color: var(--ftp-text-muted);
-  font: 700 9px/1 var(--ftp-font-ui);
+  font: 600 var(--ftp-font-size-2xs)/1 var(--ftp-font-ui);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-.ftp-actionButton {
-  width: 30px;
-  padding: 0;
-  cursor: pointer;
-}
-
-.ftp-actionButton:hover {
-  background: var(--ftp-bg-hover);
-  color: var(--ftp-text-primary);
-}
-
-.ftp-actionButton:focus-visible,
-.ftp-sourceButton:focus-visible {
-  outline: none;
-  box-shadow: var(--ftp-shadow-focus);
-}
+/* ═══ MAIN ═══ */
 
 .ftp-main {
   min-width: 0;
@@ -193,15 +404,17 @@
   background: var(--ftp-bg-app);
 }
 
+/* ═══ STATUS BAR ═══ */
+
 .ftp-statusbar {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 0 12px;
+  gap: var(--ftp-space-5);
+  padding: 0 var(--ftp-space-5);
   border-top: 1px solid var(--ftp-border-subtle);
-  background: rgba(11, 14, 19, 0.96);
+  background: var(--ftp-bg-canvas);
   color: var(--ftp-text-muted);
-  font: 600 10px/1 var(--ftp-font-ui);
+  font: 500 var(--ftp-font-size-xs)/1 var(--ftp-font-ui);
   white-space: nowrap;
   overflow: hidden;
 }
@@ -210,8 +423,9 @@
   min-width: 0;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--ftp-space-2);
   flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .ftp-statusDot {
@@ -221,7 +435,7 @@
   background: var(--ftp-neutral);
 }
 
-.dot-running { background: var(--ftp-buy-primary); }
+.dot-running { background: var(--ftp-buy-primary); box-shadow: 0 0 6px rgba(0, 212, 170, 0.6); }
 .dot-paused,
 .dot-ready { background: var(--ftp-warning); }
 .dot-completed { background: var(--ftp-info); }
@@ -234,39 +448,23 @@
   color: var(--ftp-warning);
 }
 
-@media (max-width: 1440px) {
-  .ftp-sourceButton:not(.is-active) span:last-child,
-  .ftp-clock,
-  .ftp-marketState .ftp-stat:first-of-type {
+/* ═══ RESPONSIVE ═══ */
+
+@media (max-width: 1500px) {
+  .ftp-brand > div,
+  .ftp-delta {
     display: none;
   }
 }
 
 @media (max-width: 1180px) {
-  .ftp-brand span:last-child,
-  .ftp-nav {
-    display: none;
-  }
-
-  .ftp-brand {
-    min-width: 142px;
-  }
-
-  .ftp-sourceButton:not(.is-active) {
+  .ftp-brand > div,
+  .ftp-nav,
+  .ftp-stat {
     display: none;
   }
 
   .ftp-statusbar .ftp-statusItem:nth-of-type(n + 6) {
-    display: none;
-  }
-}
-
-@media (max-width: 900px) {
-  .ftp-brand { min-width: auto; }
-  .ftp-brand > div,
-  .ftp-stat,
-  .ftp-instrument,
-  .ftp-statusbar .ftp-statusItem:nth-of-type(n + 4) {
     display: none;
   }
 }

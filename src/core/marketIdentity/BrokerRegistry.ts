@@ -1,6 +1,6 @@
 // core/marketIdentity/BrokerRegistry.ts
 // Fonte unica de identidade e cor de corretoras.
-// Regra (docs/FLOW_BROKER_COLORS.md): secundaria ativa com lote >= 250
+// Regra: secundaria ativa com lote >= 250
 // em ordem individual — nunca por soma.
 
 import { BROKERS, type BrokerInfo } from './data/brokers';

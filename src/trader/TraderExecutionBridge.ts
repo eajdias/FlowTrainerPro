@@ -32,7 +32,7 @@ let initialized = false;
 
 /**
  * Initializes the TraderExecutionBridge wiring.
- * Call ONCE on app startup (from useFlowEngine).
+ * Call ONCE on app startup.
  * Completely stateless — just wires events.
  */
 export function initTraderBridge(): void {

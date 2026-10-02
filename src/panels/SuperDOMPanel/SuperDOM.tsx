@@ -1,8 +1,11 @@
 // panels/SuperDOMPanel/SuperDOM.tsx
 // DOM interativo: click = limit, Shift+click = agressora (doc SUPERDOM_TRADING_INTERACTIONS).
 // Handlers homologados: TradingController. Fila: QueueInspector read-only.
+// Apresentação assimétrica: preço em destaque central, book com heatmap e
+// linhas de referência do dia (Máx/Mín/VWAP/Abertura) marcadas nas linhas.
 import { useMemo } from 'react';
 import { useBookStore } from '../../store/bookStore';
+import { useMarketStore } from '../../store/marketStore';
 import { usePositionStore } from '../../store/positionStore';
 import { useTraderOrderStore } from '../../store/traderOrderStore';
 import {
@@ -29,7 +32,7 @@ function QueueSection() {
   const waitByPrice = new Map(waits.map((w) => [w.price, w]));
 
   return (
-    <div>
+    <div className="ftp-dom-queue">
       <strong>Fila ({states.length})</strong>
       <ul>
         {states.map((q) => (
@@ -46,6 +49,7 @@ function QueueSection() {
     </div>
   );
 }
+
 function estimateAt(price: number, side: 'long' | 'short', avg: number, size: number): number {
   const ticks = (price - avg) / TICK_SIZE;
   const pnl = ticks * TICK_VALUE * size;
@@ -66,6 +70,21 @@ export function SuperDOM() {
   const brokerId = useTraderOrderStore((s) => s.brokerId);
   const setBrokerId = useTraderOrderStore((s) => s.setBrokerId);
 
+  // Linhas de referência do dia (mesmas do gráfico 8P)
+  const dayHigh = useMarketStore((s) => s.dayHigh);
+  const dayLow = useMarketStore((s) => s.dayLow);
+  const dayVwap = useMarketStore((s) => s.dayVwap);
+  const dayOpen = useMarketStore((s) => s.dayOpen);
+
+  const refFor = (price: number): { tag: string; cls: string; title: string } | null => {
+    const eps = TICK_SIZE / 2;
+    if (dayHigh > 0 && Math.abs(price - dayHigh) < eps) return { tag: 'Máx', cls: 'is-high', title: 'Máxima do dia' };
+    if (dayLow > 0 && Math.abs(price - dayLow) < eps) return { tag: 'Mín', cls: 'is-low', title: 'Mínima do dia' };
+    if (dayVwap > 0 && Math.abs(price - dayVwap) < eps) return { tag: 'VWAP', cls: 'is-vwap', title: 'VWAP da sessão' };
+    if (dayOpen > 0 && Math.abs(price - dayOpen) < eps) return { tag: 'Abert', cls: 'is-open', title: 'Abertura da sessão' };
+    return null;
+  };
+
   const prices = useMemo(() => {
     const set = new Set<number>();
     for (const b of bids) set.add(b.price);
@@ -81,6 +100,16 @@ export function SuperDOM() {
 
   const bidByPrice = useMemo(() => new Map(bids.map((b) => [b.price, b.size])), [bids]);
   const askByPrice = useMemo(() => new Map(asks.map((a) => [a.price, a.size])), [asks]);
+  const maxBid = useMemo(() => Math.max(1, ...bids.map((b) => b.size)), [bids]);
+  const maxAsk = useMemo(() => Math.max(1, ...asks.map((a) => a.size)), [asks]);
+
+  // Estatísticas de liquidez (estilo Jigsaw Depth & Sales)
+  const totalBid = useMemo(() => bids.reduce((a, b) => a + b.size, 0), [bids]);
+  const totalAsk = useMemo(() => asks.reduce((a, b) => a + b.size, 0), [asks]);
+  const imbalance = totalBid + totalAsk > 0 ? (totalBid / (totalBid + totalAsk)) * 100 : 50;
+  const spread = bestAsk > 0 && bestBid > 0 ? bestAsk - bestBid : 0;
+  const DEEP_MIN = 150;
+
   const buyOrdersByPrice = useMemo(() => {
     const m = new Map<number, typeof orders>();
     for (const o of orders) {
@@ -112,11 +141,13 @@ export function SuperDOM() {
 
   return (
     <PanelShell title="SuperDOM" className="ftp-superdom">
-      <div>
-        <span>
-          {posSide ? `${posSide.toUpperCase()} ${posSize} @ ${avgPrice.toFixed(2)}` : 'FLAT'}
+      <div className="ftp-dom-head">
+        <span className={`ftp-dom-pos${posSide ? (posSide === 'long' ? ' is-long' : ' is-short') : ''}`}>
+          {posSide ? `${posSide === 'long' ? 'LONG' : 'SHORT'} ${posSize} @ ${avgPrice.toFixed(2)}` : 'FLAT'}
         </span>
-        <span>P&L {unrealized.toFixed(2)}</span>
+        <span className={`ftp-dom-pnl${unrealized >= 0 ? ' is-buy' : ' is-sell'}`}>
+          P&L {unrealized.toFixed(2)}
+        </span>
         <label>
           Corretora
           <select value={brokerId} onChange={(e) => setBrokerId(Number(e.target.value))}>
@@ -128,21 +159,30 @@ export function SuperDOM() {
           </select>
         </label>
         {posSide && (
-          <button type="button" onClick={() => flattenPosition()}>
+          <button type="button" className="ftp-dom-flatten" onClick={() => flattenPosition()}>
             ZERAR
           </button>
         )}
+      </div>
+      <div className="ftp-dom-liquidity" aria-label="Liquidez do book">
+        <span>Bid <strong className="is-buy">{totalBid.toLocaleString('pt-BR')}</strong></span>
+        <span>Ask <strong className="is-sell">{totalAsk.toLocaleString('pt-BR')}</strong></span>
+        <span>Imb <strong className={imbalance >= 50 ? 'is-buy' : 'is-sell'}>{imbalance.toFixed(0)}%</strong></span>
+        <span>Spread <strong>{spread.toFixed(2)}</strong></span>
+        <div className="ftp-dom-imb" title={`Imbalance de liquidez: ${imbalance.toFixed(0)}% compra`}>
+          <div className="ftp-dom-imb-bid" style={{ width: `${imbalance}%` }} />
+        </div>
       </div>
       <QueueSection />
       <table>
         <thead>
           <tr>
-            <th>Ord.C</th>
-            <th>Qtd.C</th>
-            <th>Preço</th>
-            <th>Qtd.V</th>
-            <th>Ord.V</th>
-            <th>R$</th>
+            <th className="ftp-dom-col-trader">Ord.C</th>
+            <th className="ftp-dom-col-bid">Qtd.C</th>
+            <th className="ftp-dom-col-price">Preço</th>
+            <th className="ftp-dom-col-ask">Qtd.V</th>
+            <th className="ftp-dom-col-trader">Ord.V</th>
+            <th className="ftp-dom-col-rs">R$</th>
           </tr>
         </thead>
         <tbody>
@@ -152,9 +192,11 @@ export function SuperDOM() {
             const isBid = price === bestBid;
             const isAsk = price === bestAsk;
             const isLast = price === lastPrice;
+            const ref = refFor(price);
             return (
-              <tr key={price}>
+              <tr key={price} className={ref ? ref.cls : undefined}>
                 <td
+                  className="ftp-dom-trader"
                   onClick={(e) => {
                     if (e.shiftKey) buyMarket();
                     else placeOrder('buy', price);
@@ -173,28 +215,42 @@ export function SuperDOM() {
                   })}
                 </td>
                 <td
+                  className={`ftp-dom-cell${(bidByPrice.get(price) ?? 0) >= DEEP_MIN ? ' is-deep' : ''}`}
                   onClick={(e) => {
                     if (e.shiftKey) buyMarket();
                     else placeOrder('buy', price);
                   }}
                 >
-                  {bidByPrice.get(price) ?? ''}
+                  <span
+                    className="ftp-dom-depth is-bid"
+                    style={{ width: `${((bidByPrice.get(price) ?? 0) / maxBid) * 100}%` }}
+                    aria-hidden="true"
+                  />
+                  <span className="ftp-dom-num">{bidByPrice.get(price) || ''}</span>
                 </td>
-                <td>
-                  {price.toFixed(2)}
-                  {isBid ? ' B' : ''}
-                  {isAsk ? ' A' : ''}
-                  {isLast ? ' LAST' : ''}
+                <td className={`ftp-dom-price${isLast ? ' is-last' : ''}`} title={ref ? ref.title : undefined}>
+                  {ref && <span className={`ftp-dom-ref ${ref.cls}`}>{ref.tag}</span>}
+                  <span className="ftp-dom-priceVal">{price.toFixed(2)}</span>
+                  {isBid && <span className="ftp-dom-tag is-bid">B</span>}
+                  {isAsk && <span className="ftp-dom-tag is-ask">A</span>}
+                  {isLast && <span className="ftp-dom-tag is-last">L</span>}
                 </td>
                 <td
+                  className={`ftp-dom-cell${(askByPrice.get(price) ?? 0) >= DEEP_MIN ? ' is-deep' : ''}`}
                   onClick={(e) => {
                     if (e.shiftKey) sellMarket();
                     else placeOrder('sell', price);
                   }}
                 >
-                  {askByPrice.get(price) ?? ''}
+                  <span
+                    className="ftp-dom-depth is-ask"
+                    style={{ width: `${((askByPrice.get(price) ?? 0) / maxAsk) * 100}%` }}
+                    aria-hidden="true"
+                  />
+                  <span className="ftp-dom-num">{askByPrice.get(price) || ''}</span>
                 </td>
                 <td
+                  className="ftp-dom-trader"
                   onClick={(e) => {
                     if (e.shiftKey) sellMarket();
                     else placeOrder('sell', price);
@@ -212,7 +268,7 @@ export function SuperDOM() {
                     );
                   })}
                 </td>
-                <td>{posSide ? estimateAt(price, posSide, avgPrice, posSize).toFixed(0) : ''}</td>
+                <td className="ftp-dom-rs">{posSide ? estimateAt(price, posSide, avgPrice, posSize).toFixed(0) : ''}</td>
               </tr>
             );
           })}

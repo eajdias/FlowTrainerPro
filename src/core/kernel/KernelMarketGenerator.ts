@@ -97,6 +97,58 @@ export class KernelMarketGenerator {
         this.rest(side, price, size, broker, tick, now);
       }
     }
+
+    this.maybeSweep(regime, tick, now);
+    this.replenish(tick, now);
+  }
+
+  /**
+   * Garante liquidez nos dois lados do book: se um lado ficar raso
+   * (ex.: após um sweep), repõe níveis ao redor do melhor preço disponível.
+   */
+  private replenish(tick: number, now: number): void {
+    const { bids, asks } = this.matching.getBookLevels(20);
+    const bb = bids[0]?.price;
+    const ba = asks[0]?.price;
+    const base = bb ?? ba ?? ANCHOR_PRICE;
+    const minLevels = 3;
+    for (let i = 1; i <= minLevels; i++) {
+      const brokerB = BROKERS[Math.floor(this.rand() * BROKERS.length)]!;
+      const brokerA = BROKERS[Math.floor(this.rand() * BROKERS.length)]!;
+      if (bids.length < minLevels + i) {
+        const size = 5 + Math.floor(this.rand() * 15);
+        this.rest('buy', snap(base - i * TICK_SIZE), size, brokerB, tick, now);
+      }
+      if (asks.length < minLevels + i) {
+        const size = 5 + Math.floor(this.rand() * 15);
+        this.rest('sell', snap(base + i * TICK_SIZE), size, brokerA, tick, now);
+      }
+    }
+  }
+
+  /**
+   * Sweeps ocasionais: agressões maiores que varrem 1-3 níveis do book.
+   * Produzem deslocamento real de preço (sem eles o mercado fica preso na âncora
+   * e nenhum candle 8P fecha). Determinístico via PRNG (replay reproduz).
+   */
+  private maybeSweep(regime: string, tick: number, now: number): void {
+    const prob = this.profile === 'aggressive' ? 0.16 : this.profile === 'slow' ? 0.05 : 0.10;
+    if (this.rand() >= prob) return;
+    const side = this.pickSide(regime);
+    const broker = BROKERS[Math.floor(this.rand() * BROKERS.length)]!;
+    // Ocasionalmente um block trade (100-400) para tape institucional realista;
+    // caso contrário, agressão comum (18-60). TRAINING FIFO reduz ambos.
+    const size = this.trainingFifo
+      ? 6 + Math.floor(this.rand() * 8)
+      : this.rand() < 0.25
+        ? 100 + Math.floor(this.rand() * 300)
+        : 18 + Math.floor(this.rand() * 42);
+    const levels = 1 + Math.floor(this.rand() * 3); // até 3 níveis além do melhor
+    const { bids, asks } = this.matching.getBookLevels(1);
+    const best = side === 'buy' ? asks[0]?.price : bids[0]?.price;
+    if (best === undefined) return;
+    const limitPrice = snap(side === 'buy' ? best + levels * TICK_SIZE : best - levels * TICK_SIZE);
+    this.submit(side, limitPrice, size, broker, tick, now);
   }
 
   private pickSide(regime: string): 'buy' | 'sell' {
@@ -110,7 +162,9 @@ export class KernelMarketGenerator {
     const { bids, asks } = this.matching.getBookLevels(1);
     const bb = bids[0]?.price;
     const ba = asks[0]?.price;
-    if (bb === undefined || ba === undefined) return null;
+    if (bb === undefined && ba === undefined) return null;
+    if (bb === undefined) return ba!;
+    if (ba === undefined) return bb;
     return (bb + ba) / 2;
   }
 

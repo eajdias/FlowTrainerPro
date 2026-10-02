@@ -1,27 +1,92 @@
-/* theme.css — tokens Profit-like (dark denso profissional) */
+/* theme.css — Design tokens do FlowTrainerPro
+   Sistema: dark-only, denso, baseado em Bloomberg Terminal / Linear / pixel-show.
+   Regra: nenhum hex hardcoded fora deste arquivo.
+*/
+
 :root {
-  --ftp-bg-canvas: #101216;
-  --ftp-bg-app: #14161b;
-  --ftp-bg-panel: #1a1d23;
-  --ftp-bg-panel-elevated: #20242c;
-  --ftp-bg-hover: #262b34;
-  --ftp-border-subtle: #262b33;
-  --ftp-border-strong: #353c47;
-  --ftp-text-primary: #e8ebf0;
-  --ftp-text-secondary: #b9c0cb;
-  --ftp-text-muted: #828da0;
-  --ftp-buy-primary: #00c853;
-  --ftp-buy-dim: rgba(0, 200, 83, 0.13);
-  --ftp-sell-primary: #ff5252;
-  --ftp-sell-dim: rgba(255, 82, 82, 0.13);
-  --ftp-info: #4d8dff;
-  --ftp-warning: #ff9800;
-  --ftp-special: #f5c400;
-  --ftp-neutral: #8b90a0;
-  --ftp-font-ui: Tahoma, 'Segoe UI', system-ui, sans-serif;
-  --ftp-font-numeric: Tahoma, 'Consolas', monospace;
-  --ftp-radius-xs: 2px;
-  --ftp-radius-sm: 3px;
-  --ftp-radius-md: 4px;
-  --ftp-shadow-focus: 0 0 0 2px rgba(77, 141, 255, 0.42);
+  /* ═══ SUPERFÍCIES — 4-step elevation ═══ */
+  --ftp-bg-canvas:          #0a0c10;   /* raiz da aplicação */
+  --ftp-bg-app:             #101216;   /* fundo do main */
+  --ftp-bg-panel:           #171a21;   /* painéis padrão */
+  --ftp-bg-panel-elevated:  #1e222b;   /* painéis em foco, dropdowns */
+  --ftp-bg-hover:           #262b36;   /* hover state */
+  --ftp-bg-overlay:         rgba(10, 12, 16, 0.72); /* modais/backdrops */
+  --ftp-bg-input:           #0d0f14;   /* inputs */
+
+  /* ═══ BORDAS — sutis para não competir ═══ */
+  --ftp-border-subtle:      rgba(255, 255, 255, 0.06);
+  --ftp-border:             rgba(255, 255, 255, 0.09);
+  --ftp-border-strong:      rgba(255, 255, 255, 0.14);
+  --ftp-border-accent:      rgba(77, 141, 255, 0.45);
+  --ftp-border-row:         rgba(255, 255, 255, 0.04);
+
+  /* ═══ TEXTO — hierarquia clara ═══ */
+  --ftp-text-primary:       #e8ebf0;
+  --ftp-text-secondary:     #a8b2c1;
+  --ftp-text-muted:         #6b7688;
+  --ftp-text-disabled:      #4a5262;
+
+  /* ═══ CORES SEMÂNTICAS — direção e estado ═══ */
+  --ftp-buy-primary:        #00d4aa;
+  --ftp-buy-dim:            rgba(0, 212, 170, 0.12);
+  --ftp-sell-primary:       #ff4757;
+  --ftp-sell-dim:           rgba(255, 71, 87, 0.12);
+  --ftp-info:               #4d8dff;
+  --ftp-info-hover:         #649cff;
+  --ftp-info-active:        #3f7fe8;
+  --ftp-warning:            #ffb800;
+  --ftp-special:            #f5c400;
+  --ftp-neutral:            #8b90a0;
+
+  /* ═══ TIPOGRAFIA — 2 fontes (UI + mono para números) ═══ */
+  --ftp-font-ui:            'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --ftp-font-numeric:       'JetBrains Mono', 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  --ftp-font-size-2xs:      9px;
+  --ftp-font-size-xs:       10px;
+  --ftp-font-size-sm:       11px;
+  --ftp-font-size-base:     12px;
+  --ftp-font-size-md:       13px;
+  --ftp-font-size-lg:       14px;
+
+  /* ═══ ESPAÇAMENTO — escala de 4px ═══ */
+  --ftp-space-1:            2px;
+  --ftp-space-2:            4px;
+  --ftp-space-3:            6px;
+  --ftp-space-4:            8px;
+  --ftp-space-5:            12px;
+  --ftp-space-6:            16px;
+  --ftp-space-7:            24px;
+  --ftp-space-8:            32px;
+
+  /* ═══ RADIUS — precisão (≤4px) ═══ */
+  --ftp-radius-xs:          2px;
+  --ftp-radius-sm:          3px;
+  --ftp-radius-md:          4px;
+
+  /* ═══ MOVIMENTO — 3 durações, 2 easings ═══ */
+  --ftp-duration-fast:      120ms;  /* hover, press, feedback */
+  --ftp-duration-normal:    160ms;  /* mudanças de estado */
+  --ftp-duration-slow:      240ms;  /* overlays, transições grandes */
+  --ftp-ease-out:           cubic-bezier(0.16, 1, 0.3, 1);   /* swift out */
+  --ftp-ease-in-out:        cubic-bezier(0.4, 0, 0.2, 1);    /* standard */
+
+  /* ═══ SOMBRAS — discretas ═══ */
+  --ftp-shadow-sm:          0 1px 2px rgba(0, 0, 0, 0.24);
+  --ftp-shadow-md:          0 4px 12px rgba(0, 0, 0, 0.32);
+  --ftp-shadow-float:       0 8px 28px rgba(0, 0, 0, 0.55);
+  --ftp-shadow-focus:       0 0 0 2px rgba(77, 141, 255, 0.42);
+
+  /* ═══ Z-INDEX ═══ */
+  --ftp-z-dropdown:         100;
+  --ftp-z-modal:            200;
+  --ftp-z-tooltip:          300;
+}
+
+/* ═══ REDUCED MOTION — acessibilidade ═══ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ftp-duration-fast:    0ms;
+    --ftp-duration-normal:  0ms;
+    --ftp-duration-slow:    0ms;
+  }
 }

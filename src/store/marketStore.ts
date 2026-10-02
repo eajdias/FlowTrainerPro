@@ -62,6 +62,12 @@ interface MarketState {
   tickCount:       number;
   isRunning:       boolean;
 
+  /** Dados do dia (sessão corrente) — referências para o gráfico. */
+  dayOpen:  number;
+  dayHigh:  number;
+  dayLow:   number;
+  dayVwap:  number;
+
   trades:          TradeEntry[];      // last 60
   priceLevels:     PriceLevel[];      // ±12 levels at 0.25 tick
   volumeProfile:   VolumeNode[];      // top 30 price levels by volume
@@ -99,6 +105,8 @@ const ladderData     = new Map<number, { bid: number; ask: number; delta: number
 const brokerMap      = new Map<number, BrokerActivity>();
 let   maxVolume      = 0;
 let   tradeCounter   = 0;
+let   sumPriceVolume = 0; // Σ(preço × volume) — base do VWAP da sessão
+let   sumVolume      = 0;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function snap(price: number) {
@@ -161,6 +169,10 @@ export const useMarketStore = create<MarketState & MarketActions>((set) => ({
   sessionVolume:   0,
   tickCount:       0,
   isRunning:       false,
+  dayOpen:         0,
+  dayHigh:         0,
+  dayLow:          0,
+  dayVwap:         0,
   trades:          [],
   priceLevels:     buildInitialLadder(),
   volumeProfile:   [],
@@ -183,6 +195,10 @@ export const useMarketStore = create<MarketState & MarketActions>((set) => ({
     const nv = pv + tick.volume;
     volumeByPrice.set(price, nv);
     if (nv > maxVolume) maxVolume = nv;
+
+    // Dados do dia (sessão): abertura, máximo, mínimo e VWAP
+    sumPriceVolume += tick.price * tick.volume;
+    sumVolume      += tick.volume;
 
     // Ladder
     const ld = ladderData.get(price) ?? { bid: 0, ask: 0, delta: 0 };
@@ -237,6 +253,10 @@ export const useMarketStore = create<MarketState & MarketActions>((set) => ({
       cumulativeDelta: s.cumulativeDelta + tick.delta,
       sessionVolume:   s.sessionVolume + tick.volume,
       tickCount:       s.tickCount + 1,
+      dayOpen:         s.tickCount === 0 ? tick.price : s.dayOpen,
+      dayHigh:         Math.max(s.dayHigh, tick.price),
+      dayLow:          s.dayLow === 0 ? tick.price : Math.min(s.dayLow, tick.price),
+      dayVwap:         sumVolume > 0 ? r2(sumPriceVolume / sumVolume) : 0,
       trades:          [trade, ...s.trades].slice(0, MAX_TRADES),
       priceLevels:     buildLadder(tick.price),
       volumeProfile:   buildVolumeProfile(),
@@ -252,11 +272,14 @@ export const useMarketStore = create<MarketState & MarketActions>((set) => ({
     brokerMap.clear();
     maxVolume    = 0;
     tradeCounter = 0;
+    sumPriceVolume = 0;
+    sumVolume = 0;
     set({
       currentPrice: INITIAL_PRICE, currentVolume: 0, currentDelta: 0,
       lastTimestamp: 0, cumulativeDelta: 0, sessionVolume: 0, tickCount: 0,
       isRunning: false, trades: [], priceLevels: buildInitialLadder(),
       volumeProfile: [], brokerActivity: [],
+      dayOpen: 0, dayHigh: 0, dayLow: 0, dayVwap: 0,
       kernelState: { vwap: 0, trend: 'sideways' as const, sessionTrades: 0, imbalance: 0 },
       flowSnapshot: emptyFlowSnapshot(),
     });

@@ -1,50 +1,35 @@
-# Global Trading Controls
+# Replay & Dados — Estação Unificada
 
-## Objetivo
+## O que é
 
-Os controles globais organizam o contexto operacional sem alterar engines ou regras de mercado.
+Painel único (`DataReplayPanel`) que concentra os controles de replay e dados do projeto. Substituiu os antigos `ReplayToolbar`, `ReplayPlayerPanel`, `DataPanel` e `CandleClockPanel` (fundidos).
 
-> Controles globais utilizam vocabulário, ícones, estados e semântica consistentes.
+## Estrutura (3 linhas)
 
-## Header
+### 1. Transporte
+- `▶ Iniciar` / `⏸ Pausar` / `▶ Retomar` / `⏹ Finalizar` / `↺ Reset`
+- Velocidade: `0.5x`, `1x`, `2x`, `4x`, `8x`, `16x`
+- Perfil de mercado: `slow` / `normal` / `aggressive`
+- `TRAINING FIFO` (filas menores durante treino)
+- Status da sessão (idle/running/finished)
 
-- Marca, ativo em estudo (seletor em Dados & Ativos; motor ao vivo é sintético WDO),
-  source mode (indicadores, sem troca por clique), sessão, último preço, hora, estado global.
-- Botão Importar (ícone SVG) navega para a estação de training (painel Replay Player).
+### 2. Fonte
+- Seleção do ativo de estudo: `WDO sintético (simulador)` / `WDO diário (estudo)` / `PETR4 diário (estudo)`
+- Materiais disponíveis (sessões por ativo)
+- `Atualizar dados (brapi)` — busca o contrato corrente e salva no cache local
 
-## Source Mode
+### 3. Sessão
+- Sessão (tempo decorrido), Ticks, Último preço, progresso do Candle 8P
+- Range em formação do candle
 
-| Modo | Rótulo | Descrição |
-|---|---|---|
-| `SYNTHETIC` | `SYNTHETIC` | Mercado gerado pelo simulador. |
-| `SCENARIO` | `SCENARIO` | Cenário didático controlado. |
-| `HISTORICAL_FILE` | `HISTORICAL` | Replay de negócios históricos importados. |
-| `LIVE_FUTURE` | `LIVE FUTURE` | Reservado para mercado ao vivo futuro. |
+## Decisões de escopo
 
-Troca destrutiva bloqueada com sessão rodando (`MarketDataSourceGuard` em `marketDataSourceStore`).
+- **Sem CSV**: a ingestão de dados é via pipeline API → DuckDB → JSON (`npm run materials`). A importação manual de CSV foi descontinuada.
+- **Sem modo ao vivo**: o projeto é 100% histórico/simulado. `LIVE_FUTURE` foi removido do source mode.
+- Source modes atuais: `SYNTHETIC`, `SCENARIO`, `HISTORICAL_FILE`.
 
-## Sessão
+## Regras
 
-Vocabulário: `IDLE`, `READY`, `RUNNING`, `PAUSED`, `STOPPED`, `COMPLETED`, `ERROR`.
-
-## ReplayToolbar
-
-Transporte real: iniciar/pausar/retomar/finalizar/reset + velocidades `0.5x–16x` +
-perfis de mercado (`slow`/`normal`/`aggressive`) + `TRAINING FIFO`. Dirige sessão, kernel
-e bridge. Sem compra/venda/flatten (vivem no SuperDOM).
-
-Sem atalhos de teclado globais, sem barra de progresso e sem seek na toolbar
-(o Replay Player tem step; seek do replay histórico via `engine.seek()`).
-
-## StatusBar
-
-Kernel, Fonte, Replay, Sessão, Trades, Flow, Broker Flow, warnings e versão. Discreta.
-
-## Erros e Warnings
-
-Warnings como texto curto com tooltip. Sem `alert()`; erros aparecem na UI, não só no console.
-
-## Responsividade
-
-Header em uma linha com ocultação progressiva (`AppShell.css`); workspace com scroll;
-tabelas com layout fixo e ellipsis (SuperDOM robusto a zoom de fonte).
+- O painel é camada de apresentação — não altera engines ou stores de domínio além dos handlers homologados (`TradingController`, kernel).
+- Não colocar ações de trading (compra/venda) no transporte.
+- Botões sem handler real não são permitidos.

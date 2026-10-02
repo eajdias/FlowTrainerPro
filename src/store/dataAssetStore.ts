@@ -1,36 +1,35 @@
 // store/dataAssetStore.ts
-// Contexto de estudo: qual ativo/dataset a UI apresenta.
-// O motor ao vivo segue sintético (WDO); o seletor governa estudo e rótulos.
+// Contexto de estudo: qual dataset a UI apresenta (estudo histórico).
+// O motor ao vivo é sintético; o seletor governa estudo e rótulos.
+// Fontes: simulador sintético + materiais históricos (dados via API → DB → JSON).
+// Sem CSV e sem modo ao vivo — projeto 100% histórico/simulado.
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type StudyAsset = 'SYNTHETIC' | 'WDO' | 'PETR4' | 'CSV';
+export type StudyAsset = 'SYNTHETIC' | 'WDO' | 'PETR4';
 
 interface DataAssetState {
   asset: StudyAsset;
-  csvName: string | null;
+  /** Data da sessão de estudo selecionada (ISO 'YYYY-MM-DD'), null = todas. */
+  selectedDate: string | null;
   setAsset: (asset: StudyAsset) => void;
-  setCsv: (name: string) => void;
-  clearCsv: () => void;
+  setSelectedDate: (date: string | null) => void;
 }
 
 export const ASSET_LABELS: Record<StudyAsset, string> = {
-  SYNTHETIC: 'WDO sintético (ao vivo)',
+  SYNTHETIC: 'WDO sintético (simulador)',
   WDO: 'WDO diário (estudo)',
   PETR4: 'PETR4 diário (estudo)',
-  CSV: 'CSV importado',
 };
 
 export const useDataAssetStore = create<DataAssetState>()(
   persist(
     (set) => ({
       asset: 'SYNTHETIC',
-      csvName: null,
-      setAsset: (asset) => set({ asset }),
-      setCsv: (name) => set({ csvName: name, asset: 'CSV' }),
-      clearCsv: () =>
-        set((s) => ({ csvName: null, asset: s.asset === 'CSV' ? 'SYNTHETIC' : s.asset })),
+      selectedDate: null,
+      setAsset: (asset) => set({ asset, selectedDate: null }),
+      setSelectedDate: (selectedDate) => set({ selectedDate }),
     }),
     { name: 'flowtrainerpro-data-asset' },
   ),

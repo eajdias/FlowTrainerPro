@@ -32,9 +32,15 @@ export interface TradeRecord {
 // ── Store state ───────────────────────────────────────────────────────────────
 
 const MAX_TRADES = 100;
+const MAX_LARGE  = 200;  // agressões ≥250 (institucional)
+const MAX_MEDIUM = 300;  // agressões ≥25
+export const LARGE_MIN  = 250;
+export const MEDIUM_MIN = 25;
 
 interface TradeState {
-  trades:    TradeRecord[];   // most recent first
+  trades:    TradeRecord[];   // most recent first (janela do tape)
+  largeTrades:  TradeRecord[]; // agressões ≥250 (mantidas na sessão)
+  mediumTrades: TradeRecord[]; // agressões ≥25
   lastPrice: number;          // updated ONLY by executions
   totalExecs: number;
 }
@@ -47,10 +53,12 @@ interface TradeActions {
 
 export const useTradeStore = create<TradeState & TradeActions>((set) => ({
   trades:     [],
+  largeTrades:  [],
+  mediumTrades: [],
   lastPrice:  0,
   totalExecs: 0,
 
-  reset: () => set({ trades: [], lastPrice: 0, totalExecs: 0 }),
+  reset: () => set({ trades: [], largeTrades: [], mediumTrades: [], lastPrice: 0, totalExecs: 0 }),
 }));
 
 // ── Wire: MatchingEngine → TradeStore (runs once on module load) ──────────────
@@ -82,6 +90,12 @@ eventBus.on<Execution>(MATCHING_EVENTS.EXECUTION_CREATED, (exec) => {
 
   useTradeStore.setState((s) => ({
     trades:     [trade, ...s.trades].slice(0, MAX_TRADES),
+    largeTrades: trade.size >= LARGE_MIN
+      ? [trade, ...s.largeTrades].slice(0, MAX_LARGE)
+      : s.largeTrades,
+    mediumTrades: trade.size >= MEDIUM_MIN
+      ? [trade, ...s.mediumTrades].slice(0, MAX_MEDIUM)
+      : s.mediumTrades,
     lastPrice:  exec.price,
     totalExecs: s.totalExecs + 1,
   }));

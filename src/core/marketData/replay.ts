@@ -5,7 +5,7 @@
 import { eventBus } from '../engine/EventBus';
 import type { MarketTrade } from './types';
 
-export type MarketDataSourceMode = 'SYNTHETIC' | 'SCENARIO' | 'HISTORICAL_FILE' | 'LIVE_FUTURE';
+export type MarketDataSourceMode = 'SYNTHETIC' | 'SCENARIO' | 'HISTORICAL_FILE';
 
 export const HISTORICAL_REPLAY_EVENTS = {
   TRADE_EXECUTED: 'historical:trade:executed',
@@ -174,7 +174,7 @@ export class HistoricalReplayEngine {  private state: HistoricalReplayState = IN
   }
 }
 
-// ─── Instância compartilhada (DataPanel carrega, ReplayPlayer toca) ───────────
+// ─── Instância compartilhada (reservada para dados históricos do pipeline API→DB) ───
 
 let shared: HistoricalReplayEngine | null = null;
 

@@ -17,7 +17,7 @@ interface BookState {
   bestBid:    number;
   bestAsk:    number;
   spread:     number;
-  lastPrice:  number;            // updated ONLY by trade:executed
+  lastPrice:  number;            // updated ONLY by matching:execution:created
   lastUpdate: number;            // timestamp of last update
   execCount:  number;            // total executions this session
 }

@@ -12,7 +12,7 @@ O `SimulationKernel` é o "sistema operacional" da simulação. Ele é o **únic
 
 ## Ciclo de vida
 
-```txt
+```
 getKernel() / createKernel() → boot()       (semeia book, refresh inicial)
   → start()    → clock 150ms/speed → pause() → resume() → stop()
   → disposeKernel()

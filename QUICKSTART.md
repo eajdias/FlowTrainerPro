@@ -1,7 +1,5 @@
 # Guia rápido — testar o FlowTrainerPro em 5 minutos
 
-> Para quem nunca viu o projeto. Sem jargão técnico.
-
 ## O que é
 
 Um **simulador de pregão** para treinar leitura de fluxo do Mini Dólar (WDO) sem arriscar
