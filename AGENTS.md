@@ -16,10 +16,9 @@ npx tsc --noEmit                # typecheck
 
 | Tema | Arquivo |
 |------|---------|
-| **Status atual** | `PROJECT_STATUS.md` |
 | **Arquitetura** | `docs/Architecture.md` |
 | **Módulos e painéis** | `docs/Modules.md` |
-| **Changelog** | `CHANGELOG.md` |
+| **Changelog (histórico + estado)** | `CHANGELOG.md` |
 | **Resumo gerencial** | `RESUMO_GERENCIAL.md` |
 | **Índice de docs** | `docs/README.md` |
 | **Regras de engenharia** | `docs/standards/FLOWTRAINER_ENGINEERING_HANDBOOK.md` |
@@ -35,11 +34,11 @@ npx tsc --noEmit                # typecheck
 5. **Commits:** em inglês, Conventional Commits. Nunca `git add -A` — só paths tocados.
 6. **Evidência:** cole saída real de build/teste. Sem comando rodado, não conta.
 
-## Estado atual (2026-10-01)
+## Estado atual (2026-10-02)
 
 - Build: ✅ `tsc` 0 erros, `vite build` ok
-- Testes: ✅ 43/43 passando
-- Backlog: alta/média 100% concluído
-- Único pendente: integração com corretora real (não é o foco — projeto é de treinamento)
+- Testes: ✅ 61/61 passando (20 arquivos)
+- App: view única `Main` (sem rotas); desk fluido em linhas × colunas; 19 painéis no registry; 3 workspaces (Tape Reading, Scalping, DOM Puro)
+- Projeto 100% histórico/simulado: sem CSV na UI, sem modo ao vivo
 
 

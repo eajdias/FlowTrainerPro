@@ -1,6 +1,6 @@
 # Spec: Download e Atualização de Dados pela UI
 
-**Status:** Pronto para execução  
+**Status:** Parcialmente implementado (ver CHANGELOG 2026-10-02; restante reavaliar antes de executar)  
 **Prioridade:** Média  
 **Revisão:** 2026-10-02 (corrigida com arquitetura real)
 

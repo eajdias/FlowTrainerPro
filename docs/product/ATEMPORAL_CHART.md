@@ -15,10 +15,9 @@ Motor: `RangeCandleEngine` (`src/core/marketData/candles/`), alimentado por
 - Fecha quando `high − low >= 8.00`; o trade que estoura **não** abre o próximo (abre no trade seguinte).
 - Candles fechados são imutáveis (`Object.freeze`); em formação é sempre cópia.
 - Ticks inválidos (`price/qty <= 0`) são ignorados.
-- Painel lista O/H/L/C + saldo de agressão (C/V e %) por candle; formando com borda tracejada.
 
-## Fase futura (canvas)
+## Apresentação
 
-Viewport deslizante com auto-follow, drag horizontal, zoom (3–12px), eixo com labels em
-múltiplos de tick, `ResizeObserver` com guarda de largura e medição de FPS dedicada —
-conforme desenho original deste documento (seções removidas para não descrever o que não existe).
+- Candles renderizados (corpo + pavio + barra de agressão C/V na lane inferior), ancorados à direita, com altura medida por `ResizeObserver` (preenche o painel sem scroll).
+- Linhas de referência do dia com valores impressos: Máx (verde), Mín (vermelho), VWAP (azul), Abertura (amarelo) — desenhadas quando dentro do range visível; valores do dia sempre no header.
+- Candle com volume ≥75% do máximo da janela e range < 3 pts ganha contorno de absorção.

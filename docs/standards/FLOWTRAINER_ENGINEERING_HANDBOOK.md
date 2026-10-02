@@ -33,7 +33,7 @@
 
 - Usar Design System oficial (`src/ui/designSystem`)
 - Sem valores hardcoded de cor, tipografia, espaçamento
-- Controles globais: Header, StatusBar, ReplayToolbar (camada de apresentação)
+- Controles globais: Header (cockpit com `SessionControls`), StatusBar (camada de apresentação)
 - Botões sem handler real não são permitidos
 - Filas exibidas na UI vêm de API read-only autoritativa
 

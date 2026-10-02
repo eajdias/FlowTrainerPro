@@ -21,4 +21,4 @@ nunca forçadas para lado.
 ## Estados
 
 - Vazio: "Sem execuções na sessão." (ou "no filtro atual" com ação de limpar).
-- Fonte: exclusivamente `tradeStore` (máx. 100 execuções recentes).
+- Fonte: exclusivamente `tradeStore` (janela de 100 + buffers dedicados `largeTrades ≥250` e `mediumTrades ≥25`, usados pelos painéis de histórico).

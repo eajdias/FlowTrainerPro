@@ -8,15 +8,14 @@ Transforma `MarketTrade[]` importados em eventos de mercado histórico observado
 
 ## Arquivos
 
+Implementação em arquivo único (sem diretório `replay/`):
+
 ```
-src/core/marketData/replay/
-  HistoricalReplayController.ts
-  HistoricalReplayClock.ts
-  HistoricalTradeReplaySource.ts
-  HistoricalReplayEvents.ts
-  HistoricalReplayErrors.ts
-  HistoricalReplayTypes.ts
-  MarketDataSourceGuard.ts
+src/core/marketData/replay.ts
+  HistoricalReplayEngine (load/start/pause/resume/stop/reset/seek/setSpeed/step)
+  getSharedReplayEngine() (instância compartilhada)
+  HISTORICAL_REPLAY_EVENTS / HistoricalTradeExecutedEvent
+  MarketDataSourceMode = 'SYNTHETIC' | 'SCENARIO' | 'HISTORICAL_FILE'
 ```
 
 ## Eventos de lifecycle

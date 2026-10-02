@@ -32,7 +32,7 @@ janelas `1s–session`; modos `ESSENTIAL`/`ADVANCED`/`COMPLETE`.
 ## Rankings
 
 Mais ativa, maior compradora/vendedora agressiva, maiores nets — via
-`selectBrokerFlowRankings` (também na rota Analysis).
+`selectBrokerFlowRankings` (também na tab **Mesa** da sidebar).
 
 ## Feed ao vivo
 

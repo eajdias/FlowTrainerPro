@@ -1,6 +1,6 @@
 # Changelog
 
-Histórico consolidado do projeto. Para detalhes do estado atual, ver `PROJECT_STATUS.md` e `docs/roadmap/BACKLOG.md`.
+Histórico consolidado do projeto (inclui o estado atual verificado).
 
 ---
 
@@ -274,7 +274,7 @@ Histórico consolidado do projeto. Para detalhes do estado atual, ver `PROJECT_S
 
 ---
 
-## 2026-10-02 — Redesign da interface (spec `2026-10-02-ui-redesign.md`)
+## 2026-10-02 — Redesign da interface (spec de redesign executado)
 
 **Contexto:** Interface percebida como anti-profissional, não fluida e sem elegância. Após primeiro passe conservador, redesign AGRESSIVO aprovado com pesquisa em Bloomberg Terminal, Linear, pixel-show, Sharpnel DOM, NinjaTrader e TradingView.
 
@@ -351,13 +351,13 @@ Histórico consolidado do projeto. Para detalhes do estado atual, ver `PROJECT_S
 
 ## Documentação de domínio (julho/2026)
 
-Documentos conceituais criados para definir o domínio de mercado:
-- `FLOWTRAINER_VISION.md` — constituição, missão, princípios
-- `FLOW_MARKET_MICROSTRUCTURE.md` — especificação de microestrutura
-- `FLOW_MARKET_PHENOMENA.md` — biblioteca de 24 fenômenos de mercado
-- `FLOW_MARKET_SCENARIOS.md` — biblioteca de cenários de ensino
-- `FLOW_PLAYER_LIBRARY.md` — perfis comportamentais dos participantes
-- `FLOW_BROKER_COLORS.md` — especificação de cores das corretoras
+Documentos conceituais criados para definir o domínio de mercado (todos removidos depois; conteúdo absorvido pela implementação):
+- FLOWTRAINER_VISION (removido) — constituição, missão, princípios
+- FLOW_MARKET_MICROSTRUCTURE (removido) — especificação de microestrutura
+- FLOW_MARKET_PHENOMENA (removido) — biblioteca de 24 fenômenos de mercado
+- FLOW_MARKET_SCENARIOS (removido) — biblioteca de cenários de ensino
+- FLOW_PLAYER_LIBRARY (removido) — perfis comportamentais dos participantes
+- FLOW_BROKER_COLORS (removido) — especificação de cores das corretoras
 
 **Status:** Estes documentos foram absorvidos pela implementação atual. Os princípios e visão estão incorporados no código e nas fontes únicas atuais.
 

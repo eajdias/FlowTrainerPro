@@ -22,7 +22,6 @@ npm test      # suíte de testes
 ## Docs
 
 - `docs/README.md` — índice de toda a documentação
-- `PROJECT_STATUS.md` — estado atual e evidências
 - `docs/Architecture.md` — arquitetura (fonte única)
 - `docs/Modules.md` — módulos e painéis (fonte única)
-- `docs/roadmap/BACKLOG.md` — backlog (fonte única)
+- `CHANGELOG.md` — histórico consolidado do projeto

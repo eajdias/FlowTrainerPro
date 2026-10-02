@@ -26,18 +26,18 @@ Abra no navegador: **http://localhost:5173/**
 
 ## Primeiros 2 minutos dentro do app
 
-1. Na rota **Training**, leia o quadro **Primeiros passos** e clique em **Começar**.
-2. Escolha uma missão (ex.: *Canal + Rompimento Comprador*) e leia o briefing.
-3. Role até a barra **Replay** e aperte **▶ Iniciar** — o mercado começa a se mexer.
-4. No painel **SuperDOM**, clique num preço da coluna verde para **comprar** (ou use
+1. Na **view Main**, abra a sidebar (se colapsada) e escolha uma missão (ex.: *Canal + Rompimento Comprador*), leia o briefing.
+2. No topo da tela (**cockpit**), aperte **▶** — o mercado começa a se mexer.
+3. No painel **SuperDOM**, clique num preço da coluna verde para **comprar** (ou use
    **Shift+clique** para comprar a mercado). O `✕` cancela, **ZERAR** fecha tudo.
-5. Aperte **⏹ Finalizar** na Replay para ver sua **nota e o recado do coach**.
+4. Use **⏩ +1min/+5min** no topo para avançar a sessão; aperte **⏹** para ver sua **nota e o recado do coach**.
+5. As tabs da sidebar (**Missões · Mesa · Estudo**) mostram progresso, indicadores da sessão e materiais de estudo — sem sair da mesa.
 
 ## De onde vêm os dados
 
-- **Mercado ao vivo da tela:** gerado pelo próprio programa (simulação, sem internet).
-- **Histórico real:** rota **Academy** mostra sessões de WDO e PETR4 (já incluídas).
-  Para importar seu próprio CSV da B3: painel **Dados & Ativos** → Importar CSV.
+- **Mercado da tela:** gerado pelo próprio programa (simulação, sem internet).
+- **Histórico real:** tab **Estudo** da sidebar mostra sessões de WDO e PETR4 (já incluídas em `data/materials/`).
+  Novos dados entram pelo pipeline API → DuckDB → JSON (`npm run materials`, `npm run materials:wdo`); validação de CSV avulso: `npm run validate:trade-csv -- <arquivo>`.
 
 ## Glossário mínimo
 

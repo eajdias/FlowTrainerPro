@@ -18,17 +18,18 @@ Infrastructure     → src/services/, src/assets/
 
 ```
 src/
-├── core/               # AppRouter, AppShell, App, engine/, kernel/, orderflow/, marketData/, marketIdentity/, analytics/
-├── trader/             # TradingController, TraderExecutionBridge, QueueInspector
-├── training/           # TrainingMissionEngine, MissionLibrary, MissionStore, types
-├── panels/             # 24 tipos do registry
-├── workspace/          # PanelRegistry, WorkspaceStore, defaultWorkspaces, Manager/Layout/DockManager
-├── store/              # 14 stores
-├── market/providers/   # MarketDataProvider (MarketTick)
-├── ui/                 # designSystem
-├── services/           # SÓ index.ts (stub vazio)
-├── router/             # SÓ index.ts (stub vazio, não usado)
-└── assets/             # global.css + estáticos
+├── core/          # AppRouter (view única Main), AppShell (cockpit), App,
+│                  # SessionControls.tsx, sessionActions.ts,
+│                  # engine/, kernel/, orderflow/, marketData/, marketIdentity/, analytics/
+├── trader/        # TradingController, TraderExecutionBridge, QueueInspector
+├── training/      # TrainingMissionEngine, MissionLibrary, MissionStore, types
+├── panels/        # 19 tipos do registry (ver Modules.md)
+├── workspace/     # PanelRegistry, WorkspaceStore, defaultWorkspaces,
+│                  # Manager/Layout (DeskLayout fluido em linhas × colunas)
+├── store/         # 17 arquivos (market, book, trade, position, training, históricos, ...)
+├── market/providers/ # MarketDataProvider (MarketTick)
+├── ui/            # designSystem (ThemeProvider, Button, Badge, Tooltip, Skeleton, Icon)
+└── assets/        # global.css, theme.css, panels.css
 ```
 
 ## Regras
@@ -38,4 +39,4 @@ src/
 
 ## Ausências conhecidas
 
-`tsc` 0 erros. Motores de avaliação/feedback/replay-recorder (`src/training/evaluation|feedback|replay|rules`) e `modules/academy` não existem — inspectores correspondentes exibem entradas disponíveis com nota de pendência.
+`tsc` 0 erros. Sem React Router (view única, sem rotas). Sem Electron ativo. Motores de avaliação/feedback/replay-recorder (`src/training/evaluation|feedback|replay|rules`) e `modules/academy` não existem — inspectores correspondentes exibem entradas disponíveis com nota de pendência.

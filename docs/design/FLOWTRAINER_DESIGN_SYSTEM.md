@@ -49,12 +49,10 @@ Baseado em Bloomberg Terminal (dados), Linear (craft) e pixel-show (densidade).
 - `Skeleton` — loading state com shimmer (respeita reduced-motion)
 - `Icon` — SVG inline: `import/config/layout/help/play/pause/stop/download/database/calendar/chart/search/close/chevron-down`
 
-**Pendentes (specs consumidoras):** `Dropdown` (asset-date-selector), `Modal` (data-download)
-
 ## Controles globais
 
-Header, StatusBar, ReplayToolbar — vocabulário oficial:
-- Source mode: `SYNTHETIC`, `SCENARIO`, `HISTORICAL`, `LIVE FUTURE`
+Header (cockpit: `SessionControls` com transporte, fast-forward, velocidade e popover de fonte; preço em destaque; sessão, hora e status), StatusBar — vocabulário oficial:
+- Source mode: `SYNTHETIC`, `SCENARIO`, `HISTORICAL`
 - Sessão: `IDLE`, `READY`, `RUNNING`, `PAUSED`, `STOPPED`, `COMPLETED`, `ERROR`
 - Velocidades: `0.5x`, `1x`, `2x`, `4x`, `8x`, `16x`
 
@@ -68,6 +66,6 @@ Header, StatusBar, ReplayToolbar — vocabulário oficial:
 
 ## Baseline (2026-10-02, verificado)
 
-- `tsc` 0 erros; `vitest` 62/62; `vite build` ok
+- `tsc` 0 erros; `vitest` 61/61 (20 arquivos); `vite build` ok
 - Lighthouse a11y 100 (manter na próxima rodada)
 - Console limpo (0 erros) com kernel rodando

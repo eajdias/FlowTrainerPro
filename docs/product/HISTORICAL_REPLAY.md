@@ -1,15 +1,15 @@
 # Historical Replay
 
-O replay histórico reproduz negócios reais importados de CSV como mercado observado.
+O replay histórico reproduz negócios reais importados (via pipeline API → DuckDB → JSON ou CSV validado por script) como mercado observado.
 
 ## Cadeia real
 
 ```txt
-CSV → MarketTrade[] → HistoricalReplayEngine (load/start/pause/step/seek/speed)
+MarketTrade[] → HistoricalReplayEngine, `src/core/marketData/replay.ts`
+  (load/start/pause/step/seek/speed)
   → historical:trade:executed
   → projections (market:trade:observed, last-price)
-  → historicalTradeStore / historicalVolumeProfileStore /
-    historicalBrokerHistoryStore / historicalLastPriceStore
+  → historicalTradeStore / historicalBrokerHistoryStore / historicalLastPriceStore
   → BrokerHistoryPanel, ReplayInspector (+ Times & Trades histórico: pendente)
 ```
 
@@ -23,5 +23,4 @@ para lado direcional.
 
 ## UI
 
-Painel Replay Player (arquivo CSV, transporte, velocidade, step) + painel Dados & Ativos
-(importação com avisos honestos). Validação: `npm run validate:trade-csv -- <arquivo>`.
+Sem painel próprio: o replay histórico é consumido pelos painéis de leitura quando a fonte ativa é histórica. Novos dados entram pelo pipeline (`npm run materials`, `npm run materials:wdo`); validação de CSV avulso: `npm run validate:trade-csv -- <arquivo>`.

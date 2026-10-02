@@ -25,7 +25,7 @@ Essas três camadas NUNCA se misturam.
 
 | Componente | Fonte | Nunca lê de |
 |------------|-------|-------------|
-| SuperDOM | `bookStore` | trades do marketStore |
+| SuperDOM | `bookStore` (intenções) + `marketStore.priceLevels` (execuções por preço) | trades do marketStore |
 | Times & Trades | `tradeStore` | book |
 | Volume Profile | `volumeProfileStore` | book |
 | Last Price | última execução | book |

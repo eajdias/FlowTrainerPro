@@ -2,7 +2,7 @@
 
 ## O que é
 
-O SuperDOM é a principal ferramenta de interação do trader. Mostra o livro de ofertas (DOM) e permite operar com cliques.
+O SuperDOM é a principal ferramenta de interação do trader. Mostra o livro de ofertas (DOM) **fundido com o Price Ladder**: 9 colunas `[Δ exec] [Ord.C] [Qtd.C] [PREÇO] [Qtd.V] [Ord.V] [Exec.C] [Exec.V] [R$]` — intenções (book) + execuções por preço (ladder) na mesma grade, com heat de profundidade, refs do dia, auto-follow e linha atual sublinhada. Permite operar com cliques.
 
 ## Interações
 

@@ -5,12 +5,12 @@
 ```
 SimulationKernel (clock 150ms)
   ├─ MarketScenarioEngine (regimes: range | trend-up | trend-down | volatile)
-  ├─ KernelMarketGenerator (ordens sintéticas: perfis slow/normal/aggressive, TRAINING FIFO)
+  ├─ KernelMarketGenerator (ordens sintéticas: perfis slow/normal/aggressive, TRAINING FIFO; sweeps + replenish)
   ├─ MatchingEngine (FIFO price-time → matching:execution:created)
   └─ OrderBookEngine (snapshot → book:update)
-       ├─ bookStore / tradeStore / volumeProfileStore / brokerHistoryStore
+       ├─ bookStore / tradeStore (buffers T&T + ≥25 + ≥250) / volumeProfileStore / brokerFlowStore
        ├─ positionStore (via TraderExecutionBridge) / traderOrderStore
-       ├─ marketStore (priceLevels, brokerActivity, flowSnapshot)
+       ├─ marketStore (priceLevels, brokerActivity, flowSnapshot, dados do dia: abertura/máx/mín/VWAP)
        ├─ FlowAnalysisEngine (pressão/resposta/liquidez) / BrokerFlowAnalyzer
        └─ RangeCandleEngine (candles 8P: range ≥ 8.00)
 ```
@@ -19,10 +19,10 @@ SimulationKernel (clock 150ms)
 
 | Store | Responsabilidade |
 |-------|------------------|
-| `useMarketStore` | Ticks de mercado (ladder, volume profile, brokers, flowSnapshot) |
+| `useMarketStore` | Ticks de mercado (ladder, volume profile, brokers, flowSnapshot, dados do dia) |
 | `useBookStore` | Book (intenções) via `book:update` |
-| `useTradeStore` | Execuções via `matching:execution:created` |
-| `useWorkspaceStore` | Layout persistido |
+| `useTradeStore` | Execuções via `matching:execution:created` (janela T&T + buffers ≥25/≥250) |
+| `useWorkspaceStore` | Layout persistido (desk fluido em linhas × colunas) |
 | `useTrainingStore` / `useTrainingSessionStore` / `useMissionStore` | Treino, sessão, missão |
 | `historical*`, `brokerFlowStore`, `marketDataSourceStore` | Replay e projections |
 
@@ -36,16 +36,17 @@ SimulationKernel (clock 150ms)
 
 - Jogadores sintéticos determinísticos (seed fixa; mesma sessão = mesmo fluxo)
 - 1–5 ordens/tick por perfil; 60% cruzadas (tape) / 40% resting (profundidade)
+- Sweeps ocasionais (agressões 18–60 que varrem 1–3 níveis, com block trades) + replenish (repõe liquidez)
 - Book semeado com ±12 níveis; preço âncora 5069.00, tick 0.50 (WDO)
 
 ## Layout
 
-Workspace com layouts salvos (`defaultWorkspaces.ts`): Default, Tape Reading, Scalping (+1). Painéis docked em grade + flutuantes; posições/visibilidade persistem.
+Desk fluido em linhas × colunas (`DeskLayout`): 3 workspaces (Tape Reading, Scalping, DOM Puro). Colunas proporcionais adaptam-se à sidebar; posições/visibilidade persistem.
 
 ## Replay histórico
 
 ```
-CSV → MarketTrade[] → HistoricalReplayEngine → historical:trade:executed → projections → stores históricos
+API → DuckDB → JSON (`data/materials/`) ou MarketTrade[] → HistoricalReplayEngine → historical:trade:executed → projections → stores históricos
 ```
 
 Nunca passa pelo `MatchingEngine`; nunca altera posição, stops, P&L, FIFO ou ordens do aluno.
@@ -54,4 +55,4 @@ Nunca passa pelo `MatchingEngine`; nunca altera posição, stops, P&L, FIFO ou o
 
 `react 19`, `react-dom 19`, `zustand`, `uuid`, `typescript 6`, `vite 8`, `@vitejs/plugin-react 6`, `vitest 3` (+ `@vitest/coverage-v8`)
 
-Sem React Router (hash `#/rota` + estado local). Sem Electron ativo (stubs em `electron/`).
+Sem React Router (view única, sem rotas). Sem Electron (só web).

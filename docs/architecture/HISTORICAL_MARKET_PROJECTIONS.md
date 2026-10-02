@@ -17,7 +17,7 @@ historical:trade:executed → HistoricalMarketDataProjection → market:trade:ob
 
 ## Stores históricos
 
-`useHistoricalTradeStore`, `useHistoricalVolumeProfileStore`, `useHistoricalBrokerHistoryStore`, `useHistoricalLastPriceStore`, `useMarketDataSourceStore`
+`useHistoricalTradeStore`, `useHistoricalBrokerHistoryStore`, `useHistoricalLastPriceStore`, `useMarketDataSourceStore`
 
 ## Categorias
 
@@ -25,7 +25,7 @@ historical:trade:executed → HistoricalMarketDataProjection → market:trade:ob
 
 ## Source mode
 
-`SimulationKernel.setMarketDataSource(mode)`: `SYNTHETIC`, `SCENARIO`, `HISTORICAL_FILE`. (Modo ao vivo não faz parte do escopo.)
+`useMarketDataSourceStore.setSource(mode)`: `SYNTHETIC`, `SCENARIO`, `HISTORICAL_FILE` (com guarda contra troca destrutiva com sessão rodando). (Modo ao vivo não faz parte do escopo.)
 
 Ao entrar em `HISTORICAL_FILE`: kernel pausa clock sintético, limpa scenario, reseta FlowAnalysis.
 

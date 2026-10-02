@@ -17,9 +17,10 @@ getKernel() / createKernel() → boot()       (semeia book, refresh inicial)
   → start()    → clock 150ms/speed → pause() → resume() → stop()
   → disposeKernel()
 setSpeed() / setProfile() / setTrainingFifo() a qualquer momento
+advance(ticks) — fast-forward síncrono (usado em chunks por `advanceSimulation`)
 ```
 
-Cada tick: `scenario.onTick → generator.onTick → book.refresh → kernel:tick`.
+Cada tick: `scenario.onTick → generator.onTick (ordens + sweeps + replenish) → book.refresh → kernel:tick`.
 
 ## Eventos emitidos/consumidos
 

@@ -14,7 +14,7 @@ React representa estado. Engines e stores de domínio continuam fora da camada v
 
 ## Chart8P
 
-Lista de candles (O/H/L/C + agressão C/V) a partir do `RangeCandleEngine`; formando com borda tracejada. Canvas com viewport/drag/zoom é fase futura.
+Candles renderizados (corpo + pavio + barra de agressão C/V) a partir do `RangeCandleEngine`, ancorados à direita com altura dinâmica (`ResizeObserver`); linhas de referência do dia (Máx/Mín/VWAP/Abertura) com valores impressos. Formando com borda tracejada; absorção com contorno.
 
 ## Medição em navegador (evidência 2026-10-01)
 

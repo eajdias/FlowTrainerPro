@@ -1,6 +1,6 @@
 # Spec: Seletor de Ativo e Data/Sessão
 
-**Status:** Pronto para execução  
+**Status:** Parcialmente implementado (ver CHANGELOG 2026-10-02; restante reavaliar antes de executar)  
 **Prioridade:** Alta  
 **Revisão:** 2026-10-02 (corrigida com arquitetura real)
 
