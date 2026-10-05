@@ -1,6 +1,6 @@
 # FlowTrainerPro Documentation
 
-Single entry for humans: `../QUICKSTART.md`. For LLM agents: `../AGENTS.md` first.
+Single entry for humans: `quickstart.md` (5-minute guide). For LLM agents: `../AGENTS.md` first.
 
 Flat layout on purpose: one `glob docs/*.md` lists everything. Prefix groups by area.
 Each topic has a single source — do not duplicate content across files.
@@ -9,6 +9,7 @@ Each topic has a single source — do not duplicate content across files.
 
 | File | Read when |
 |------|-----------|
+| `quickstart.md` | first run, 5-minute human guide |
 | `architecture.md` | layers, the two universes (Market × Trader), real `src/` tree |
 | `modules.md` | Main view, sidebar, cockpit header, workspaces, panel registry |
 | `../CHANGELOG.md` | project history and last verified state |

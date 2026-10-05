@@ -38,6 +38,7 @@ Abra no navegador: **http://localhost:5173/**
 - **Mercado da tela:** gerado pelo próprio programa (simulação, sem internet).
 - **Histórico real:** tab **Estudo** da sidebar mostra sessões de WDO e PETR4 (já incluídas em `data/materials/`).
   Novos dados entram pelo pipeline API → DuckDB → JSON (`npm run materials`, `npm run materials:wdo`); validação de CSV avulso: `npm run validate:trade-csv -- <arquivo>`.
+  Detalhes em [`../data/README.md`](../data/README.md).
 
 ## Glossário mínimo
 
@@ -57,3 +58,9 @@ Abra no navegador: **http://localhost:5173/**
 | `localhost:5173` não abre | Veja se o terminal mostra `Local: http://localhost:5173/`; porta ocupada → feche outro `npm run dev` |
 | Painéis vazios ("Sem execuções") | Aperte **▶ Iniciar** — sem kernel ligado não há mercado |
 | `npm install` falha | Rode `node --version` (precisa 20+); apague `node_modules` e tente de novo |
+
+## Próximos passos
+
+- [`../README.md`](../README.md) — visão geral, scripts e estrutura do projeto
+- [`README.md`](README.md) — índice da documentação técnica
+- [`modules.md`](modules.md) — painéis, sidebar e workspaces em detalhe
