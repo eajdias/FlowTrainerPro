@@ -8,6 +8,10 @@ nenhuma ordem chega a uma corretora real.
 
 **Stack:** React 19 · TypeScript 6 · Vite 8 · Zustand · Vitest · DuckDB (pipeline de dados históricos).
 
+## Captura de tela
+
+![Mesa Main — SuperDOM, Times & Trades, Volume Profile, corretoras e gráfico 8P](docs/screenshot-desk.png)
+
 ## Funcionalidades
 
 - **SuperDOM fundido com Ladder** — 9 colunas, heatmap de profundidade, imbalance de liquidez, refs do dia (Máx/Mín/VWAP/Abertura)
