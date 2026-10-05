@@ -1,3 +1,8 @@
+# Env (projeto usa só FLOWTRAINER_DB opcional via ambiente, sem .env commitado)
+.env
+.env.*
+!.env.example
+
 # Logs
 logs
 *.log
