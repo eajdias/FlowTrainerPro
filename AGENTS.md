@@ -16,14 +16,13 @@ npx tsc --noEmit                # typecheck
 
 | Tema | Arquivo |
 |------|---------|
-| **Arquitetura** | `docs/Architecture.md` |
-| **Módulos e painéis** | `docs/Modules.md` |
+| **Arquitetura** | `docs/architecture.md` |
+| **Módulos e painéis** | `docs/modules.md` |
 | **Changelog (histórico + estado)** | `CHANGELOG.md` |
-| **Resumo gerencial** | `RESUMO_GERENCIAL.md` |
 | **Índice de docs** | `docs/README.md` |
-| **Regras de engenharia** | `docs/standards/FLOWTRAINER_ENGINEERING_HANDBOOK.md` |
-| **Interações SuperDOM** | `docs/product/SUPERDOM_TRADING_INTERACTIONS.md` |
-| **Design System** | `docs/design/FLOWTRAINER_DESIGN_SYSTEM.md` |
+| **Regras de engenharia** | `docs/engineering-handbook.md` |
+| **Interações SuperDOM** | `docs/product-superdom.md` |
+| **Design System** | `docs/design-system.md` |
 
 ## Regras críticas (resumo)
 

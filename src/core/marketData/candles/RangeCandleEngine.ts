@@ -1,6 +1,6 @@
 // core/marketData/candles/RangeCandleEngine.ts
 // Candles atemporais range-8: fecham quando (high-low) >= RANGE (8.00 = 16 ticks).
-// 8P = 8 pontos (ver docs/product/ATEMPORAL_CHART.md).
+// 8P = 8 pontos (ver docs/product-atemporal-chart.md).
 // Candles fechados sao imutaveis (Object.freeze). So execucoes geram volume.
 
 export const RANGE_SIZE = 8.0;

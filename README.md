@@ -22,6 +22,6 @@ npm test      # suíte de testes
 ## Docs
 
 - `docs/README.md` — índice de toda a documentação
-- `docs/Architecture.md` — arquitetura (fonte única)
-- `docs/Modules.md` — módulos e painéis (fonte única)
+- `docs/architecture.md` — arquitetura (fonte única)
+- `docs/modules.md` — módulos e painéis (fonte única)
 - `CHANGELOG.md` — histórico consolidado do projeto

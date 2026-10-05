@@ -32,4 +32,4 @@ npm run materials:wdo                                   # WDO diário via brapi 
 npm run validate:trade-csv -- data/imports/arquivo.csv  # valida CSV avulso (scripts/testes, sem UI)
 ```
 
-Pipeline de dados históricos: ver `../CHANGELOG.md` e `../docs/architecture/HISTORICAL_MARKET_DATA_PIPELINE.md`.
+Pipeline de dados históricos: ver `../CHANGELOG.md` e `../docs/arch-history-pipeline.md`.
